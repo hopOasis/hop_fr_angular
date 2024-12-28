@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build:ssr": "ng build --prod && ng run hop_fr_angular:server:production",
+    "build:ssr": "ng build && ng run hop_fr_angular:server:production",
     "serve:ssr": "node dist/hop_fr_angular/main.js",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
