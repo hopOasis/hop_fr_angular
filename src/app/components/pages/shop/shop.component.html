@@ -1,0 +1,58 @@
+<div class="main__container">
+  <nav class="main__breadcrumb">
+    <a routerLink="/home" class="main__breadcrumb-link active">Khmila Oaza</a>
+    <a routerLink="./" class="main__breadcrumb-link">Магазин</a>
+  </nav>
+  <div class="main__row">
+    <nav class="main__menu menu">
+      <a routerLinkActive="active" routerLink="all-products" class="menu__link"
+        >Всі товари</a
+      >
+      <a
+        routerLinkActive="active"
+        routerLink="beers"
+        [queryParams]="{ sort_by: currentTypeOfSorting() }"
+        class="menu__link"
+        >Пиво</a
+      >
+      <a
+        routerLinkActive="active"
+        routerLink="ciders"
+        [queryParams]="{ sort_by: currentTypeOfSorting() }"
+        class="menu__link"
+        >Сидр</a
+      >
+      <a
+        routerLinkActive="active"
+        routerLink="snacks"
+        [queryParams]="{ sort_by: currentTypeOfSorting() }"
+        class="menu__link"
+        >Снеки</a
+      >
+    </nav>
+    <div class="main__sort-by">
+      <h4 class="main__title-sort">Сортування</h4>
+      <button type="button" class="main__button button-asc">
+        <a
+          (click)="onChangeType('asc')"
+          routerLinkActive="active"
+          [routerLink]="['./', currentChild]"
+          [queryParams]="{ sort_by: 'asc' }"
+          class="main__sort-link"
+          >Від дешевих</a
+        >
+      </button>
+      <button type="button" class="main__button button-desc">
+        <a
+          (click)="onChangeType('desc')"
+          routerLinkActive="active"
+          [queryParams]="{ sort_by: 'desc' }"
+          [routerLink]="['./', currentChild]"
+          class="main__sort-link"
+          >Від дорогих</a
+        >
+      </button>
+    </div>
+  </div>
+  <section class="main__products"><router-outlet></router-outlet></section>
+</div>

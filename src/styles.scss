@@ -1,1 +1,181 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: "icomoon";
+  src: url("../public/fonts/icomoon.eot?9ik3d9");
+  src: url("../public/fonts/icomoon.eot?9ik3d9#iefix")
+      format("embedded-opentype"),
+    url("../public/fonts/icomoon.ttf?9ik3d9") format("truetype"),
+    url("../public/fonts/icomoon.woff?9ik3d9") format("woff"),
+    url("../public/fonts/icomoon.svg?9ik3d9#icomoon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+[class^="icon-"],
+[class*=" icon-"] {
+  font-family: "icomoon" !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-add-plus:before {
+  content: "\e900";
+}
+.icon-arrow-down-sm:before {
+  content: "\e901";
+}
+.icon-arrow-left:before {
+  content: "\e902";
+}
+.icon-arrow-right:before {
+  content: "\e903";
+}
+.icon-arrow-up-sm:before {
+  content: "\e904";
+}
+.icon-checkbox-checked:before {
+  content: "\e905";
+}
+.icon-checkbox-unchecked:before {
+  content: "\e906";
+}
+.icon-chevron-down:before {
+  content: "\e907";
+}
+.icon-chevron-up:before {
+  content: "\e908";
+}
+.icon-heart:before {
+  content: "\e909";
+}
+.icon-hide-eye:before {
+  content: "\e90a";
+}
+.icon-menu-alt:before {
+  content: "\e90b";
+}
+.icon-phone:before {
+  content: "\e90c";
+}
+.icon-radio-fill:before {
+  content: "\e90d";
+}
+.icon-radio-unchecked:before {
+  content: "\e90e";
+}
+.icon-remove-minus:before {
+  content: "\e90f";
+}
+.icon-search:before {
+  content: "\e910";
+}
+.icon-shopping-cart:before {
+  content: "\e911";
+}
+.icon-showed-eye:before {
+  content: "\e912";
+}
+.icon-small-arrow-left:before {
+  content: "\e913";
+}
+.icon-small-arrow-right:before {
+  content: "\e914";
+}
+.icon-star:before {
+  content: "\e915";
+}
+.icon-tabler-point-filled:before {
+  content: "\e916";
+}
+.icon-trash-full:before {
+  content: "\e917";
+}
+.icon-user:before {
+  content: "\e918";
+}
+
+@import url("https://fonts.googleapis.com/css?family=Montserrat:regular,500,600,italic,500italic,600italic&display=swap");
+* {
+  padding: 0px;
+  margin: 0px;
+  border: 0px;
+  box-sizing: border-box;
+}
+*::before,
+*::after {
+  box-sizing: border-box;
+  display: inline-block;
+}
+body {
+  line-height: 1;
+  text-rendering: optimizeLegibility;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+input,
+button,
+textarea {
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  background-color: transparent;
+}
+
+input,
+textarea {
+  width: 100%;
+}
+
+button,
+select,
+option {
+  cursor: pointer;
+}
+a {
+  display: inline-block;
+  color: inherit;
+  text-decoration: none;
+}
+ul li {
+  list-style: none;
+}
+img {
+  vertical-align: top;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: inherit;
+  font-size: inherit;
+}
+html,
+body {
+  height: 100%;
+}
+////////////////////////////////////////////////////
+html {
+  font-size: 16px;
+}
+body {
+  font-family: "Montserrat", sans-serif;
+}
+[class*="__container"] {
+  max-width: 81.25rem;
+  margin: 0 auto;
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
+}
+.wrapper {
+}

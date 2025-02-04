@@ -1,0 +1,80 @@
+.main {
+  &__container {
+    padding-top: 2.5rem;
+  }
+
+  &__breadcrumb {
+    display: flex;
+    gap: 0.25rem;
+    margin-bottom: 2.5rem;
+  }
+
+  &__breadcrumb-link {
+    font-weight: 600;
+    font-size: 1.1rem;
+    &:not(:last-child) {
+      padding-right: 0.25rem;
+      border-right: 1px solid rgb(105, 105, 105);
+    }
+    &.active {
+      color: rgb(105, 105, 105);
+      cursor: pointer;
+    }
+  }
+
+  &__page-name {
+  }
+
+  &__row {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 1.81rem;
+    margin-bottom: 3rem;
+  }
+
+  &__menu {
+    display: flex;
+    gap: 3.5rem;
+  }
+
+  &__sort-by {
+    display: flex;
+    gap: 1.25rem;
+  }
+
+  &__title-sort {
+    color: rgb(19, 19, 19);
+  }
+
+  &__button {
+    &.active {
+    }
+  }
+
+  &__sort-link {
+    font-size: 1rem;
+    border: 1px solid rgb(41, 41, 41);
+    border-radius: 4px;
+    padding: 2px 4px;
+    line-height: 1.25rem;
+    &.active {
+      color: #ff9a00;
+      border-color: rgb(255, 154, 0);
+    }
+  }
+}
+.menu {
+  &__link {
+    &.active {
+      color: #ff9a00;
+    }
+  }
+}
+.button-asc {
+}
+.button-desc {
+}
