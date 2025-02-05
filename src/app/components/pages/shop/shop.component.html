@@ -32,25 +32,27 @@
     </nav>
     <div class="main__sort-by">
       <h4 class="main__title-sort">Сортування</h4>
-      <button type="button" class="main__button button-asc">
-        <a
-          (click)="onChangeType('asc')"
-          routerLinkActive="active"
-          [routerLink]="['./', currentChild]"
-          [queryParams]="{ sort_by: 'asc' }"
-          class="main__sort-link"
-          >Від дешевих</a
-        >
+      <button
+        [disabled]="currentChild() === 'all-products'"
+        (click)="onChangeType('asc')"
+        type="button"
+        class="main__button button-asc"
+        [class.active]="
+          currentTypeOfSorting() === 'asc' && currentChild() !== 'all-products'
+        "
+      >
+        Від дешевих
       </button>
-      <button type="button" class="main__button button-desc">
-        <a
-          (click)="onChangeType('desc')"
-          routerLinkActive="active"
-          [queryParams]="{ sort_by: 'desc' }"
-          [routerLink]="['./', currentChild]"
-          class="main__sort-link"
-          >Від дорогих</a
-        >
+      <button
+        [disabled]="currentChild() === 'all-products'"
+        type="button"
+        (click)="onChangeType('desc')"
+        class="main__button button-desc"
+        [class.active]="
+          currentTypeOfSorting() === 'desc' && currentChild() !== 'all-products'
+        "
+      >
+        Від дорогих
       </button>
     </div>
   </div>
