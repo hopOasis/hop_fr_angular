@@ -1,21 +1,30 @@
 <div class="header__container">
-  <div class="header__logo-container">
-    <a routerLink="/home">
-      <img src="./header-logo.png" alt="Brand name logo" class="header__logo"
-    /></a>
-  </div>
+  <a routerLink="/home">
+    <img src="./header-logo.png" alt="Brand name logo" class="header__logo"
+  /></a>
 
-  <nav class="header__menu menu">
-    <a routerLinkActive="active" routerLink="#" class="menu__link"
-      >Про броварню</a
-    >
-    <a routerLinkActive="active" routerLink="/shop" class="menu__link"
-      >Магазин</a
-    >
-    <a routerLinkActive="active" routerLink="#" class="menu__link"
-      >Доставка і оплата</a
-    >
-  </nav>
+  <div class="header__menu menu">
+    <button class="menu__icon"></button>
+    <nav class="menu__body">
+      <ul class="menu__list">
+        <li class="menu__item">
+          <a routerLinkActive="active" routerLink="#" class="menu__link"
+            >Про броварню</a
+          >
+        </li>
+        <li class="menu__item">
+          <a routerLinkActive="active" routerLink="/shop" class="menu__link"
+            >Магазин</a
+          >
+        </li>
+        <li class="menu__item">
+          <a routerLinkActive="active" routerLink="#" class="menu__link"
+            >Доставка і оплата</a
+          >
+        </li>
+      </ul>
+    </nav>
+  </div>
   @if(isShowedInput()){
   <div class="header__input-wrapper">
     <input
