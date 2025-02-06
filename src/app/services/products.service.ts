@@ -10,9 +10,9 @@ import { BeersFetchedProductData } from '../models/product.model';
 })
 export class ProductsService {
   private authService = inject(AuthService);
+  private httpClient = inject(HttpClient);
   private BASE_URL = this.authService.BASE_URL;
   public typeOfSorting$ = new Subject<TypesOfSorting>();
-  private httpClient = inject(HttpClient);
 
   getBeersData(): Observable<BeersFetchedProductData> {
     return this.typeOfSorting$.pipe(
@@ -25,4 +25,5 @@ export class ProductsService {
       })
     );
   }
+  
 }
