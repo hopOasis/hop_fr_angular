@@ -32,19 +32,19 @@ export class ShopComponent implements OnInit {
   private activeRoute = inject(ActivatedRoute);
   private destroyRef = inject(DestroyRef);
   private productsService = inject(ProductsService);
-  public currentChild = signal<string | undefined>('all-products');
+  public currentChildRoute = signal<string | undefined>('all-products');
   ngOnInit(): void {
     const routerEventSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd)
-        this.currentChild.set(this.activeRoute.children[0].routeConfig?.path);
+        this.currentChildRoute.set(this.activeRoute.children[0].routeConfig?.path);
     });
 
     this.destroyRef.onDestroy(() => routerEventSubscription.unsubscribe());
   }
   onChangeType(type: TypesOfSorting) {
-    this.currentChild.set(this.activeRoute.children[0].routeConfig?.path);
+    this.currentChildRoute.set(this.activeRoute.children[0].routeConfig?.path);
     this.currentTypeOfSorting.set(type);
-    this.router.navigate(['./', this.currentChild()], {
+    this.router.navigate(['./', this.currentChildRoute()], {
       queryParams: { sort_by: this.currentTypeOfSorting() },
       relativeTo: this.activeRoute,
     });
