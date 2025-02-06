@@ -29,8 +29,6 @@ export interface Reviews {
 }
 export interface ProductDescription {
   averageRating: number;
-  beerColor: string;
-  beerName: string;
   description: string;
   id: number;
   imageName: string[];
@@ -39,4 +37,8 @@ export interface ProductDescription {
   ratingCount: number;
   reviews: Reviews[] | [];
   specialOfferIds: [];
+}
+export interface BeerDescription extends ProductDescription {
+  beerColor: string;
+  beerName: string;
 }

@@ -1,7 +1,6 @@
-import { Pageable, ProductDescription, Sort } from './pageable.model';
+import { BeerDescription, Pageable, Sort } from './pageable.model';
 
-export interface FetchedProductData {
-  content: ProductDescription[];
+interface FetchedProductData {
   empty: boolean;
   first: boolean;
   last: boolean;
@@ -12,4 +11,7 @@ export interface FetchedProductData {
   sort: Sort;
   totalElements: number;
   totalPages: number;
+}
+export interface BeersFetchedProductData extends FetchedProductData {
+  content: BeerDescription[];
 }
