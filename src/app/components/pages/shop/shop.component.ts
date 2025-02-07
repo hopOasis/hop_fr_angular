@@ -6,7 +6,6 @@ import { TypesOfSorting } from '../../../models/products-types.model';
 import { ProductsService } from '../../../services/products.service';
 import { ProductDescription } from '../../../models/pageable.model';
 import { ProductCardComponent } from '../../product-card/product-card.component';
-
 @Component({
   selector: 'app-shop',
   standalone: true,
@@ -56,7 +55,13 @@ export class ShopComponent implements OnInit {
       ({ typeCategory }) => {
         this.currentChildRoute.set(typeCategory);
         this.productsService.typeOfCategory$.next(typeCategory);
-        this.currentChildRoute.set(typeCategory);
+        this.onChangePage(0);
+        if (this.currentTypeOfSorting()) {
+          this.router.navigate(['./'], {
+            queryParams: { sort_by: this.currentTypeOfSorting() },
+            relativeTo: this.activeRoute,
+          });
+        }
       }
     );
     const queryParamsSubscription = this.activeRoute.queryParams.subscribe(
