@@ -25,9 +25,8 @@ export class ShopComponent implements OnInit {
   public currentChildRoute = signal<string>('all-products');
   public productData = signal<undefined | ProductDescription[]>(undefined);
   ngOnInit(): void {
-    this.currentTypeOfSorting.set(
-      this.activeRoute.snapshot.queryParams['sort_by']
-    );
+    const sortingType = this.activeRoute.snapshot.queryParams['sort_by'];
+    if (sortingType) this.currentTypeOfSorting.set(sortingType);
     const fetchedDataSubscription = this.productsService
       .getProductData()
       .subscribe((data) => {
