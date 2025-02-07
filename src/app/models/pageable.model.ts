@@ -31,14 +31,19 @@ export interface ProductDescription {
   averageRating: number;
   description: string;
   id: number;
-  imageName: string[];
+  imageName?: string[];
   itemType: string;
   options: Option[] | [];
   ratingCount: number;
   reviews: Reviews[] | [];
   specialOfferIds: [];
+  beerColor?: string;
+  beerName?: string;
+  ciderName?: string;
+  ciderImageName?: [];
+  snackName?: string;
+  snackImageName?: [];
 }
-export interface BeerDescription extends ProductDescription {
-  beerColor: string;
-  beerName: string;
-}
+export interface BeerDescription extends ProductDescription {}
+export interface CiderDescription extends ProductDescription {}
+export interface SnackDescription extends ProductDescription {}

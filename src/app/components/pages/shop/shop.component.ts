@@ -1,26 +1,16 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DestroyRef,
-  inject,
-  OnInit,
-  signal,
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  NavigationEnd,
-  Router,
-  RouterLink,
-  RouterLinkActive,
-  RouterOutlet,
-} from '@angular/router';
+import { DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TypesOfSorting } from '../../../models/products-types.model';
 import { ProductsService } from '../../../services/products.service';
+import { ProductDescription } from '../../../models/pageable.model';
+import { ProductCardComponent } from '../../product-card/product-card.component';
 
 @Component({
   selector: 'app-shop',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, RouterOutlet],
+  imports: [RouterLink, RouterLinkActive, ProductCardComponent],
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,19 +22,43 @@ export class ShopComponent implements OnInit {
   private activeRoute = inject(ActivatedRoute);
   private destroyRef = inject(DestroyRef);
   private productsService = inject(ProductsService);
-  public currentChildRoute = signal<string | undefined>('all-products');
+  public currentChildRoute = signal<string>('all-products');
+  public productData = signal<undefined | ProductDescription[]>(undefined);
   ngOnInit(): void {
-    const routerEventSubscription = this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd)
-        this.currentChildRoute.set(this.activeRoute.children[0].routeConfig?.path);
+    this.currentTypeOfSorting.set(
+      this.activeRoute.snapshot.queryParams['sort_by']
+    );
+    const fetchedDataSubscription = this.productsService
+      .getProductData()
+      .subscribe((data) => {
+        this.productData.set(data.content);
+      });
+    const paramsSubscription = this.activeRoute.params.subscribe(
+      ({ typeCategory }) => {
+        this.productData.set([]);
+        this.productsService.typeOfCategory$.next(typeCategory);
+        this.currentChildRoute.set(typeCategory);
+      }
+    );
+    const queryParamsSubscription = this.activeRoute.queryParams.subscribe(
+      ({ sort_by }) => {
+        this.productsService.typeOfSorting$.next(sort_by);
+      }
+    );
+    this.destroyRef.onDestroy(() => {
+      fetchedDataSubscription.unsubscribe();
+      paramsSubscription.unsubscribe();
+      queryParamsSubscription.unsubscribe();
     });
-
-    this.destroyRef.onDestroy(() => routerEventSubscription.unsubscribe());
   }
+
   onChangeType(type: TypesOfSorting) {
-    this.currentChildRoute.set(this.activeRoute.children[0].routeConfig?.path);
+    this.productData.set([]);
+    this.currentChildRoute.set(
+      this.activeRoute.snapshot.params['typeCategory']
+    );
     this.currentTypeOfSorting.set(type);
-    this.router.navigate(['./', this.currentChildRoute()], {
+    this.router.navigate(['/shop', this.currentChildRoute()], {
       queryParams: { sort_by: this.currentTypeOfSorting() },
       relativeTo: this.activeRoute,
     });

@@ -172,13 +172,13 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 [class*="__container"] {
-  // max-width: 81.25rem;
+  max-width: 81.25rem;
   margin: 0 auto;
   padding-left: 0.9375rem;
   padding-right: 0.9375rem;
 
-  // padding-left: 0.625rem;
-  // padding-right: 0.625rem;
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
 }
 .wrapper {
 }
