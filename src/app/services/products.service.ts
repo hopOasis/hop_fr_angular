@@ -1,14 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
-import {
-  BehaviorSubject,
-  catchError,
-  combineLatest,
-  Observable,
-  of,
-  Subject,
-  switchMap,
-} from 'rxjs';
+import { BehaviorSubject, catchError, combineLatest } from 'rxjs';
+import { Observable, Subject, switchMap } from 'rxjs';
 import { TypesOfProduct, TypesOfSorting } from '../models/products-types.model';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { FetchedProductData } from '../models/product.model';
@@ -21,7 +14,7 @@ export class ProductsService {
   private authService = inject(AuthService);
   private httpClient = inject(HttpClient);
   private BASE_URL = this.authService.BASE_URL;
-  public typeOfSorting$ = new Subject<TypesOfSorting>();
+  public typeOfSorting$ = new BehaviorSubject<TypesOfSorting | ''>('');
   public typeOfCategory$ = new Subject<TypesOfProduct>();
   public pageOfProduct$ = new BehaviorSubject(0);
   private router = inject(Router);
