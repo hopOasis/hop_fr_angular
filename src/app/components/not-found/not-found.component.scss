@@ -1,0 +1,23 @@
+.error {
+  &__container {
+    padding: 3rem;
+  }
+
+  &__button {
+  }
+
+  &__title {
+    font-size: 2rem;
+    font-weight: 500;
+    color: #ea3939;
+    margin-bottom: 1rem;
+  }
+
+  &__link {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    &:hover {
+      color: #d26262;
+    }
+  }
+}
