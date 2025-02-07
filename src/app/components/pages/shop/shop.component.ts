@@ -22,7 +22,7 @@ export class ShopComponent implements OnInit {
   private productsService = inject(ProductsService);
 
   public currentChildRoute = signal<string>('all-products');
-  public currentTypeOfSorting = signal<TypesOfSorting>('asc');
+  public currentTypeOfSorting = signal<TypesOfSorting | ''>('');
 
   public isActiveSortButtons = signal(true);
 
@@ -39,7 +39,6 @@ export class ShopComponent implements OnInit {
       for (let i = this.currentPage() - 2; i <= 5; i++) {
         arr.push(i);
       }
-
     return arr;
   });
   public currentPage = signal(0);
@@ -62,12 +61,6 @@ export class ShopComponent implements OnInit {
     );
     const queryParamsSubscription = this.activeRoute.queryParams.subscribe(
       ({ sort_by }) => {
-        if (!sort_by && this.currentChildRoute() !== 'all-products') {
-          this.router.navigate(['./'], {
-            queryParams: { sort_by: this.currentTypeOfSorting() },
-            relativeTo: this.activeRoute,
-          });
-        }
         this.productsService.typeOfSorting$.next(sort_by);
       }
     );
@@ -85,10 +78,18 @@ export class ShopComponent implements OnInit {
     this.currentChildRoute.set(
       this.activeRoute.snapshot.params['typeCategory']
     );
-    this.currentTypeOfSorting.set(type);
-    this.router.navigate(['./'], {
-      queryParams: { sort_by: this.currentTypeOfSorting() },
-      relativeTo: this.activeRoute,
-    });
+
+    if (this.currentTypeOfSorting() === type) {
+      this.currentTypeOfSorting.set('');
+      this.router.navigate(['./'], {
+        relativeTo: this.activeRoute,
+      });
+    } else {
+      this.currentTypeOfSorting.set(type);
+      this.router.navigate(['./'], {
+        queryParams: { sort_by: this.currentTypeOfSorting() },
+        relativeTo: this.activeRoute,
+      });
+    }
   }
 }
