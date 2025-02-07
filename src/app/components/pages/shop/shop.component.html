@@ -5,56 +5,65 @@
   </nav>
   <div class="main__row">
     <nav class="main__menu menu">
-      <a routerLinkActive="active" routerLink="all-products" class="menu__link"
+      <a
+        routerLinkActive="active"
+        routerLink="/shop/all-products"
+        class="menu__link"
         >Всі товари</a
       >
-      <a
-        routerLinkActive="active"
-        routerLink="beers"
-        [queryParams]="{ sort_by: currentTypeOfSorting() }"
-        class="menu__link"
+      <a routerLinkActive="active" routerLink="/shop/beers" class="menu__link"
         >Пиво</a
       >
-      <a
-        routerLinkActive="active"
-        routerLink="ciders"
-        [queryParams]="{ sort_by: currentTypeOfSorting() }"
-        class="menu__link"
+      <a routerLinkActive="active" routerLink="/shop/ciders" class="menu__link"
         >Сидр</a
       >
-      <a
-        routerLinkActive="active"
-        routerLink="snacks"
-        [queryParams]="{ sort_by: currentTypeOfSorting() }"
-        class="menu__link"
+      <a routerLinkActive="active" routerLink="/shop/snacks" class="menu__link"
         >Снеки</a
       >
     </nav>
     <div class="main__sort-by">
       <h4 class="main__title-sort">Сортування</h4>
       <button
-        [disabled]="currentChild() === 'all-products'"
+        [disabled]="currentChildRoute() === 'all-products'"
         (click)="onChangeType('asc')"
         type="button"
         class="main__button button-asc"
         [class.active]="
-          currentTypeOfSorting() === 'asc' && currentChild() !== 'all-products'
+          currentTypeOfSorting() === 'asc' &&
+          currentChildRoute() !== 'all-products'
         "
       >
         Від дешевих
       </button>
       <button
-        [disabled]="currentChild() === 'all-products'"
+        [disabled]="currentChildRoute() === 'all-products'"
         type="button"
         (click)="onChangeType('desc')"
         class="main__button button-desc"
         [class.active]="
-          currentTypeOfSorting() === 'desc' && currentChild() !== 'all-products'
+          currentTypeOfSorting() === 'desc' &&
+          currentChildRoute() !== 'all-products'
         "
       >
         Від дорогих
       </button>
     </div>
   </div>
-  <section class="main__products"><router-outlet></router-outlet></section>
+  <section class="main__products">
+    @if(productData()){ @for(product of productData();track product.id){
+    <app-product-card [data]="product"></app-product-card>
+    } }
+  </section>
+  @if(availablePages() > 1){
+  <div class="main__pagination pagination">
+    @for(page of arrayOfPages();track page){
+    <span
+      (click)="onChangePage(page - 1)"
+      [class.active]="currentPage() === page - 1"
+      class="pagination__page"
+      >{{ page }}</span
+    >
+    }
+  </div>
+  }
 </div>

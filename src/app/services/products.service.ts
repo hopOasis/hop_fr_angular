@@ -1,9 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
+import { BehaviorSubject, catchError, combineLatest } from 'rxjs';
 import { Observable, Subject, switchMap } from 'rxjs';
-import { TypesOfSorting } from '../models/products-types.model';
+import { TypesOfProduct, TypesOfSorting } from '../models/products-types.model';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { BeersFetchedProductData } from '../models/product.model';
+import { FetchedProductData } from '../models/product.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -12,18 +14,29 @@ export class ProductsService {
   private authService = inject(AuthService);
   private httpClient = inject(HttpClient);
   private BASE_URL = this.authService.BASE_URL;
-  public typeOfSorting$ = new Subject<TypesOfSorting>();
-
-  getBeersData(): Observable<BeersFetchedProductData> {
-    return this.typeOfSorting$.pipe(
-      switchMap((typeOfSorting) => {
-        const baseParams = new HttpParams().set('sortDirection', typeOfSorting);
-        return this.httpClient.get<BeersFetchedProductData>(
-          `${this.BASE_URL()}/beers`,
-          { params: baseParams }
+  public typeOfSorting$ = new BehaviorSubject<TypesOfSorting | ''>('');
+  public typeOfCategory$ = new Subject<TypesOfProduct>();
+  public pageOfProduct$ = new BehaviorSubject(0);
+  private router = inject(Router);
+  getProductData(): Observable<FetchedProductData> {
+    return combineLatest([
+      this.typeOfSorting$,
+      this.typeOfCategory$,
+      this.pageOfProduct$,
+    ]).pipe(
+      switchMap(([typeOfSorting, typeOfCategory, page]) => {
+        const params = new HttpParams()
+          .set('sortDirection', typeOfSorting)
+          .set('page', page);
+        return this.httpClient.get<FetchedProductData>(
+          `${this.BASE_URL()}/${typeOfCategory}`,
+          { params: params }
         );
+      }),
+      catchError((error, obs) => {
+        this.router.navigate(['not_found']);
+        throw new Error('Something went wrong!');
       })
     );
   }
-  
 }
