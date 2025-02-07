@@ -5,26 +5,29 @@
   </nav>
   <div class="main__row">
     <nav class="main__menu menu">
-      <a routerLinkActive="active" routerLink="all-products" class="menu__link"
+      <a
+        routerLinkActive="active"
+        routerLink="/shop/all-products"
+        class="menu__link"
         >Всі товари</a
       >
       <a
         routerLinkActive="active"
-        routerLink="beers"
+        routerLink="/shop/beers"
         [queryParams]="{ sort_by: currentTypeOfSorting() }"
         class="menu__link"
         >Пиво</a
       >
       <a
         routerLinkActive="active"
-        routerLink="ciders"
+        routerLink="/shop/ciders"
         [queryParams]="{ sort_by: currentTypeOfSorting() }"
         class="menu__link"
         >Сидр</a
       >
       <a
         routerLinkActive="active"
-        routerLink="snacks"
+        routerLink="/shop/snacks"
         [queryParams]="{ sort_by: currentTypeOfSorting() }"
         class="menu__link"
         >Снеки</a
@@ -38,7 +41,8 @@
         type="button"
         class="main__button button-asc"
         [class.active]="
-          currentTypeOfSorting() === 'asc' && currentChildRoute() !== 'all-products'
+          currentTypeOfSorting() === 'asc' &&
+          currentChildRoute() !== 'all-products'
         "
       >
         Від дешевих
@@ -49,12 +53,17 @@
         (click)="onChangeType('desc')"
         class="main__button button-desc"
         [class.active]="
-          currentTypeOfSorting() === 'desc' && currentChildRoute() !== 'all-products'
+          currentTypeOfSorting() === 'desc' &&
+          currentChildRoute() !== 'all-products'
         "
       >
         Від дорогих
       </button>
     </div>
   </div>
-  <section class="main__products"><router-outlet></router-outlet></section>
+  <section class="main__products">
+    @if(productData()){ @for(product of productData();track product.id){
+    <app-product-card [data]="product"></app-product-card>
+    } }
+  </section>
 </div>
