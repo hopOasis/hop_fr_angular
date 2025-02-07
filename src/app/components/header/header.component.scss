@@ -4,6 +4,8 @@
 .header {
   display: flex;
   &__container {
+
+
     display: flex;
     align-items: center;
     min-height: 5.875rem;
@@ -11,6 +13,7 @@
     @media (max-width: 650px) {
       gap: 1rem;
     }
+
   }
   &__logo {
     cursor: pointer;
