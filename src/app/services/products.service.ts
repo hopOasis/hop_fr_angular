@@ -25,15 +25,15 @@ export class ProductsService {
       this.pageOfProduct$,
     ]).pipe(
       switchMap(([typeOfSorting, typeOfCategory, page]) => {
-        const params = new HttpParams()
-          .set('sortDirection', typeOfSorting)
-          .set('page', page);
+        let params = new HttpParams();
+        if (typeOfSorting) params = params.set('sortDirection', typeOfSorting);
+        if (page) params = params.set('page', page);
         return this.httpClient.get<FetchedProductData>(
           `${this.BASE_URL()}/${typeOfCategory}`,
-          { params: params }
+          { params }
         );
       }),
-      catchError((error, obs) => {
+      catchError(() => {
         this.router.navigate(['not_found']);
         throw new Error('Something went wrong!');
       })
