@@ -5,4 +5,5 @@ import { Injectable, signal } from '@angular/core';
 })
 export class AuthService {
   public BASE_URL = signal('https://hopoasis.onrender.com');
+  public isAuth = signal(false);
 }

@@ -1,34 +1,6 @@
-<!-- <div class="product-cards__container">
-  <div class="products__cards">
-    <div class="product__card card-product">
-      <div class="card-product__image">
-        <img src="product-cards/01.png" alt="dark beer" />
-        <span class="icon-heart"></span>
-      </div>
-      <div class="card-product__body">
-        <h4 class="card-product__title">
-          <a href="#" class="card-product__link-title"
-            >{{ data().beerName ?? data().ciderName ?? data().snackName }}
-            
-          </a>
-        </h4>
-
-        <div class="card-product__actions">
-          <span>0,33 л</span>
-          <span>0,5 л</span>
-        </div>
-
-        <div class="card-product__price"><span>70</span> грн.</div>
-        <div class="card-product__cart">
-          <a href="#" class="card-product__cart-button">У кошик</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
 <div class="product-card">
   <button
+    [disabled]="!isAuth()"
     [class.active]="isAddedToFavorite()"
     (click)="onAddToFavorite(data().id)"
     class="icon-heart product-card__icon"
@@ -43,9 +15,9 @@
     <a routerLink="#" class="product-card__title"
       >{{ data().beerName ?? data().ciderName ?? data().snackName }}
     </a>
-    @if(data().options.length!==0){
+    @if(data().options.length!==0 ){
     <div class="product-card__options">
-      @for(option of data().options;track option.id){
+      @for(option of data().options;track option.id){ @if(option.quantity){
       <button
         [class.active]="activeOptionId() === option.id"
         (click)="onChangeOption(option.id)"
@@ -54,18 +26,22 @@
       >
         {{ option.volume | updateMeasure : data().itemType }}
       </button>
-      }
+      } }
     </div>
     }
 
     <div class="product-card__price">
       {{ currentPrice() ?? 0 | updatePrice }}
     </div>
-    <div
-      (click)="onAddToShop(data().id, activeOptionId())"
-      class="product-card__button-wrapper"
-    >
-      <button class="product-card__add-shop-button">У кошик</button>
+    <div class="product-card__button-wrapper">
+      <button
+        (click)="onAddToShop(data().id, activeOptionId())"
+        [disabled]="isNotAvailable()"
+        [class.freez]="isNotAvailable()"
+        class="product-card__add-shop-button"
+      >
+        У кошик
+      </button>
     </div>
   </div>
 </div>
