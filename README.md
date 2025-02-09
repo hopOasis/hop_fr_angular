@@ -45,27 +45,31 @@ node -v
 2️⃣ Install Angular CLI via Terminal
 
 npm install -g @angular/cli@18
+
 ng version # Verify installation
 
 
 3️⃣ Download and install VSCode from the official website: 
+
   https://code.visualstudio.com/
 
 4️⃣ Go to the directory in which you want to clone the repository via Terminal
+
   cd folder/folder
 
 5️⃣ Clone the Repository via Terminal
 
 git clone https://github.com/hopOasis/hop_fr_angular.git
+
 cd hop_fr_angular
 
 6️⃣ Install Dependencies
 
 npm install
 
-6️⃣ Open VSCode & add folder with project to workspace in VSCode
+7️⃣ Open VSCode & add folder with project to workspace in VSCode
 
-7️⃣ Request Environment Configuration from PM
+8️⃣ Request Environment Configuration from PM
 
 Ask the PM for the .env file containing environment variables. Once received:
 
@@ -73,7 +77,7 @@ Create a .env file in the root directory of the project.
 
 Copy and paste the received variables into .env.
 
-8️⃣ Run the Local Server
+9️⃣ Run the Local Server
 
 npm start
 
