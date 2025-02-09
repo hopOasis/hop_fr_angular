@@ -12,7 +12,7 @@ import { RouterLink } from '@angular/router';
 import { UpdateMeasurePipe } from '../../pipes/update-measure.pipe';
 import { UpdatePricePipe } from '../../pipes/update-price.pipe';
 import { AuthService } from '../../services/auth.service';
-import { log } from 'util';
+
 @Component({
   selector: 'app-product-card',
   standalone: true,
