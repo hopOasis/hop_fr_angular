@@ -1,118 +1,149 @@
+# 🛍️ HopOasis - E-commerce Store (Frontend)
 
-🛍️ HopOasis - E-commerce Store (Frontend)
-
-🚀 Project Description
+## 🚀 Project Description
 
 HopOasis is an e-commerce platform that allows users to easily search, browse, and purchase products. The project includes a wide range of features for both users and administrators, such as product search and sorting, a shopping cart with checkout functionality, a responsive design, an authentication system, and an admin panel.
 
-The core features include product search by name and keywords, sorting by price and rating, pagination for easy navigation, filtering by categories and price range, order history without time limitations, and integration with the Stripe payment system. Users can register, log in via Google OAuth, add products to their cart, place orders, and leave reviews, which are moderated by the administrator. The platform also supports discounts, promo codes, and special offers, along with automated email notifications about order status.
+The core features include:
+- Product search by name and keywords
+- Sorting by price and rating
+- Pagination for easy navigation
+- Filtering by categories and price range
+- Order history without time limitations
+- Integration with the Stripe payment system
+- User authentication and Google OAuth login
+- Shopping cart and order placement
+- Review system with admin moderation
+- Discounts, promo codes, and special offers
+- Automated email notifications for order status
 
-🛠️ Tech Stack
+---
 
-Angular 18
+## 🛠️ Tech Stack
 
-TypeScript
+- **Angular 18**
+- **TypeScript**
+- **RxJS**
+- **NGXS (State Management)**
+- **REST API Integration**
 
-RxJS
+---
 
-NGXS (State Management)
+## 👷‍♀️ Local Setup Instructions
 
-REST API Integration
+### 1️⃣ Install Node.js and npm
 
-👷‍♀️ Local Setup Instructions
+**Recommended version: Node.js 18+**
 
-
-
-1️⃣ Install Node.js and npm via Terminal
-
-Recommended version: Node.js 18+
-
-Linux:
-
+#### Linux:
+```sh
 sudo apt update && sudo apt install nodejs npm
 node -v   # Verify installation
+```
 
-Windows:
-
+#### Windows:
+```sh
 winget install OpenJS.NodeJS
 node -v
+```
 
-macOS:
-
+#### macOS:
+```sh
 brew install node
 node -v
+```
 
-2️⃣ Install Angular CLI via Terminal
+---
 
+### 2️⃣ Install Angular CLI
+```sh
 npm install -g @angular/cli@18
-
 ng version # Verify installation
+```
 
+---
 
-3️⃣ Download and install VSCode from the official website: 
+### 3️⃣ Download and install VSCode
 
-  https://code.visualstudio.com/
+[Download VSCode](https://code.visualstudio.com/)
 
-4️⃣ Go to the directory in which you want to clone the repository via Terminal
+---
 
-  cd folder/folder
+### 4️⃣ Go to the directory where you want to clone the repository
+```sh
+cd folder/folder
+```
 
-5️⃣ Clone the Repository via Terminal
+---
 
+### 5️⃣ Clone the Repository
+```sh
 git clone https://github.com/hopOasis/hop_fr_angular.git
-
 cd hop_fr_angular
+```
 
-6️⃣ Install Dependencies
+---
 
+### 6️⃣ Install Dependencies
+```sh
 npm install
+```
 
-7️⃣ Open VSCode & add folder with project to workspace in VSCode
+---
 
-8️⃣ Request Environment Configuration from PM
+### 7️⃣ Open VSCode & add project folder to workspace
 
-Ask the PM for the .env file containing environment variables. Once received:
+---
 
-Create a .env file in the root directory of the project.
+### 8️⃣ Request Environment Configuration from PM
 
-Copy and paste the received variables into .env.
+Ask the PM for the `.env` file containing environment variables. Once received:
+1. Create a `.env` file in the root directory of the project.
+2. Copy and paste the received variables into `.env`.
 
-9️⃣ Run the Local Server
+---
 
+### 9️⃣ Run the Local Server
+```sh
 npm start
+```
+The frontend will be available at: [http://localhost:4200](http://localhost:4200)
 
-The frontend will be available at: http://localhost:4200
+---
 
-🔄 Git Workflow Guidelines
+## 🔄 Git Workflow Guidelines
 
-📌 Creating a New Branch
+### 📌 Creating a New Branch
+- A new branch should be created from `main`.
+- The branch name should be descriptive (e.g., `feature/add-product-filter`).
 
-A new branch should be created from main.
+---
 
-The branch name should be descriptive (e.g., feature/add-product-filter).
+### 📝 Commits
+- Write clear and concise commit messages.
+- It is recommended to limit commits to **5 per task**.
+- Example:
+```sh
+feat: added product filtering form
+```
 
-📝 Commits
+---
 
-Write clear and concise commit messages.
+### 🔀 Pull Request (PR)
+- After completing a task, create a **Pull Request**.
+- A PR is considered approved after receiving **2 approvals** (one from a developer and one from the PM).
+- Approved branches are merged into `main`.
 
-It is recommended to limit commits to 5 per task.
+---
 
-Example: feat: added product filtering form.
-
-🔀 Pull Request (PR)
-
-After completing a task, create a Pull Request.
-
-A PR is considered approved after receiving 2 approvals (one from a developer and one from the PM).
-
-Approved branches are merged into main.
-
-✅ Production Build
+## ✅ Production Build
 
 To create an optimized production build, run:
-
+```sh
 npm run build
+```
+The build will be saved in the `dist/` folder and will be ready for deployment.
 
-The build will be saved in the dist/ folder and will be ready for deployment.
+---
 
 Happy coding! 🚀
