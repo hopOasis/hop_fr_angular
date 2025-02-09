@@ -1,27 +1,114 @@
-# HopFrAngular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.6.
+🛍️ HopOasis - E-commerce Store (Frontend)
 
-## Development server
+🚀 Project Description
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+HopOasis is an e-commerce platform that allows users to easily search, browse, and purchase products. The project includes a wide range of features for both users and administrators, such as product search and sorting, a shopping cart with checkout functionality, a responsive design, an authentication system, and an admin panel.
 
-## Code scaffolding
+The core features include product search by name and keywords, sorting by price and rating, pagination for easy navigation, filtering by categories and price range, order history without time limitations, and integration with the Stripe payment system. Users can register, log in via Google OAuth, add products to their cart, place orders, and leave reviews, which are moderated by the administrator. The platform also supports discounts, promo codes, and special offers, along with automated email notifications about order status.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+🛠️ Tech Stack
 
-## Build
+Angular 18
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+TypeScript
 
-## Running unit tests
+RxJS
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+NGXS (State Management)
 
-## Running end-to-end tests
+REST API Integration
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+👷‍♀️ Local Setup Instructions
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+1️⃣ Install Node.js and npm via Terminal
+
+Recommended version: Node.js 18+
+
+Linux:
+
+sudo apt update && sudo apt install nodejs npm
+node -v   # Verify installation
+
+Windows:
+
+winget install OpenJS.NodeJS
+node -v
+
+macOS:
+
+brew install node
+node -v
+
+2️⃣ Install Angular CLI via Terminal
+
+npm install -g @angular/cli@18
+ng version # Verify installation
+
+
+3️⃣ Download and install VSCode from the official website: 
+  https://code.visualstudio.com/
+
+4️⃣ Go to the directory in which you want to clone the repository via Terminal
+  cd folder/folder
+
+5️⃣ Clone the Repository via Terminal
+
+git clone https://github.com/hopOasis/hop_fr_angular.git
+cd hop_fr_angular
+
+6️⃣ Install Dependencies
+
+npm install
+
+6️⃣ Open VSCode & add folder with project to workspace in VSCode
+
+7️⃣ Request Environment Configuration from PM
+
+Ask the PM for the .env file containing environment variables. Once received:
+
+Create a .env file in the root directory of the project.
+
+Copy and paste the received variables into .env.
+
+8️⃣ Run the Local Server
+
+npm start
+
+The frontend will be available at: http://localhost:4200
+
+🔄 Git Workflow Guidelines
+
+📌 Creating a New Branch
+
+A new branch should be created from main.
+
+The branch name should be descriptive (e.g., feature/add-product-filter).
+
+📝 Commits
+
+Write clear and concise commit messages.
+
+It is recommended to limit commits to 5 per task.
+
+Example: feat: added product filtering form.
+
+🔀 Pull Request (PR)
+
+After completing a task, create a Pull Request.
+
+A PR is considered approved after receiving 2 approvals (one from a developer and one from the PM).
+
+Approved branches are merged into main.
+
+✅ Production Build
+
+To create an optimized production build, run:
+
+npm run build
+
+The build will be saved in the dist/ folder and will be ready for deployment.
+
+Happy coding! 🚀
