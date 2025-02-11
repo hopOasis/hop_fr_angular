@@ -52,10 +52,15 @@
   }
   &__products {
     margin-bottom: 2rem;
+
     display: grid;
     gap: 1.5rem;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-
+    grid-template-columns: repeat(auto-fit, minmax(280px, 302px));
+    @media (max-width: 1300px) {
+      gap: 2rem;
+      justify-content: center;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 302px));
+    }
     &:not(:last-child) {
       margin-bottom: 5rem;
     }

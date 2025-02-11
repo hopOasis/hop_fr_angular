@@ -38,14 +38,22 @@
     >
       <span class="icon icon-search"></span>
     </button>
-    }
-    <a href="#" class="header__actions-link"
+    } @if(isAuth$ | async){
+    <a routerLink="favorite" class="header__actions-link"
       ><span class="header__icon icon icon-heart"></span
     ></a>
-    <a href="#" class="header__actions-link"
+    <a
+      routerLink="cabinet"
+      routerLinkActive="active"
+      class="header__actions-link"
       ><span class="header__icon icon icon-user"></span
     ></a>
-    <a href="#" class="header__actions-link"
+    }@else {
+    <span class="header__icon disable icon icon-heart"></span>
+    <span (click)="onOpenModal()"  class="header__icon icon icon-user"></span>
+    }
+
+    <a routerLink="cart" class="header__actions-link"
       ><span class="header__icon icon icon-shopping-cart"></span
     ></a>
   </div>
