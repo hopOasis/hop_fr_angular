@@ -10,6 +10,7 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideEffects } from '@ngrx/effects';
 import { provideStore } from '@ngrx/store';
 import { authReducer } from './store/auth.reducer';
+import { loginModalReducer, registerModalReducer } from './store/modal.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,6 +23,10 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(),
     provideHttpClient(withFetch()),
     provideEffects(),
-    provideStore({ auth: authReducer }),
+    provideStore({
+      auth: authReducer,
+      loginModal: loginModalReducer,
+      registerModal: registerModalReducer,
+    }),
   ],
 };

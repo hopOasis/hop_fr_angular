@@ -1,8 +1,9 @@
+
 .wrapper {
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow-x: scroll;
 }
 .header {
 }

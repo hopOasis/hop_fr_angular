@@ -1,16 +1,12 @@
-
 <div class="product-card">
   <button
-    [disabled]="!isAuth()"
+    [disabled]="!(isAuth$ | async)"
     [class.active]="isAddedToFavorite()"
     (click)="onAddToFavorite(data().id)"
     class="icon-heart product-card__icon"
   ></button>
   <a routerLink="#" class="product-card__image">
-    <img
-      src="https://images-hop-oasis.s3.eu-central-1.amazonaws.com/beers/903May-the-stout.jpg"
-      alt=""
-    />
+    <img [src]="data().imageName" alt="A botle of beer or cider or snack" />
   </a>
   <div class="product-card__body">
     <a routerLink="#" class="product-card__title"
@@ -30,7 +26,6 @@
       } }
     </div>
     }
-
     <div class="product-card__price">
       {{ currentPrice() ?? 0 | updatePrice }}
     </div>

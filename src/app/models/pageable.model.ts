@@ -33,9 +33,9 @@ export interface ProductDescription {
   id: number;
   imageName?: string[];
   itemType: string;
-  options: Option[] | [];
+  options: Option[];
   ratingCount: number;
-  reviews: Reviews[] | [];
+  reviews: Reviews[];
   specialOfferIds: [];
   beerColor?: string;
   beerName?: string;
@@ -44,6 +44,3 @@ export interface ProductDescription {
   snackName?: string;
   snackImageName?: [];
 }
-export interface BeerDescription extends ProductDescription {}
-export interface CiderDescription extends ProductDescription {}
-export interface SnackDescription extends ProductDescription {}

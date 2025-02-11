@@ -1,3 +1,7 @@
+:host {
+  & {
+  }
+}
 .product-card {
   height: 100%;
   border-radius: 4px;
@@ -20,10 +24,10 @@
 
   &__image {
     & img {
-      object-fit: contain;
+      object-fit: cover;
       object-position: center;
       width: 100%;
-      aspect-ratio: 302/340;
+      aspect-ratio: 270/302;
     }
   }
 
