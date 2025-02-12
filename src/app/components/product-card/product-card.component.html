@@ -6,7 +6,10 @@
     class="icon-heart product-card__icon"
   ></button>
   <a routerLink="#" class="product-card__image">
-    <img [src]="data().imageName" alt="A botle of beer or cider or snack" />
+    <img
+      [src]="data().imageName ?? data().snackImageName ?? data().ciderImageName"
+      alt="A botle of beer or cider or snack"
+    />
   </a>
   <div class="product-card__body">
     <a routerLink="#" class="product-card__title"

@@ -11,6 +11,7 @@ import { provideEffects } from '@ngrx/effects';
 import { provideStore } from '@ngrx/store';
 import { authReducer } from './store/auth.reducer';
 import { loginModalReducer, registerModalReducer } from './store/modal.reducer';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -23,6 +24,7 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(),
     provideHttpClient(withFetch()),
     provideEffects(),
+    provideAnimations(),
     provideStore({
       auth: authReducer,
       loginModal: loginModalReducer,

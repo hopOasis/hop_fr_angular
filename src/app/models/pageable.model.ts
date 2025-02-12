@@ -40,7 +40,7 @@ export interface ProductDescription {
   beerColor?: string;
   beerName?: string;
   ciderName?: string;
-  ciderImageName?: [];
+  ciderImageName?: string[];
   snackName?: string;
-  snackImageName?: [];
+  snackImageName?: string[];
 }

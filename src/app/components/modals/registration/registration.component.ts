@@ -7,11 +7,20 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
-
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+} from '@angular/animations';
 @Component({
   selector: 'app-registration',
   standalone: true,
   imports: [ModalComponent, ReactiveFormsModule],
+  animations: [
+    
+  ],
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.scss',
 })
