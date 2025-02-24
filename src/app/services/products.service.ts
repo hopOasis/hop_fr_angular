@@ -6,6 +6,8 @@ import { TypesOfProduct, TypesOfSorting } from '../models/products-types.model';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { FetchedProductData } from '../models/product.model';
 import { Router } from '@angular/router';
+import { ProductTypes, ProductTypesEnum } from '../models/product-types.model';
+import { ProductDescription } from '../models/pageable.model';
 
 @Injectable({
   providedIn: 'root',
@@ -38,5 +40,18 @@ export class ProductsService {
         throw new Error('Something went wrong!');
       })
     );
+  }
+  getProductFullData(
+    type: ProductTypesEnum,
+    productId: string
+  ): Observable<ProductDescription> {
+    return this.httpClient
+      .get<ProductDescription>(`${this.BASE_URL()}/${type}/${productId}`)
+      .pipe(
+        catchError(() => {
+          this.router.navigate(['not_found']);
+          throw new Error('Something went wrong!');
+        })
+      );
   }
 }

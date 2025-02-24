@@ -5,11 +5,18 @@
     (click)="onAddToFavorite(data().id)"
     class="icon-heart product-card__icon"
   ></button>
-  <a routerLink="#" class="product-card__image">
+  <a
+    [routerLink]="['/shop', 'product', data().id]"
+    [queryParams]="{ type: data().itemType }"
+    class="product-card__image"
+  >
     <img [src]="data().imageName" alt="A botle of beer or cider or snack" />
   </a>
   <div class="product-card__body">
-    <a routerLink="#" class="product-card__title"
+    <a
+      [routerLink]="['shop', 'product', data().id]"
+      [queryParams]="{ type: data().itemType }"
+      class="product-card__title"
       >{{ data().beerName ?? data().ciderName ?? data().snackName }}
     </a>
     @if(data().options.length!==0 ){
