@@ -50,11 +50,9 @@
     </div>
   </div>
   <section class="main__products">
-    @if(!productData()){
-    <app-spinner></app-spinner>
-    } @if(productData()){ @for(product of productData();track product.id){
+    @if(productData()){ @for(product of productData();track product.id){
     <app-product-card [data]="product"></app-product-card>
-    } }
+    } }@else {<app-spinner></app-spinner>}
   </section>
   @if(availablePages() > 1){
   <div class="main__pagination pagination">
