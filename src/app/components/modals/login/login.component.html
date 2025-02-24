@@ -1,4 +1,4 @@
-<app-modal [typeOfForm]="'login'">
+<app-modal [typeOfForm]="'login'" [isActiveSpinner]="isFetching()">
   <form [formGroup]="form" (ngSubmit)="onLogin()" name="login" class="form">
     <div class="form__input-wrapper">
       <label for="email" class="form__label">Email</label>
@@ -60,6 +60,9 @@
       <button type="button" class="form__remember-password">
         Нагадати пароль
       </button>
+      @if(errorMessage()){
+      <p class="input-error">{{ errorMessage() }}</p>
+      }
     </div>
   </form>
 </app-modal>

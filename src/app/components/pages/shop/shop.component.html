@@ -50,7 +50,9 @@
     </div>
   </div>
   <section class="main__products">
-    @if(productData()){ @for(product of productData();track product.id){
+    @if(!productData()){
+    <app-spinner></app-spinner>
+    } @if(productData()){ @for(product of productData();track product.id){
     <app-product-card [data]="product"></app-product-card>
     } }
   </section>

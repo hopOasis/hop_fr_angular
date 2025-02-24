@@ -13,19 +13,23 @@ export class AuthService {
   public BASE_URL = signal(environment.apiUrl);
   private httpClient = inject(HttpClient);
 
-  userLogin(data: Login): Observable<Token | FetchedError> {
+  get token() {
+    return this.accessToken();
+  }
+  handleError(error: HttpErrorResponse) {
+    return throwError(() => {
+      if (error.status === 404) {
+        return new Error('Схоже проблеми на сервері. Спробуйте пізніше.');
+      } else if (error.status === 400) {
+        return error.error as FetchedError;
+      } else return new Error('Щось сталося))');
+    });
+  }
+  userLogin(data: Login): Observable<Token> {
     return this.httpClient
       .post<Token>(`${this.BASE_URL()}/auth/login`, data)
       .pipe(
-        catchError((error: HttpErrorResponse) => {
-          return throwError(() => {
-            if (error.status === 404) {
-              new Error('Server does not work.Try later!');
-            } else if (error.status === 400) {
-              new Error('Введіть правильні данні');
-            }
-          });
-        }),
+        catchError((error: HttpErrorResponse) => this.handleError(error)),
         tap({
           next: (data) => {
             this.accessToken.set(data);
@@ -33,24 +37,22 @@ export class AuthService {
         })
       );
   }
-  userRegistration(data: Registration): Observable<Token | FetchedError> {
+  userRegistration(data: Registration): Observable<Token> {
     return this.httpClient
       .post<Token>(`${this.BASE_URL()}/auth/register`, data)
       .pipe(
-        catchError((error: HttpErrorResponse) => {
-          return throwError(() => {
-            if (error.status === 404) {
-              new Error('Server does not work.Try later!');
-            } else if (error.status === 400) {
-              new Error('Введіть правильні данні');
-            }
-          });
-        }),
+        catchError((error: HttpErrorResponse) => this.handleError(error)),
         tap({
           next: (data) => {
             this.accessToken.set(data);
           },
         })
       );
+  }
+  checkAccessToken(): Observable<string> {
+    return this.httpClient.get<string>(`${this.BASE_URL()}/health`);
+  }
+  refreshAccessToken(): Observable<Token> {
+    return this.httpClient.get<Token>(`${this.BASE_URL()}/auth/refresh/token`);
   }
 }

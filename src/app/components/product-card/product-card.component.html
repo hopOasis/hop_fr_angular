@@ -13,7 +13,9 @@
   </a>
   <div class="product-card__body">
     <a routerLink="#" class="product-card__title"
-      >{{ data().beerName ?? data().ciderName ?? data().snackName }}
+      >{{
+        data().beerName ?? data().ciderName ?? data().snackName ?? data().name
+      }}
     </a>
     @if(data().options.length!==0 ){
     <div class="product-card__options">
@@ -24,7 +26,10 @@
         class="product-card__option"
         type="button"
       >
-        {{ option.volume | updateMeasure : data().itemType }}
+        {{
+          option.volume ?? option.weight ?? option.measureValue ?? 0
+            | updateMeasure : data().itemType
+        }}
       </button>
       } }
     </div>

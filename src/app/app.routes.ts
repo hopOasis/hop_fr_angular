@@ -14,10 +14,11 @@ export const routes: Routes = [
     path: 'shop/:typeCategory',
     component: ShopComponent,
   },
-  { path: 'shop', redirectTo: 'shop/beers', pathMatch: 'full' },
+  { path: 'shop', redirectTo: 'shop/all-products', pathMatch: 'full' },
   {
-    path: 'cabinet',
+    path: 'my_cabinet',
     component: UserCabinetComponent,
+    canMatch: [],
   },
   { path: 'not_found', component: NotFoundComponent },
   {

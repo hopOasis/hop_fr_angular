@@ -13,7 +13,9 @@ export interface Sort {
 }
 export interface Option {
   id: number;
-  volume: number;
+  volume?: number;
+  weight?: number;
+  measureValue?: number;
   quantity: number;
   price: number;
 }
@@ -39,6 +41,7 @@ export interface ProductDescription {
   specialOfferIds: [];
   beerColor?: string;
   beerName?: string;
+  name?: string;
   ciderName?: string;
   ciderImageName?: string[];
   snackName?: string;
