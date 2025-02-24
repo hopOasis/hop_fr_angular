@@ -7,15 +7,32 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
-
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+} from '@angular/animations';
+import { StoreData } from '../../../models/store.model';
+import { Store } from '@ngrx/store';
+import { logIn } from '../../../store/auth.actions';
+import { Router } from '@angular/router';
+import { hideRegisterModal } from '../../../store/modal.actions';
+import { ScrollService } from '../../../services/scroll.service';
 @Component({
   selector: 'app-registration',
   standalone: true,
   imports: [ModalComponent, ReactiveFormsModule],
+  animations: [],
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.scss',
 })
 export class RegistrationComponent {
+  public isFetching = signal(false);
+  private scrollService = inject(ScrollService);
+  private router = inject(Router);
+
   private authService = inject(AuthService);
   public form = new FormGroup({
     email: new FormControl('', [Validators.email, Validators.required]),
@@ -35,7 +52,9 @@ export class RegistrationComponent {
       Validators.maxLength(15),
     ]),
   });
+  public errorMessage = signal('');
   public isShowedPassword = signal(false);
+  constructor(private store: Store<StoreData>) {}
   onShowPassword() {
     this.isShowedPassword.set(true);
   }
@@ -47,7 +66,8 @@ export class RegistrationComponent {
     const password = this.form.value.password;
     const firstName = this.form.value.firstName;
     const lastName = this.form.value.lastName;
-    if (email && password && firstName && lastName)
+    if (email && password && firstName && lastName) {
+      this.isFetching.set(true);
       this.authService
         .userRegistration({
           email,
@@ -55,7 +75,27 @@ export class RegistrationComponent {
           firstName,
           lastName,
         })
-        .subscribe();
-    this.form.reset();
+        .subscribe({
+          next: (data) => {
+            this.store.dispatch(logIn());
+            this.store.dispatch(hideRegisterModal());
+            this.scrollService.addScroll();
+            this.isFetching.set(false);
+            this.router.navigate(['/my_cabinet']);
+          },
+          error: (error: string) => {
+            this.isFetching.set(false);
+            this.errorMessage.set(error);
+            setTimeout(() => {
+              this.errorMessage.set('');
+              this.form.reset();
+            }, 3000);
+          },
+          complete: () => {
+            this.isFetching.set(false);
+            this.form.reset();
+          },
+        });
+    }
   }
 }

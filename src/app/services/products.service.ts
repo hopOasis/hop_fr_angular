@@ -16,7 +16,7 @@ export class ProductsService {
   private BASE_URL = this.authService.BASE_URL;
   public typeOfSorting$ = new BehaviorSubject<TypesOfSorting | ''>('');
   public typeOfCategory$ = new Subject<TypesOfProduct>();
-  public pageOfProduct$ = new BehaviorSubject(0);
+  public pageOfProduct$ = new Subject<number>();
   private router = inject(Router);
   getProductData(): Observable<FetchedProductData> {
     return combineLatest([

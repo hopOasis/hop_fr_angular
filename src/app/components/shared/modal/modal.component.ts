@@ -23,15 +23,17 @@ import {
   showRegisterModal,
 } from '../../../store/modal.actions';
 import { ScrollService } from '../../../services/scroll.service';
+import { SpinnerComponent } from '../spinner/spinner.component';
 
 @Component({
   selector: 'app-modal',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, SpinnerComponent],
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss',
 })
 export class ModalComponent implements OnInit {
+  public isActiveSpinner = input.required<boolean>();
   private scrollService = inject(ScrollService);
   public typeOfForm = input.required<FormType>();
 

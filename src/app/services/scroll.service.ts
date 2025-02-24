@@ -1,22 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { StoreData } from '../models/store.model';
 import { FormType } from '../models/form-types.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ScrollService {
-  setActiveModal(state: FormType | '') {
-    localStorage.setItem('activeModal', state);
+  setActiveModal(state: FormType | ''): void {
+    if (typeof window !== undefined) localStorage.setItem('activeModal', state);
   }
   getActiveModal() {
-    return localStorage.getItem('activeModal');
+    if (typeof window !== undefined) return localStorage.getItem('activeModal');
+    return '';
   }
-  addScroll() {
+  addScroll(): void {
     document.body.style.overflow = 'scroll';
   }
-  deleteScroll() {
+  deleteScroll(): void {
     document.body.style.overflow = 'hidden';
   }
 }

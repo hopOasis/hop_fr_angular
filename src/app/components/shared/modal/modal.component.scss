@@ -14,7 +14,9 @@
     justify-content: center;
     align-items: center;
   }
+
   &__body {
+    
     display: grid;
     align-items: center;
     grid-template-columns: repeat(2, 1fr);
@@ -29,6 +31,7 @@
     box-shadow: 0 0 16px #ababab;
   }
   &__form-wrapper {
+    position: relative;
     padding: 2rem 3rem;
     color: rgb(50, 50, 50);
     border-radius: 2px;
@@ -121,7 +124,7 @@
     font-weight: 300;
     text-align: center;
   }
-  
+
   &__google-link {
     cursor: pointer;
     width: 100%;

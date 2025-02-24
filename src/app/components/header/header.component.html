@@ -38,19 +38,23 @@
     >
       <span class="icon icon-search"></span>
     </button>
-    } @if(isAuth$ | async){
-    <a routerLink="favorite" class="header__actions-link"
-      ><span class="header__icon icon icon-heart"></span
-    ></a>
+    } @let state = isAuth$|async; @if(state){
+    <a routerLink="/favorite" class="header__actions-link"
+      ><span class="header__icon icon icon-heart"></span>
+    </a>
     <a
-      routerLink="cabinet"
-      routerLinkActive="active"
+      routerLink="/my_cabinet"
       class="header__actions-link"
+      routerLinkActive="active"
       ><span class="header__icon icon icon-user"></span
     ></a>
     }@else {
-    <span class="header__icon disable icon icon-heart"></span>
-    <span (click)="onOpenModal()"  class="header__icon icon icon-user"></span>
+    <span class="header__icon icon icon-heart"></span>
+    <a
+      (click)="checkUserPermission(state ?? false)"
+      class="header__actions-link"
+      ><span class="header__icon icon icon-user"></span
+    ></a>
     }
 
     <a routerLink="cart" class="header__actions-link"

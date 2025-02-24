@@ -1,5 +1,5 @@
 import { input, OnInit, signal } from '@angular/core';
-import { Component, computed } from '@angular/core';
+import { Component } from '@angular/core';
 import { ProductDescription } from '../../models/pageable.model';
 import { ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
@@ -8,6 +8,7 @@ import { UpdatePricePipe } from '../../pipes/update-price.pipe';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { StoreData } from '../../models/store.model';
 
 @Component({
   selector: 'app-product-card',
@@ -23,27 +24,31 @@ export class ProductCardComponent implements OnInit {
   public isAddedToFavorite = signal(false);
   public isNotAvailable = signal(false);
   public isAuth$: Observable<boolean>;
-  public currentPrice = computed(
-    () =>
-      this.data().options.find((option) => option.id === this.activeOptionId())
-        ?.price
-  );
-  constructor(private store: Store<{ auth: boolean }>) {
+  public currentPrice = signal<number | undefined>(undefined);
+  constructor(private store: Store<StoreData>) {
     this.isAuth$ = store.select('auth');
   }
-  onChangeOption(optionId: number | null) {
-    if (optionId) this.activeOptionId.set(optionId);
+  onChangeOption(optionId: number) {
+    this.activeOptionId.set(optionId);
+    this.currentPrice.set(
+      this.data().options.find((option) => option.id === this.activeOptionId())
+        ?.price
+    );
   }
-
   onAddToFavorite(id: number) {
     this.isAddedToFavorite.set(!this.isAddedToFavorite());
   }
-
   onAddToShop(productId: number, optionId: number | null) {}
-
   ngOnInit(): void {
     let option = this.data().options.find((option) => option.quantity);
-    !option ? this.isNotAvailable.set(true) : false;
-    this.activeOptionId.set(option?.id ?? null);
+    if (option) {
+      this.isNotAvailable.set(!option);
+      this.activeOptionId.set(option.id);
+    }
+
+    this.currentPrice.set(
+      this.data().options.find((option) => option.id === this.activeOptionId())
+        ?.price
+    );
   }
 }

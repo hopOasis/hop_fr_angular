@@ -9,34 +9,47 @@ import {
 import { ProductsService } from '../../../services/products.service';
 import { ProductDescription } from '../../../models/pageable.model';
 import { ProductCardComponent } from '../../product-card/product-card.component';
+import { Params } from '../../../models/shop-params.model';
+import { SpinnerComponent } from '../../shared/spinner/spinner.component';
+import { ViewportScroller } from '@angular/common';
 @Component({
   selector: 'app-shop',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, ProductCardComponent],
+  imports: [
+    RouterLink,
+    RouterLinkActive,
+    ProductCardComponent,
+    SpinnerComponent,
+  ],
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShopComponent implements OnInit {
+  private viewportScroller = inject(ViewportScroller);
   private router = inject(Router);
   private activeRoute = inject(ActivatedRoute);
   private destroyRef = inject(DestroyRef);
   private productsService = inject(ProductsService);
 
-  public currentChildRoute = signal<TypesOfProduct>('all-products');
+  public currentChildRoute = signal<TypesOfProduct | undefined>(undefined);
   public currentTypeOfSorting = signal<TypesOfSorting>('');
 
   public isActiveSortButtons = signal(true);
 
   public productData = signal<undefined | ProductDescription[]>(undefined);
-
   public availablePages = signal(0);
   public currentPage = signal(0);
   public arrayOfPages = computed<number[]>(() => this.calculatePagination());
 
   ngOnInit(): void {
-    const sortingType = this.activeRoute.snapshot.queryParams['sort_by'];
-    if (sortingType) this.currentTypeOfSorting.set(sortingType);
+    const { sort_by, page } = this.activeRoute.snapshot.queryParams as {
+      sort_by: TypesOfSorting | null;
+      page: string | null;
+    };
+    if (page) this.currentPage.set(+page - 1);
+    if (sort_by) this.currentTypeOfSorting.set(sort_by);
+
     const fetchedDataSubscription = this.productsService
       .getProductData()
       .subscribe((data) => {
@@ -44,17 +57,16 @@ export class ShopComponent implements OnInit {
         this.availablePages.set(data.totalPages);
         this.currentPage.set(data.pageable.pageNumber);
       });
+
+    this.productData.set(undefined);
+    this.productsService.pageOfProduct$.next(this.currentPage());
+
     const paramsSubscription = this.activeRoute.params.subscribe(
       ({ typeCategory }) => {
         this.currentChildRoute.set(typeCategory);
+        this.navigatePage();
+        this.productData.set(undefined);
         this.productsService.typeOfCategory$.next(typeCategory);
-        this.onChangePage(0);
-        if (this.currentTypeOfSorting()) {
-          this.router.navigate(['./'], {
-            queryParams: { sort_by: this.currentTypeOfSorting() },
-            relativeTo: this.activeRoute,
-          });
-        }
       }
     );
 
@@ -63,9 +75,23 @@ export class ShopComponent implements OnInit {
       paramsSubscription.unsubscribe();
     });
   }
+  navigatePage() {
+    this.router.navigate(['./'], {
+      relativeTo: this.activeRoute,
+      queryParams: this.createParams(this.currentTypeOfSorting()),
+    });
+  }
+  createParams(sort_by: string | null) {
+    let params: Params = { page: this.currentPage() + 1 };
+    if (sort_by) params.sort_by = sort_by;
+    return params;
+  }
   onChangePage(page: number) {
+    this.viewportScroller.scrollToPosition([0, 0]);
+    this.productData.set(undefined);
     this.productsService.pageOfProduct$.next(page);
     this.currentPage.set(page);
+    this.navigatePage();
   }
   calculatePagination() {
     let arr = [];
@@ -77,6 +103,7 @@ export class ShopComponent implements OnInit {
       }
       return arr;
     }
+
     for (let i = this.currentPage() + 1; i <= this.currentPage() + 3; i++) {
       if (i <= this.availablePages()) {
         arr.push(i);
@@ -96,16 +123,11 @@ export class ShopComponent implements OnInit {
     this.currentChildRoute.set(
       this.activeRoute.snapshot.params['typeCategory']
     );
-    let queryParams = {};
     if (this.currentTypeOfSorting() === type) this.currentTypeOfSorting.set('');
-    else {
-      this.currentTypeOfSorting.set(type);
-      queryParams = { sort_by: this.currentTypeOfSorting() };
-    }
-    this.router.navigate(['./'], {
-      queryParams: queryParams,
-      relativeTo: this.activeRoute,
-    });
+    else this.currentTypeOfSorting.set(type);
+
+    this.navigatePage();
+    this.productData.set(undefined);
     this.productsService.typeOfSorting$.next(this.currentTypeOfSorting());
   }
 }
