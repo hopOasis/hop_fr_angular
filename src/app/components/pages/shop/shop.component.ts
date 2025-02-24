@@ -30,7 +30,7 @@ export class ShopComponent implements OnInit {
 
   public productData = signal<undefined | ProductDescription[]>(undefined);
 
-  public availablePages = signal(1);
+  public availablePages = signal(0);
   public currentPage = signal(0);
   public arrayOfPages = computed<number[]>(() => this.calculatePagination());
 
@@ -40,8 +40,6 @@ export class ShopComponent implements OnInit {
     const fetchedDataSubscription = this.productsService
       .getProductData()
       .subscribe((data) => {
-        console.log(data);
-
         this.productData.set(data.content);
         this.availablePages.set(data.totalPages);
         this.currentPage.set(data.pageable.pageNumber);

@@ -1,3 +1,9 @@
+@if(isShowedRegister|async){
+<app-registration></app-registration>
+} @if(isShowedLogin$|async){
+<app-login></app-login>
+}
+
 <div class="wrapper">
   <header appHeader class="header"></header>
   <main class="main">

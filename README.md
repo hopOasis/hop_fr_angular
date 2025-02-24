@@ -1,3 +1,4 @@
+
 # 🛍️ HopOasis - E-commerce Store (Frontend)
 
 ## 🚀 Project Description
@@ -147,3 +148,4 @@ The build will be saved in the `dist/` folder and will be ready for deployment.
 ---
 
 Happy coding! 🚀
+
