@@ -28,12 +28,12 @@
         id="lastName"
         class="form__input"
       />
-      @if(form.controls.firstName.invalid && form.controls.firstName.touched ){
-      @if(form.controls.firstName.errors?.['required']){
+      @if(form.controls.lastName.invalid && form.controls.lastName.touched ){
+      @if(form.controls.lastName.errors?.['required']){
       <p class="input-error">Введіть своє прізвище</p>
-      }@else if(form.controls.firstName.errors?.['pattern']){
+      }@else if(form.controls.lastName.errors?.['pattern']){
       <p class="input-error">Введіть своє прізвище на кирилиці</p>
-      } @else if(form.controls.firstName.errors?.['maxlength']){
+      } @else if(form.controls.lastName.errors?.['maxlength']){
       <p class="input-error">Поле повинно містити не більше 15 символів</p>
       } }
     </div>

@@ -18,41 +18,45 @@ export class AuthService {
   }
   handleError(error: HttpErrorResponse) {
     return throwError(() => {
-      if (error.status === 404) {
-        return new Error('Схоже проблеми на сервері. Спробуйте пізніше.');
-      } else if (error.status === 400) {
-        return error.error as FetchedError;
-      } else return new Error('Щось сталося))');
+      switch (error.status) {
+        case 404:
+          return 'Схоже проблеми на сервері. Спробуйте пізніше.';
+        case 400:
+          if (!error.error || !(error.error as FetchedError).errors)
+            return 'Виникла не відома помилка';
+          return (
+            (error.error as FetchedError).errors.email ||
+            (error.error as FetchedError).errors.password ||
+            'Виникла не відома помилка'
+          );
+        default:
+          return 'Виникла не відома помилка';
+      }
     });
+  }
+  handleAccessToken(token: Token) {
+    this.accessToken.set(token);
   }
   userLogin(data: Login): Observable<Token> {
     return this.httpClient
       .post<Token>(`${this.BASE_URL()}/auth/login`, data)
       .pipe(
-        catchError((error: HttpErrorResponse) => this.handleError(error)),
-        tap({
-          next: (data) => {
-            this.accessToken.set(data);
-          },
-        })
+        catchError(this.handleError),
+        tap(this.handleAccessToken.bind(this))
       );
   }
   userRegistration(data: Registration): Observable<Token> {
     return this.httpClient
       .post<Token>(`${this.BASE_URL()}/auth/register`, data)
       .pipe(
-        catchError((error: HttpErrorResponse) => this.handleError(error)),
-        tap({
-          next: (data) => {
-            this.accessToken.set(data);
-          },
-        })
+        catchError(this.handleError),
+        tap(this.handleAccessToken.bind(this))
       );
   }
-  checkAccessToken(): Observable<string> {
-    return this.httpClient.get<string>(`${this.BASE_URL()}/health`);
-  }
+
   refreshAccessToken(): Observable<Token> {
-    return this.httpClient.get<Token>(`${this.BASE_URL()}/auth/refresh/token`);
+    return this.httpClient
+      .get<Token>(`${this.BASE_URL()}/auth/refresh/token`)
+      .pipe(tap(this.handleAccessToken.bind(this)));
   }
 }

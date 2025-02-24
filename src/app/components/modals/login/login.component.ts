@@ -14,6 +14,7 @@ import { logIn } from '../../../store/auth.actions';
 import { Router } from '@angular/router';
 import { hideLoginModal } from '../../../store/modal.actions';
 import { ScrollService } from '../../../services/scroll.service';
+import { log } from 'console';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -55,15 +56,9 @@ export class LoginComponent {
           this.isFetching.set(false);
           this.router.navigate(['/my_cabinet']);
         },
-        error: (error: Error | FetchedError) => {
+        error: (error: string) => {
           this.isFetching.set(false);
-          if (error instanceof Error) {
-            this.errorMessage.set(error.message);
-          } else {
-            this.errorMessage.set(
-              error.errors.password ?? error.errors.email ?? ''
-            );
-          }
+          this.errorMessage.set(error);
           setTimeout(() => {
             this.errorMessage.set('');
             this.form.reset();

@@ -14,7 +14,6 @@ import {
   animate,
   transition,
 } from '@angular/animations';
-import { FetchedError } from '../../../models/fetched-error.model';
 import { StoreData } from '../../../models/store.model';
 import { Store } from '@ngrx/store';
 import { logIn } from '../../../store/auth.actions';
@@ -84,15 +83,9 @@ export class RegistrationComponent {
             this.isFetching.set(false);
             this.router.navigate(['/my_cabinet']);
           },
-          error: (error: Error | FetchedError) => {
+          error: (error: string) => {
             this.isFetching.set(false);
-            if (error instanceof Error) {
-              this.errorMessage.set(error.message);
-            } else {
-              this.errorMessage.set(
-                error.errors.password ?? error.errors.email ?? ''
-              );
-            }
+            this.errorMessage.set(error);
             setTimeout(() => {
               this.errorMessage.set('');
               this.form.reset();
