@@ -1,0 +1,58 @@
+<div class="main__row">
+  <nav class="main__menu menu">
+    <a
+      routerLinkActive="active"
+      routerLink="/shop/all-products"
+      class="menu__link"
+      [queryParams]="{ page: currentPage(), sort_by: currentTypeOfSorting() }"
+      >Всі товари</a
+    >
+    <a
+      routerLinkActive="active"
+      [queryParams]="{ page: currentPage(), sort_by: currentTypeOfSorting() }"
+      routerLink="/shop/beers"
+      class="menu__link"
+      >Пиво</a
+    >
+    <a
+      routerLinkActive="active"
+      [queryParams]="{ page: currentPage(), sort_by: currentTypeOfSorting() }"
+      routerLink="/shop/ciders"
+      class="menu__link"
+      >Сидр</a
+    >
+    <a
+      routerLinkActive="active"
+      [queryParams]="{ page: currentPage(), sort_by: currentTypeOfSorting() }"
+      routerLink="/shop/snacks"
+      class="menu__link"
+      >Снеки</a
+    >
+  </nav>
+
+  <div class="main__sort-by">
+    <h4 class="main__title-sort">Сортування</h4>
+    <button
+      [disabled]="currentTypeOfProduct() === 'all-products'"
+      (click)="
+        onChangeType(currentTypeOfSorting() === 'asc' ? undefined : 'asc')
+      "
+      type="button"
+      class="main__button button-asc"
+      [class.active]="currentTypeOfSorting() === 'asc'"
+    >
+      Від дешевих
+    </button>
+    <button
+      [disabled]="currentTypeOfProduct() === 'all-products'"
+      type="button"
+      (click)="
+        onChangeType(currentTypeOfSorting() === 'desc' ? undefined : 'desc')
+      "
+      class="main__button button-desc"
+      [class.active]="currentTypeOfSorting() === 'desc'"
+    >
+      Від дорогих
+    </button>
+  </div>
+</div>

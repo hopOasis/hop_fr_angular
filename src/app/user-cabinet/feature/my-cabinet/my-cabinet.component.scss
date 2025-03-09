@@ -1,0 +1,62 @@
+:host {
+  flex-grow: 1;
+}
+.main {
+  &__container {
+    padding-top: 2rem;
+    color: rgb(41, 41, 41);
+  }
+
+  &__title {
+    text-align: center;
+
+    font-size: 2rem;
+    font-weight: 500;
+    line-height: 2.4rem;
+    letter-spacing: 0%;
+    margin-bottom: 1.5rem;
+  }
+
+  &__body {
+    display: grid;
+    grid-template-columns: 210px 1fr;
+    gap: 2rem;
+  }
+
+  &__aside {
+  }
+
+  &__menu {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding-bottom: 1.4rem;
+    border-bottom: 1px solid rgb(179, 179, 178);
+    margin-bottom: 1.4rem;
+  }
+
+  &__exit-button {
+    color: rgb(105, 105, 105);
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 150%;
+  }
+
+  &__content {
+  }
+}
+.menu {
+  &__link {
+    transition: all 0.2s ease;
+    &.active {
+      color: rgb(232, 140, 0);
+    }
+    &:hover,
+    &:active {
+      color: rgb(255, 154, 0);
+    }
+    line-height: 150%;
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+}

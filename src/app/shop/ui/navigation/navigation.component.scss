@@ -1,0 +1,55 @@
+.main {
+  &__row {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 1.81rem;
+    margin-bottom: 3rem;
+    @media (max-width: 890px) {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+
+  &__menu {
+    display: flex;
+    gap: 3.5rem;
+    @media (max-width: 960px) {
+      gap: 2rem;
+    }
+    @media (max-width: 500px) {
+      font-size: 1.2rem;
+    }
+  }
+  &__sort-by {
+    display: flex;
+    gap: 1.25rem;
+    @media (max-width: 500px) {
+      font-size: 1.2rem;
+    }
+  }
+  &__title-sort {
+    color: rgb(19, 19, 19);
+  }
+  &__button {
+    font-size: 1rem;
+    border: 1px solid rgb(41, 41, 41);
+    border-radius: 4px;
+    padding: 2px 4px;
+    line-height: 1.25rem;
+    &.active {
+      color: #ff9a00;
+      border-color: rgb(255, 154, 0);
+    }
+  }
+}
+.menu {
+  &__link {
+    &.active {
+      color: #ff9a00;
+    }
+  }
+}

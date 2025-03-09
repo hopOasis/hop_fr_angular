@@ -1,0 +1,15 @@
+.pagination {
+  margin-bottom: 9rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  &__page {
+    font-weight: 700;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: rgb(19, 19, 19);
+    &.active {
+      color: rgb(255, 154, 0);
+    }
+  }
+}

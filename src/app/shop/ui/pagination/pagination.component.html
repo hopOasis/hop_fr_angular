@@ -1,0 +1,10 @@
+<div class="main__pagination pagination">
+  @for(page of arrayOfPages();track page){
+  <span
+    (click)="onChangePage(page - 1)"
+    [class.active]="+currentPage() === page - 1"
+    class="pagination__page"
+    >{{ page }}</span
+  >
+  }
+</div>
