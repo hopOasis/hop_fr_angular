@@ -1,0 +1,68 @@
+<div class="header__container">
+  <div class="header__logo-container">
+    <a routerLink="/home">
+      <img src="./header-logo.png" alt="Brand name logo" class="header__logo"
+    /></a>
+  </div>
+  <nav class="header__menu menu">
+    <a routerLinkActive="active" routerLink="#" class="menu__link"
+      >Про броварню</a
+    >
+    <a routerLinkActive="active" routerLink="/shop" class="menu__link"
+      >Магазин</a
+    >
+    <a routerLinkActive="active" routerLink="#" class="menu__link"
+      >Доставка і оплата</a
+    >
+  </nav>
+  <!-- @if(isShowedInput()){
+  <div class="header__input-wrapper">
+    <input
+      (blur)="onShowInput(false)"
+      appAutoFocus
+      #input
+      type="text"
+      name="search"
+      placeholder="Пошук"
+      class="header__input"
+    />
+    <span class="icon input-icon icon-search"></span>
+  </div>
+  } -->
+  <div class="header__actions">
+    <button type="button" class="header__actions-link button">
+      <span class="icon icon-search"></span>
+    </button>
+    <a
+      [routerLink]="authApiService.isAuth() ? '/my_cabinet/favorite' : null"
+      class="header__actions-link"
+      ><span
+        class="header__icon icon icon-heart"
+        [class.disable]="!authApiService.isAuth()"
+      ></span>
+    </a>
+    <a
+      [routerLink]="authApiService.isAuth() ? '/my_cabinet' : null"
+      (click)="onOpenModal(authApiService.isAuth())"
+      routerLinkActive="active"
+      class="header__actions-link"
+      routerLinkActive="active"
+      ><span class="header__icon icon icon-user"></span
+    ></a>
+    <button
+      type="button"
+      (click)="openCartModal()"
+      class="header__actions-link"
+    >
+      <span class="header__icon icon icon-shopping-cart">
+        @if(cartApiService.amountOfItems()){
+        <span
+          class="cart-amount"
+          [class.big]="cartApiService.amountOfItems() > 9"
+          >{{ cartApiService.amountOfItems() }}</span
+        >
+        }
+      </span>
+    </button>
+  </div>
+</div>

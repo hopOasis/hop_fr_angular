@@ -1,0 +1,9 @@
+.small-button {
+  font-size: 1.6rem;
+  padding: 0.36rem 1.75rem;
+  &.freez {
+    background: rgb(105, 105, 105);
+    font-size: 1.25rem;
+    padding: 0.76rem;
+  }
+}

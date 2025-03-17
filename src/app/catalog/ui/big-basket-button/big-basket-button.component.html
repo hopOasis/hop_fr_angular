@@ -1,0 +1,37 @@
+<ng-template #notAvailable>
+  <span class="block">Нема в наявності</span></ng-template
+>
+<ng-template #spinner><app-small-spinner></app-small-spinner></ng-template>
+
+<ng-template #bigButton>
+  <span class="block">
+    {{ currentContent() }}
+  </span>
+</ng-template>
+
+<ng-template #smallButton>
+  <span
+    class="small-button block"
+    [class.bg-accent-500]="isOptionInCart()"
+    [class.icon-shopping-cart]="isCurrentOption()"
+    [class.freez]="!isCurrentOption()"
+  >
+    <ng-container
+      [ngTemplateOutlet]="!isCurrentOption() ? notAvailable : null"
+    ></ng-container>
+  </span>
+</ng-template>
+
+<button
+  (click)="onClickButton.emit()"
+  [disabled]="!isCurrentOption()"
+  type="button"
+  class="relative flex align-center overflow-hidden hover:bg-accent-500 active:bg-accent-600 leading-3 bg-grey-500 rounded text-white-500 product__button"
+>
+  <ng-container
+    [ngTemplateOutlet]="buttonMode() === 'big' ? bigButton : smallButton"
+  ></ng-container>
+  <ng-container
+    [ngTemplateOutlet]="productStore.isProcessing() ? spinner : null"
+  ></ng-container>
+</button>

@@ -1,0 +1,82 @@
+<p-toast />
+<div class="product-card">
+  <button
+    [disabled]="authApiService.isAuth()"
+    [class.active]="isAddedToFavorite()"
+    (click)="onAddToFavorite()"
+    class="icon-heart product-card__icon"
+  ></button>
+  <a
+    [routerLink]="['/shop', 'details', data()!.id]"
+    [queryParams]="{ type: data()!.itemType }"
+    class="product-card__image"
+  >
+    <img [src]="imageUrl()" alt="A botle of beer or cider or snack" />
+  </a>
+
+  <div class="product-card__body">
+    <a
+      [routerLink]="['/shop', 'details', data()!.id]"
+      [queryParams]="{ type: data()!.itemType }"
+      class="cursor-pointer product-card__title"
+      >{{ productName() }}
+    </a>
+    <div class="product-card__options-wrapper">
+      <div class="product-card__price">
+        @if(currentOption()){
+        {{ currentPrice() | updatePrice }}
+        }@else{
+        {{ productStore.priceOfFirstOption() | updatePrice }}
+        }
+      </div>
+
+      @if(data()!.options.length !== 0 ){
+      <div class="product-card__options">
+        @for(option of data()!.options;track option.id){
+        <button
+          [class.active]="currentOption()?.id === option.id"
+          (click)="onChangeOption(option)"
+          [disabled]="!option.quantity && !currentOptionInCart()"
+          class="product-card__option"
+          type="button"
+        >
+          {{
+            option.volume ?? option.weight ?? option.measureValue ?? 0
+              | updateMeasure : data()!.itemType
+          }}
+        </button>
+        }
+      </div>
+      }
+
+      <div class="product-card__button-wrapper">
+        @if(currentOption()){
+        <div class="product-card__amount-wrapper amount-wrapper">
+          <button
+            [disabled]="currentOptionInCart() || quantity() <= 1"
+            (click)="changeAmountOfItems(quantity() - 1)"
+            type="button"
+            class="amount-wrapper__button decrease"
+          ></button>
+          <span class="amount-wrapper__quantity">
+            {{ quantity() }}
+          </span>
+          <button
+            [disabled]="
+              currentOptionInCart() || quantity() === currentOption()?.quantity
+            "
+            (click)="changeAmountOfItems(quantity() + 1)"
+            type="button"
+            class="amount-wrapper__button increase"
+          ></button>
+        </div>
+
+        }
+        <app-big-basket-button
+          (onClickButton)="onMoveProduct()"
+          buttonMode="small"
+        ></app-big-basket-button>
+      </div>
+    </div>
+  </div>
+</div>

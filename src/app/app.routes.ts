@@ -1,27 +1,31 @@
 import { Routes } from '@angular/router';
-import { ShopComponent } from './components/pages/shop/shop.component';
-import { HomeComponent } from './components/pages/home/home.component';
-import { NotFoundComponent } from './components/not-found/not-found.component';
-import { UserCabinetComponent } from './components/pages/user-cabinet/user-cabinet.component';
+import { shopRoutes } from './catalog/feature/product.routes';
+import { checkUserPermission } from './authentication/data-access/guards/auth.guard';
+import { userCabinetRoutes } from './user/feature/user-cabinet.routes';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
     path: 'home',
-    component: HomeComponent,
+    loadComponent: () =>
+      import('./home/home.component').then((m) => m.HomeComponent),
+  },
+
+  { path: 'shop', children: shopRoutes },
+  {
+    path: 'my_cabinet',
+    canMatch: [checkUserPermission],
+    children: userCabinetRoutes,
+    loadComponent: () =>
+      import('./user/feature/my-cabinet/my-cabinet.component').then(
+        (m) => m.MyCabinetComponent
+      ),
   },
   {
-    path: 'shop/:typeCategory',
-    component: ShopComponent,
-  },
-  { path: 'shop', redirectTo: 'shop/beers', pathMatch: 'full' },
-  {
-    path: 'cabinet',
-    component: UserCabinetComponent,
-  },
-  { path: 'not_found', component: NotFoundComponent },
-  {
-    path: '**',
-    component: NotFoundComponent,
+    path: 'not_found',
+    loadComponent: () =>
+      import('./shared/layout/not-found/not-found.component').then(
+        (m) => m.NotFoundComponent
+      ),
   },
 ];

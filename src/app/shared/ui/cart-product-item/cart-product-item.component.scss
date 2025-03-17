@@ -1,0 +1,27 @@
+.card {
+  &__wrapper {
+    display: flex;
+    padding-top: 2rem;
+    border-bottom: 1px solid rgb(179, 179, 178);
+    padding-bottom: 0.4rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+
+  &__image {
+  }
+
+  &__title {
+  }
+
+  &__counter {
+  }
+
+  &__price {
+  }
+
+  &__delete-button {
+  }
+}
+.icon-trash-full {
+}

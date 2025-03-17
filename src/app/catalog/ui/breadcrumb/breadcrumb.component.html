@@ -1,0 +1,17 @@
+<div
+  [class]="{
+    'text-left': position() === 'left',
+    'text-center': position() === 'center'
+  }"
+>
+  @for (item of breadCrumb().linksList; track item.title) {
+  <a
+    [routerLink]="item.linkPath"
+    class="pr-1 main__breadcrumb-link active"
+    >{{ item.title }}</a
+  >
+  }
+  <span class="pl-1 main__breadcrumb-link">{{
+    breadCrumb().currentPathName
+  }}</span>
+</div>

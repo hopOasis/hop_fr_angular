@@ -1,0 +1,1 @@
+export type ProductType = 'BEER' | 'SNACK' | 'PRODUCT_BUNDLE' | 'CIDER'

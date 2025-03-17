@@ -4,16 +4,20 @@ import {
   withComponentInputBinding,
   withRouterConfig,
 } from '@angular/router';
+
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
-import { provideHttpClient, withFetch } from '@angular/common/http';
-import { provideEffects } from '@ngrx/effects';
-import { provideStore } from '@ngrx/store';
-import { authReducer } from './store/auth.reducer';
-import { loginModalReducer, registerModalReducer } from './store/modal.reducer';
+import {
+  provideHttpClient,
+  withFetch,
+  withInterceptors,
+} from '@angular/common/http';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { loggingInterceptor } from './authentication/data-access/interceptors/token.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideAnimations(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(
       routes,
@@ -21,12 +25,6 @@ export const appConfig: ApplicationConfig = {
       withRouterConfig({ paramsInheritanceStrategy: 'always' })
     ),
     provideClientHydration(),
-    provideHttpClient(withFetch()),
-    provideEffects(),
-    provideStore({
-      auth: authReducer,
-      loginModal: loginModalReducer,
-      registerModal: registerModalReducer,
-    }),
+    provideHttpClient(withFetch(), withInterceptors([loggingInterceptor])),
   ],
 };

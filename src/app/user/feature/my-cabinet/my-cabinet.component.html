@@ -1,0 +1,39 @@
+<div class="main__container">
+  <div class="main__body">
+    <aside class="main__aside">
+      <nav class="main__menu menu">
+        <a
+          [routerLink]="['./', 'my-orders']"
+          routerLinkActive="active"
+          class="menu__link"
+          >Мої замовлення</a
+        >
+        <a
+          [routerLink]="['./', 'cart']"
+          routerLinkActive="active"
+          class="menu__link"
+          >Кошик</a
+        >
+        <a
+          [routerLink]="['./', 'favorite']"
+          routerLinkActive="active"
+          class="menu__link"
+          >Улюблене</a
+        >
+        <a
+          [routerLink]="['./', 'settings']"
+          routerLinkActive="active"
+          class="menu__link"
+          >Налаштування</a
+        >
+      </nav>
+
+      <button (click)="logout()" type="button" class="main__exit-button">
+        Вихід
+      </button>
+    </aside>
+    <div class="main__content">
+      <router-outlet />
+    </div>
+  </div>
+</div>
