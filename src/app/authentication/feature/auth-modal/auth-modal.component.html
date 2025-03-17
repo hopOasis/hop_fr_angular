@@ -1,0 +1,198 @@
+<p-toast position="bottom-right" />
+<div
+  [@authModal]="authModalStore.isOpened() ? 'open' : 'close'"
+  (click)="onCloseModal($event)"
+  [class]="{
+    dialog: true,
+    visible: authModalStore.isOpened()
+  }"
+  #dialogWrapper
+>
+  <div class="dialog__wrapper">
+    <button
+      #buttonCloseModal
+      (click)="onCloseModal($event)"
+      type="button"
+      class="dialog__button-close-modal icon-add-plus"
+    ></button>
+    <div class="dialog__body">
+      <div class="dialog__head">
+        <img src="./header-logo.png" alt="Logo" class="dialog__logo" />
+        <h3 class="gialog__title">Увійдіть або Зареєструйтеся</h3>
+      </div>
+      <div class="dialog__form-wrapper form-wrapper">
+        @if(isActiveSpinner()){
+        <app-spinner></app-spinner>
+        }
+        <div class="form__head">
+          <h2 class="form__title">Вхід</h2>
+          @if(mode()==='login'){
+          <p class="form__register">
+            Новий користувач?
+            <button
+              (click)="mode.set('register')"
+              type="button"
+              class="form__switch-register"
+            >
+              Зареєструватися
+            </button>
+          </p>
+          }@else {
+          <p class="form__register">
+            Ви вже маєте обліковий запис?
+            <button
+              (click)="mode.set('login')"
+              type="button"
+              class="form__switch-register"
+            >
+              Увійти
+            </button>
+          </p>
+          }
+        </div>
+        <form
+          [formGroup]="form()"
+          (ngSubmit)="onAuth()"
+          name="login"
+          class="form"
+        >
+          @if(mode()==='register'){
+          <div class="form__input-wrapper">
+            <label for="firstName" class="form__label">Ім'я</label>
+            <input
+              (focus)="this.errorMessage.set('')"
+              formControlName="firstName"
+              type="text"
+              name="firstName"
+              id="firstName"
+              class="form__input"
+            />
+            @if(form().controls.firstName!.invalid &&
+            form().controls.firstName!.touched ){
+            @if(form().controls.firstName!.errors?.['required']){
+            <p class="input-error">Введіть своє ім'я</p>
+            }@else if(form().controls.firstName!.errors?.['pattern']){
+            <p class="input-error">Введіть своє ім'я на кирилиці</p>
+            } @else if(form().controls.firstName!.errors?.['maxlength']){
+            <p class="input-error">
+              Поле повинно містити не більше 15 символів
+            </p>
+            } }@else {
+            <p class="input-error"></p>
+            }
+          </div>
+          <div class="form__input-wrapper">
+            <label for="lastName" class="form__label">Прізвище</label>
+            <input
+              (focus)="this.errorMessage.set('')"
+              formControlName="lastName"
+              type="text"
+              name="lastName"
+              id="lastName"
+              class="form__input"
+            />
+            @if(form().controls.lastName!.invalid &&
+            form().controls.lastName!.touched ){
+            @if(form().controls.lastName!.errors?.['required']){
+            <p class="input-error">Введіть своє прізвище</p>
+            }@else if(form().controls.lastName!.errors?.['pattern']){
+            <p class="input-error">Введіть своє прізвище на кирилиці</p>
+            } @else if(form().controls.lastName!.errors?.['maxlength']){
+            <p class="input-error">
+              Поле повинно містити не більше 15 символів
+            </p>
+            } }@else {
+            <p class="input-error"></p>
+            }
+          </div>
+          }
+          <div class="form__input-wrapper">
+            <label for="email" class="form__label">Email</label>
+            <input
+              (focus)="this.errorMessage.set('')"
+              formControlName="email"
+              type="email"
+              name="email"
+              id="email"
+              class="form__input"
+            />
+            @if(form().controls.email.invalid && form().controls.email.touched
+            ){ @if(form().controls.email.errors?.['required']){
+            <p class="input-error">Будь ласка введіть свій email</p>
+            }@else {
+            <p class="input-error">Введіть коректний email</p>
+            } }@else {
+            <p class="input-error"></p>
+            }
+          </div>
+          <div class="form__input-wrapper">
+            <label for="password" class="form__label">Пароль</label>
+            <div class="form__password-wrapper">
+              @if(isShowedPassword()){
+              <button
+                type="button"
+                (click)="onHidePassword()"
+                class="button icon-showed-eye"
+              ></button>
+              }@else {
+              <button
+                type="button"
+                (click)="onShowPassword()"
+                class="button icon-hide-eye"
+              ></button>
+              }
+
+              <input
+                (focus)="this.errorMessage.set('')"
+                formControlName="password"
+                name="password"
+                id="password"
+                [type]="isShowedPassword() ? 'text' : 'password'"
+                class="form__input"
+              />
+            </div>
+            @if(form().controls.password.invalid &&
+            form().controls.password.touched ){
+            @if(form().controls.password.errors?.['required']){
+            <p class="input-error">Будь ласка введіть свій пароль</p>
+            }@else if(form().controls.password.errors?.['minlength']) {
+            <p class="input-error">Пароль повинен містити мінімум 8 символів</p>
+            }@else if(form().controls.password.errors?.['pattern']){
+            <p class="input-error">
+              Пароль повинен містити щонайменше одну велику літеру та одну цифру
+            </p>
+            } }@else {
+            <p class="input-error"></p>
+            }
+          </div>
+          <div class="form__main-button-wrapper">
+            <button
+              [disabled]="form().invalid"
+              type="submit"
+              class="form__button"
+            >
+              {{ mode() === "login" ? "Увійти" : "Зареєструватися" }}
+            </button>
+            @if(mode()==='login'){
+            <button type="button" class="form__remember-password">
+              Нагадати пароль
+            </button>
+            } @if(errorMessage()){
+            <p class="input-error">{{ errorMessage() }}</p>
+            }@else {
+            <p class="input-error"></p>
+            }
+          </div>
+        </form>
+        <div class="form__separated-line">
+          <span class="form__line"></span>
+          <span class="form__or">або</span>
+        </div>
+        <a routerLink="#" class="form__google-link">
+          <img src="./google.png" alt="google logo" />
+          <span>Увійти з данними Google</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

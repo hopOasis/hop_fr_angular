@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
@@ -7,5 +7,6 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
   imports: [ProgressSpinnerModule],
   templateUrl: './spinner.component.html',
   styleUrl: './spinner.component.scss',
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class SpinnerComponent {}

@@ -1,11 +1,10 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { TokenService } from './core/data-access/auth/services/token.service';
 import { HeaderComponent } from './shared/layout/header/header.component';
 import { FooterComponent } from './shared/layout/footer/footer.component';
-import { AuthModalComponent } from './shared/ui/auth-modal/auth-modal.component';
-
-import { CartModalComponent } from './shared/ui/cart-modal/cart-modal.component';
+import { AuthModalComponent } from './authentication/feature/auth-modal/auth-modal.component';
+import { CartModalComponent } from './cart/feature/cart-modal/cart-modal.component';
+import { AuthApiService } from './authentication/data-access/api/auth-api.service';
 
 @Component({
   selector: 'app-root',
@@ -18,12 +17,11 @@ import { CartModalComponent } from './shared/ui/cart-modal/cart-modal.component'
     CartModalComponent,
   ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  styleUrl: './app.component.scss',changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
-  private tokenService = inject(TokenService);
-
+  readonly authApi = inject(AuthApiService);
   ngOnInit(): void {
-    this.tokenService.checkTokenInStorage();
+    this.authApi.checkTokenInStore();
   }
 }

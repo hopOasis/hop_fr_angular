@@ -1,0 +1,19 @@
+<div
+  [@modalState]="animationState()"
+  (click)="onCloseModal($event)"
+  #dialogWrapper
+  [class]="{
+    dialog: true,
+    visible: cartModalStore.isOpened()
+  }"
+>
+  <div class="dialog__wrapper cart">
+    <div class="cart__head">
+      <h3 class="cart__title">Кошик</h3>
+      <button type="button" class="cart__button-close">
+        <span #buttonCloseModal class="icon-add-plus"></span>
+      </button>
+    </div>
+    <app-cart></app-cart>
+  </div>
+</div>

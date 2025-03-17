@@ -1,0 +1,90 @@
+<p-toast />
+<div class="main__container pt-10">
+  <!-- @if (loading()) {
+  <app-spinner></app-spinner>
+  } -->
+  <app-breadcrumb
+    position="center"
+    [breadCrumb]="{
+      linksList: [
+        { title: 'Khmilna Oaza', linkPath: '/home' },
+        { title: 'Магазин', linkPath: '/shop' }
+      ],
+      currentPathName: productName()
+    }"
+  ></app-breadcrumb>
+  <section class="product-head flex mb-16">
+    <div class="product__image-wrapper basis-1/2">
+      <img
+        [src]="productStore.imageUrl()"
+        alt=""
+        class="aspect-[628/431] object-contain object-center product__image"
+      />
+    </div>
+    <div class="product__body basis-1/2 pl-28">
+      <h1
+        class="leading-3 pt-8 font-medium product__title text-black-500 mb-12 text-4xl"
+      >
+        {{ productStore.productName() }},
+        {{ productStore.measureValue() }}
+      </h1>
+      <div class="product__price font-medium text-accent-500 text-3xl mb-2">
+        {{
+          (productStore.currentOption()?.price || 0) *
+            (productStore.quantity() || 1) | updatePrice
+        }}
+      </div>
+      @if(productData()?.options?.length !== 0 ){
+      <div class="product-card__options text-black-500 mb-3 text-sm gap-4 flex">
+        @for(option of productData()?.options;track option.id){
+        <!-- @let
+        isActiveOption = productStore.currentOption()!.id === option.id; @let
+        disabledOption = !option.quantity &&
+        !productStore.currentOptionInCart();
+        <button
+          [class.active]="isActiveOption"
+          (click)="productStore.updateCurrentOption(option)"
+          [disabled]="disabledOption"
+          class="rounded border-solid border-black-500 border product-card__option px-0.5"
+          [class]="{
+            'text-white-500': isActiveOption,
+            'border-accent-500': isActiveOption,
+            'bg-accent-500': isActiveOption,
+            'text-black-100': disabledOption,
+            'border-black-100': disabledOption
+          }"
+          type="button"
+        >
+          {{
+            productStore.measureValue()
+              | updateMeasure : productData()!.itemType
+          }}
+        </button> -->
+        }
+      </div>
+      } @let starsAmount = [1,2,3,4,5];
+      <div class="product__rate mb-4 flex items-center">
+        @for (item of starsAmount; track $index) {
+        <span
+          class="pr-3 text-2xl icon-star"
+          [class]="{
+            'text-accent-500': item <= (productData()?.ratingCount || 0)
+          }"
+        ></span>
+        }
+        <span class="font-medium text-black-100">{{
+          productData()?.ratingCount
+        }}</span>
+      </div>
+      <app-big-basket-button
+        buttonMode="big"
+        (onClickButton)="onMoveProduct()"
+      ></app-big-basket-button>
+      <button type="button" class="block product__add-to-fav">
+        <span class="icon-heart"></span>
+        <span>Додати до обраного</span>
+      </button>
+    </div>
+  </section>
+  <section class="product__description">description</section>
+</div>

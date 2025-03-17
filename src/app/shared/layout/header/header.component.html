@@ -1,4 +1,3 @@
-@let isAuth = isAuth$| async; @let cartAmount = cartAmount$ | async;
 <div class="header__container">
   <div class="header__logo-container">
     <a routerLink="/home">
@@ -34,22 +33,17 @@
     <button type="button" class="header__actions-link button">
       <span class="icon icon-search"></span>
     </button>
-
     <a
-      [routerLink]="isAuth ? '/my_cabinet/favorite' : null"
+      [routerLink]="authApiService.isAuth() ? '/my_cabinet/favorite' : null"
       class="header__actions-link"
       ><span
-        [class]="{
-          header__icon: true,
-          icon: true,
-          'icon-heart': true,
-          disable: !isAuth
-        }"
+        class="header__icon icon icon-heart"
+        [class.disable]="!authApiService.isAuth()"
       ></span>
     </a>
     <a
-      [routerLink]="isAuth ? '/my_cabinet' : null"
-      (click)="onOpenModal(!!isAuth)"
+      [routerLink]="authApiService.isAuth() ? '/my_cabinet' : null"
+      (click)="onOpenModal(authApiService.isAuth())"
       routerLinkActive="active"
       class="header__actions-link"
       routerLinkActive="active"
@@ -61,13 +55,11 @@
       class="header__actions-link"
     >
       <span class="header__icon icon icon-shopping-cart">
-        @if(cartAmount){
+        @if(cartApiService.amountOfItems()){
         <span
-          [class]="{
-            'cart-amount': true,
-            big: cartAmount > 9
-          }"
-          >{{ cartAmount }}</span
+          class="cart-amount"
+          [class.big]="cartApiService.amountOfItems() > 9"
+          >{{ cartApiService.amountOfItems() }}</span
         >
         }
       </span>

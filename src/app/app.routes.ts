@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { shopRoutes } from './shop/feature/product.routes';
-import { checkUserPermission } from './core/guards/auth.guard';
-import { userCabinetRoutes } from './user-cabinet/feature/user-cabinet.routes';
+import { shopRoutes } from './catalog/feature/product.routes';
+import { checkUserPermission } from './authentication/data-access/guards/auth.guard';
+import { userCabinetRoutes } from './user/feature/user-cabinet.routes';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -17,8 +17,15 @@ export const routes: Routes = [
     canMatch: [checkUserPermission],
     children: userCabinetRoutes,
     loadComponent: () =>
-      import('./user-cabinet/feature/my-cabinet/my-cabinet.component').then(
+      import('./user/feature/my-cabinet/my-cabinet.component').then(
         (m) => m.MyCabinetComponent
+      ),
+  },
+  {
+    path: 'not_found',
+    loadComponent: () =>
+      import('./shared/layout/not-found/not-found.component').then(
+        (m) => m.NotFoundComponent
       ),
   },
 ];
