@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, Observable, take, throwError } from 'rxjs';
 import { Login, Register } from '../models/auth.model';
 import { Token } from '../models/token.model';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../../environments/environment.prod';
 import { FetchedError } from '../models/error.model';
 
 @Injectable({
