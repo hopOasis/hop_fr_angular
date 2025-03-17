@@ -3,7 +3,7 @@ import { of, Subject, switchMap, take } from 'rxjs';
 import { combineLatest, Observable } from 'rxjs';
 import { FetchedProductData } from '../models/product-api-response.model';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../../environments/environment.prod';
 import { SortingTypes } from '../models/sorting-types.model';
 import { ProductDescription } from '../models/product-description.model';
 import { CatalogStoreData } from '../models/store-data.model';
