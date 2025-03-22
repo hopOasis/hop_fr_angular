@@ -15,24 +15,13 @@
       >Доставка і оплата</a
     >
   </nav>
-  <!-- @if(isShowedInput()){
-  <div class="header__input-wrapper">
-    <input
-      (blur)="onShowInput(false)"
-      appAutoFocus
-      #input
-      type="text"
-      name="search"
-      placeholder="Пошук"
-      class="header__input"
-    />
-    <span class="icon input-icon icon-search"></span>
-  </div>
-  } -->
   <div class="header__actions">
-    <button type="button" class="header__actions-link button">
-      <span class="icon icon-search"></span>
-    </button>
+    <div class="header__search">
+      <input type="text" [(ngModel)]="searchQuery" (keyup.enter)="searchProduct()" placeholder="Пошук товара" class="header__input">
+      <button (click)="searchProduct()" type="button" class="header__search-button">
+        <span class="icon icon-search"></span>
+      </button>
+    </div>
     <a
       [routerLink]="authApiService.isAuth() ? '/my_cabinet/favorite' : null"
       class="header__actions-link"

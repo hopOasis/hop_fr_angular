@@ -51,6 +51,31 @@
     position: relative;
     display: flex;
   }
+  &__search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    max-width: 25rem;
+    width: 100%;
+  }
+  &__search-button {
+    position: absolute;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #131313;
+    
+    .icon-search {
+      position: absolute;
+      left: -2rem;
+      font-size: 1.2rem;
+      color: #131313;
+    }
+  }
   &__input {
     flex-grow: 1;
     padding: 0.6rem 3rem 0.6rem 1.25rem;
@@ -59,6 +84,7 @@
     font-size: 0.875rem;
     font-weight: 500;
     border: 1px solid rgb(179, 179, 178);
+    margin-right: 1rem;
     &:hover {
       //border-color: rgb(19, 19, 19);
     }
@@ -79,6 +105,7 @@
     }
   }
   &__actions-link {
+    align-self: center;
     &.active {
       & .icon {
         color: rgb(232, 140, 0);
@@ -110,7 +137,6 @@
   color: rgb(255, 251, 244);
 }
 .icon-search.input-icon {
-  position: absolute;
   top: 0.4rem;
   right: 0.69rem;
   color: #131313;
