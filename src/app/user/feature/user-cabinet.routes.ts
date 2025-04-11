@@ -19,7 +19,9 @@ export const userCabinetRoutes: Routes = [
   {
     path: 'favorite',
     loadComponent: () =>
-      import('../../wishlist/feature/favorite/favorite.component').then((m) => m.FavoriteComponent),
+      import('../../wishlist/feature/favorite/favorite.component').then(
+        (m) => m.FavoriteComponent
+      ),
   },
   {
     path: 'settings',
