@@ -1,0 +1,36 @@
+<div class="faq-section__container max-w-md mx-auto mt-10">
+  <h2 class="text-3xl font-medium">Поширені питання</h2>
+  @for (item of items; track $index) {
+  <div class="overflow-hidden">
+    <button
+      (click)="toggle($index)"
+      class="w-full border-b border-solid border-black-500 px-4 py-4 text-left text-2xl font-medium flex justify-between items-center transition"
+    >
+      {{ item.title }}
+      <svg
+        [ngClass]="{ 'rotate-180': openIndex.includes($index) }"
+        class="w-5 h-5 transition-transform duration-300"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M19 9l-7 7-7-7"
+        />
+      </svg>
+    </button>
+    <div
+      [@accordion]="openIndex.includes($index) ? 'open' : 'closed'"
+      class="py-2 transition-all duration-300 ease-in-out"
+      [@.disabled]="false"
+    >
+      <p class="leading-normal text-justify">
+        {{ item.content }}
+      </p>
+    </div>
+  </div>
+  }
+</div>
