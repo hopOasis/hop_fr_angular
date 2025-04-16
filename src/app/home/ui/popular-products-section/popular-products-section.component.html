@@ -1,0 +1,27 @@
+<section class="main__container mt-10">
+  <div class="flex justify-between items-center gap-2">
+    <h2 class="text-3xl font-medium">Товари тижня</h2>
+    <div class="flex items-center gap-2">
+      <button (click)="onPrev()">
+        <span class="icon-arrow-left"></span>
+      </button>
+      <button (click)="onNext()">
+        <span class="icon-arrow-right"></span>
+      </button>
+    </div>
+  </div>
+  @if(productData()) {
+  <div
+    #sliderRef
+    class="py-6 [&>div] [&>div]:h-[502px] w-full [&>*]:min-w-[302px] flex flex-row gap-4 [&::-webkit-scrollbar]:hidden [overscroll-behavior-inline:contain] [-ms-overflow-style:none] [scrollbar-width:none] scroll-smooth overflow-x-scroll overscroll-x-contain no-scrollbar [scroll-snap-type:x_mandatory] [&>*]:[scroll-snap-align:start]"
+  >
+    @for (product of productData()!.content; track product.id) {
+    <app-product-card [inputData]="product"></app-product-card>
+    }
+  </div>
+  } @if(catalogDataStore.loading()){
+  <div class="h-[502px] relative">
+    <app-spinner></app-spinner>
+  </div>
+  }
+</section>

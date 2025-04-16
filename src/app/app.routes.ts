@@ -8,7 +8,7 @@ export const routes: Routes = [
   {
     path: 'home',
     loadComponent: () =>
-      import('./home/home.component').then((m) => m.HomeComponent),
+      import('./home/feature/home/home.component').then((m) => m.HomeComponent),
   },
 
   { path: 'shop', children: shopRoutes },
