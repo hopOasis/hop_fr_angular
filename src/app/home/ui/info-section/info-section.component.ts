@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+
 import { infoData } from '../../data-access/constants/info';
 
 @Component({
@@ -7,6 +8,7 @@ import { infoData } from '../../data-access/constants/info';
   imports: [],
   templateUrl: './info-section.component.html',
   styleUrl: './info-section.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InfoSectionComponent {
   info = infoData;

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
   trigger,
   state,
@@ -7,6 +7,7 @@ import {
   transition,
   animate,
 } from '@angular/animations';
+
 import { faqData } from '../../data-access/constants/faq';
 
 @Component({
@@ -15,6 +16,7 @@ import { faqData } from '../../data-access/constants/faq';
   imports: [CommonModule],
   templateUrl: './faq-section.component.html',
   styleUrl: './faq-section.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('accordion', [
       state(

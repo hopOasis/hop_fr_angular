@@ -1,0 +1,17 @@
+<section class="main__container mt-10">
+  <h2 class="text-3xl font-medium">Пропозиції від нашої команди</h2>
+  <div class="">
+    @for (proposal of proposals; track proposal.title) {
+    <div>
+      <div>
+        <img [src]="proposal.img" alt="user img" />
+      </div>
+      <div>
+        <h4>{{ proposal.title }}</h4>
+        <p>{{ proposal.description }}</p>
+        <a [routerLink]="proposal.link" class="">{{ proposal.link }}</a>
+      </div>
+    </div>
+    }
+  </div>
+</section>

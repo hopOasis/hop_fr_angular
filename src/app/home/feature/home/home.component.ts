@@ -4,6 +4,7 @@ import { HeroSectionComponent } from '../../ui/hero-section/hero-section.compone
 import { FAQSectionComponent } from '../../ui/faq-section/faq-section.component';
 import { InfoSectionComponent } from '../../ui/info-section/info-section.component';
 import { PopularProductsSectionComponent } from '../../ui/popular-products-section/popular-products-section.component';
+import { ProposalsSectionComponent } from '../../ui/proposals-section/proposals-section.component';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,7 @@ import { PopularProductsSectionComponent } from '../../ui/popular-products-secti
     FAQSectionComponent,
     PopularProductsSectionComponent,
     InfoSectionComponent,
+    ProposalsSectionComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
