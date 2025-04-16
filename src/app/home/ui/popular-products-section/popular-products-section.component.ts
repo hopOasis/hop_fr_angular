@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   inject,
+  OnInit,
   ViewChild,
 } from '@angular/core';
 
@@ -18,7 +19,7 @@ import { SpinnerComponent } from '../../../shared/ui/spinner/spinner.component';
   styleUrl: './popular-products-section.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PopularProductsSectionComponent {
+export class PopularProductsSectionComponent implements OnInit {
   readonly catalogDataStore = inject(CatalogDataStore);
   public productData = this.catalogDataStore.productData;
 
@@ -42,5 +43,13 @@ export class PopularProductsSectionComponent {
       left: this.sliderRef.nativeElement.scrollLeft - this.scrollStep,
       behavior: 'smooth',
     });
+  }
+
+  ngOnInit(): void {
+    // this.catalogDataStore.updateData({
+    //   sortDirection: 'desc',
+    //   productCategory: 'BEER',
+    //   page: 1,
+    // });
   }
 }

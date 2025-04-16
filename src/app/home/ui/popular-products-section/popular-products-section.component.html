@@ -2,8 +2,12 @@
   <div class="flex justify-between items-center gap-2">
     <h2 class="text-3xl font-medium">Товари тижня</h2>
     <div class="flex items-center gap-2">
-      <button (click)="onPrev()">{{ "<" }}</button>
-      <button (click)="onNext()">{{ ">" }}</button>
+      <button (click)="onPrev()">
+        <span class="icon-arrow-left"></span>
+      </button>
+      <button (click)="onNext()">
+        <span class="icon-arrow-right"></span>
+      </button>
     </div>
   </div>
   @if(productData()) {
