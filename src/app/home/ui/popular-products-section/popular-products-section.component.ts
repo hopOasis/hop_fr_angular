@@ -31,7 +31,7 @@ export class PopularProductsSectionComponent implements OnInit {
     if (!this.sliderRef) return;
 
     this.sliderRef.nativeElement.scrollTo({
-      left: this.sliderRef.nativeElement.scrollLeft + this.scrollStep,
+      left: this.sliderRef.nativeElement.scrollLeft - this.scrollStep,
       behavior: 'smooth',
     });
   }
@@ -40,16 +40,16 @@ export class PopularProductsSectionComponent implements OnInit {
     if (!this.sliderRef) return;
 
     this.sliderRef.nativeElement.scrollTo({
-      left: this.sliderRef.nativeElement.scrollLeft - this.scrollStep,
+      left: this.sliderRef.nativeElement.scrollLeft + this.scrollStep,
       behavior: 'smooth',
     });
   }
 
   ngOnInit(): void {
-    // this.catalogDataStore.updateData({
-    //   sortDirection: 'desc',
-    //   productCategory: 'BEER',
-    //   page: 1,
-    // });
+    this.catalogDataStore.updateData({
+      sortDirection: 'desc',
+      productCategory: 'all-products',
+      page: 1,
+    });
   }
 }
