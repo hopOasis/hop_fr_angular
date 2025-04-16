@@ -1,15 +1,26 @@
 <section class="main__container mt-10">
   <h2 class="text-3xl font-medium">Пропозиції від нашої команди</h2>
-  <div class="">
-    @for (proposal of proposals; track proposal.title) {
-    <div>
-      <div>
-        <img [src]="proposal.img" alt="user img" />
-      </div>
-      <div>
-        <h4>{{ proposal.title }}</h4>
-        <p>{{ proposal.description }}</p>
-        <a [routerLink]="proposal.link" class="">{{ proposal.link }}</a>
+  <div
+    class="py-6 flex flex-col gap-4 lg:grid lg:grid-flow-col lg:grid-rows-4 lg:gap-10"
+  >
+    @for (proposal of proposals; track $index) {
+    <div
+      [ngClass]="getGridClasses($index)"
+      class="p-4 rounded-lg shadow-lg overflow-hidden flex flex-col gap-6"
+    >
+      <img
+        [src]="proposal.img"
+        alt=""
+        class="w-[302px] h-[267px] mx-auto object-cover rounded-md"
+      />
+      <div class="flex gap-4 flex-col justify-center">
+        <h4 class="font-bold">{{ proposal.title }}</h4>
+        <p class="leading-6 text-lg">{{ proposal.description }}</p>
+        <a
+          class="text-accent-500 font-bold transition-all underline hover:opacity-70"
+          [routerLink]="proposal.link"
+          >Сторінка товару</a
+        >
       </div>
     </div>
     }
