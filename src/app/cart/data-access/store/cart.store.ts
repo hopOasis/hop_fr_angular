@@ -38,15 +38,11 @@ export const CartStore = signalStore(
     ),
   })),
   withComputed(({ cartDetails }) => ({
-    cartId: computed(() =>
-      cartDetails()?.items[0] ? cartDetails()!.items[0].cartId : 0
-    ),
-    amountOfItems: computed(() =>
-      cartDetails() ? cartDetails()!.items.length : 0
-    ),
-    cartItems: computed(() => (cartDetails() ? cartDetails()!.items : [])),
+    cartId: computed(() => cartDetails()?.items[0]?.cartId ?? 0),
+    amountOfItems: computed(() => cartDetails()?.items.length ?? 0),
+    cartItems: computed(() => cartDetails()?.items ?? []),
     priceForAll: computed(() =>
-      !cartDetails ? 0 : cartDetails()!.priceForAll
+      cartDetails() ? cartDetails()!.priceForAll : 0
     ),
   }))
 );

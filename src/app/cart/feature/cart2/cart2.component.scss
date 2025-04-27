@@ -1,0 +1,18 @@
+.cart-dialog-wrapper {
+  font-family: 'Montserrat', sans-serif;
+  max-height: 80dvh;
+  overflow-y: auto;
+}
+
+::ng-deep .cart-dialog-wrapper .p-dialog .p-dialog-header {
+  color: #292929;
+  height: 64px;
+  padding-inline: 64px;
+  font-size: 24px;
+  font-weight: 500;
+  border-bottom: 1px solid #BDBDBD;
+}
+
+::ng-deep .cart-dialog-wrapper .p-dialog .p-dialog-footer {
+  padding-inline: 64px;
+}

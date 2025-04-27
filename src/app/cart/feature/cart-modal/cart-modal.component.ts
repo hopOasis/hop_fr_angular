@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, computed, ElementRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  ElementRef,
+} from '@angular/core';
 import { inject, viewChild } from '@angular/core';
 import { CartComponent } from '../cart/cart.component';
 import {
@@ -40,7 +45,7 @@ import { CartModalStore } from '../../data-access/store/cart-modal.store';
   ],
   templateUrl: './cart-modal.component.html',
   styleUrl: './cart-modal.component.scss',
-  changeDetection:ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CartModalComponent {
   private button = viewChild<ElementRef<HTMLSpanElement>>('buttonCloseModal');
@@ -53,6 +58,6 @@ export class CartModalComponent {
       (event.target as HTMLDialogElement).classList.contains('dialog') ||
       event.target === this.button()?.nativeElement
     )
-      this.cartModalStore.updateState(false);
+      this.cartModalStore.close();
   }
 }

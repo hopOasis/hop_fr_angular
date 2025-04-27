@@ -9,13 +9,10 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class CartApiService {
-  private cartModalStore = inject(CartModalStore);
   private cartStore = inject(CartStore);
   private cartService = inject(CartService);
-  updateState(state: boolean): void {
-    this.cartModalStore.updateState(state);
-  }
-   get priceForAll(): Signal<number> {
+
+  get priceForAll(): Signal<number> {
     return this.cartStore.priceForAll;
   }
   triggerCartUpdate(isAuth: boolean): void {
