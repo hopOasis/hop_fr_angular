@@ -1,1 +1,23 @@
-<p>cart-content works!</p>
+@for (item of data(); track item.itemId) {
+<app-cart-item [itemData]="item"></app-cart-item>
+}
+<div class="cart-content__actions">
+  <div></div>
+  <p class="cart-content__amount">
+    Сума замовлення {{ fullCost() | updatePrice }}
+  </p>
+  <button
+    (click)="continueShopping()"
+    type="button"
+    class="cart-content__continue-shopping-btn"
+  >
+    Продовжити покупки
+  </button>
+  <button
+    (click)="makeOrder()"
+    type="button"
+    class="cart-content__make-order-btn"
+  >
+    Оформити замовлення
+  </button>
+</div>

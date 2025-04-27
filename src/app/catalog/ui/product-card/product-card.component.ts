@@ -60,7 +60,12 @@ export class ProductCardComponent implements OnInit {
   changeAmountOfItems(amount: number) {
     this.productStore.changeAmountOfItems(amount);
   }
-  onMoveProduct() {
+  onMoveProduct(isAuthorized: boolean) {
+    if (!isAuthorized) {
+      this.authApiService.updateModalState(true);
+      return;
+    }
+
     this.productStore.toggleCartItem().subscribe({
       next: (data) => {
         this.messageService.add({

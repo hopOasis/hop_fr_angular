@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+
 import { AuthApiService } from '../../../authentication/data-access/api/auth-api.service';
 import { CartModalStore } from '../../../cart/data-access/store/cart-modal.store';
 import { CartApiService } from '../../../cart/data-access/api/cart-api.service';
@@ -20,7 +21,9 @@ export class HeaderComponent {
   onOpenModal(isAuthorized: boolean) {
     if (!isAuthorized) this.authApiService.updateModalState(true);
   }
-  openCartModal() {
-    this.cartModalStore.open();
+  openCartModal(isAuthorized: boolean) {
+    isAuthorized
+      ? this.cartModalStore.open()
+      : this.authApiService.updateModalState(true);
   }
 }

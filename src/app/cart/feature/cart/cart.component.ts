@@ -1,14 +1,21 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { UpdatePricePipe } from '../../../catalog/utils/update-price.pipe';
-import { RouterLink } from '@angular/router';
-import { CartProductItemComponent } from '../../../shared/ui/cart-product-item/cart-product-item.component';
+
+import { DialogModule } from 'primeng/dialog';
 import { CartModalStore } from '../../data-access/store/cart-modal.store';
 import { CartStore } from '../../data-access/store/cart.store';
+import { EmptyCartComponent } from '../../ui/empty-cart/empty-cart.component';
+import { CartContentComponent } from '../../ui/cart-content/cart-content.component';
+import { CartSpecialOfferComponent } from '../../ui/cart-special-offer/cart-special-offer.component';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CartProductItemComponent, UpdatePricePipe, RouterLink],
+  imports: [
+    DialogModule,
+    EmptyCartComponent,
+    CartContentComponent,
+    CartSpecialOfferComponent,
+  ],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -19,7 +26,10 @@ export class CartComponent {
   public data = this.cartStore.cartItems;
   public fullCost = this.cartStore.priceForAll;
 
-  onCloseModal() {
-    this.cartModalStore.close();
+  get isOpenedSignal() {
+    return this.cartModalStore.isOpened();
+  }
+  set isOpenedSignal(value: boolean) {
+    value ? this.cartModalStore.open() : this.cartModalStore.close();
   }
 }

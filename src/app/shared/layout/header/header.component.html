@@ -51,7 +51,7 @@
     ></a>
     <button
       type="button"
-      (click)="openCartModal()"
+      (click)="openCartModal(authApiService.isAuth())"
       class="header__actions-link"
     >
       <span class="header__icon icon icon-shopping-cart">

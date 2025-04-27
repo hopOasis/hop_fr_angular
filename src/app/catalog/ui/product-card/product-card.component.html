@@ -72,7 +72,7 @@
 
         }
         <app-big-basket-button
-          (onClickButton)="onMoveProduct()"
+          (onClickButton)="onMoveProduct(authApiService.isAuth())"
           buttonMode="small"
         ></app-big-basket-button>
       </div>

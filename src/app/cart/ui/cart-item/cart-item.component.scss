@@ -1,0 +1,8 @@
+.cart-item {
+  &__wrapper {
+    display: flex;
+    gap: 16px;
+    padding: 0 64px;
+    border-bottom: 1px solid #B3B3B2;
+  }
+}

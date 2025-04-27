@@ -1,1 +1,6 @@
-<p>cart-item works!</p>
+<div class="cart-item__wrapper">
+  <h5>{{ itemData().itemTitle }}</h5>
+  <button (click)="onRemoveItem()" type="button">
+    <span class="icon-trash-full"></span>
+  </button>
+</div>

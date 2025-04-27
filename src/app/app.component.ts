@@ -8,9 +8,8 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './shared/layout/header/header.component';
 import { FooterComponent } from './shared/layout/footer/footer.component';
 import { AuthModalComponent } from './authentication/feature/auth-modal/auth-modal.component';
-import { CartModalComponent } from './cart/feature/cart-modal/cart-modal.component';
 import { AuthApiService } from './authentication/data-access/api/auth-api.service';
-import { Cart2Component } from './cart/feature/cart2/cart2.component';
+import { CartComponent } from './cart/feature/cart/cart.component';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +19,7 @@ import { Cart2Component } from './cart/feature/cart2/cart2.component';
     HeaderComponent,
     FooterComponent,
     AuthModalComponent,
-    Cart2Component,
+    CartComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
