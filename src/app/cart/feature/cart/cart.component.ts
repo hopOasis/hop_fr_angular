@@ -23,8 +23,6 @@ import { CartSpecialOfferComponent } from '../../ui/cart-special-offer/cart-spec
 export class CartComponent {
   readonly cartModalStore = inject(CartModalStore);
   readonly cartStore = inject(CartStore);
-  public data = this.cartStore.cartItems;
-  public fullCost = this.cartStore.priceForAll;
 
   get isOpenedSignal() {
     return this.cartModalStore.isOpened();

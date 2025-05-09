@@ -20,7 +20,6 @@ import { BigBasketButtonComponent } from '../../ui/big-basket-button/big-basket-
   selector: 'app-product-details',
   standalone: true,
   imports: [
-    
     BreadcrumbComponent,
     UpdatePricePipe,
     ToastModule,
@@ -47,26 +46,7 @@ export class ProductDetailsComponent implements OnInit {
       if (this.error()) this.router.navigate(['/not_found']);
     });
   }
-  onMoveProduct() {
-    this.productStore.toggleCartItem().subscribe({
-      next: (data) => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail:
-            data === 'rem'
-              ? 'Товар видалено з корзини'
-              : 'Товар додано до корзини!',
-        });
-      },
-      error: (error: string) =>
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Success',
-          detail: error,
-        }),
-    });
-  }
+  onMoveProduct() {}
   ngOnInit(): void {
     this.productStore.fetchData(+this.productId(), ItemTypesEnum[this.type()]);
   }

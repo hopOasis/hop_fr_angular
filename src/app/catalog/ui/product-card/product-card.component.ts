@@ -60,31 +60,7 @@ export class ProductCardComponent implements OnInit {
   changeAmountOfItems(amount: number) {
     this.productStore.changeAmountOfItems(amount);
   }
-  onMoveProduct(isAuthorized: boolean) {
-    if (!isAuthorized) {
-      this.authApiService.updateModalState(true);
-      return;
-    }
-
-    this.productStore.toggleCartItem().subscribe({
-      next: (data) => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail:
-            data === 'rem'
-              ? 'Товар видалено з корзини'
-              : 'Товар додано до корзини!',
-        });
-      },
-      error: (error: string) =>
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Success',
-          detail: error,
-        }),
-    });
-  }
+  onMoveProduct(isAuthorized: boolean) {}
 
   onAddToFavorite() {}
   ngOnInit(): void {

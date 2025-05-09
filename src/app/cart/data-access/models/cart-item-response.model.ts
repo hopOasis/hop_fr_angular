@@ -8,4 +8,5 @@ export interface CartItemResponse {
   pricePerItem: number;
   quantity: number;
   totalCost: number;
+  measureValue: number;
 }

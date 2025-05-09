@@ -1,10 +1,10 @@
-@for (item of data(); track item.itemId) {
+@for (item of cartStore.items(); track item.itemId) {
 <app-cart-item [itemData]="item"></app-cart-item>
 }
 <div class="cart-content__actions">
   <div></div>
   <p class="cart-content__amount">
-    Сума замовлення {{ fullCost() | updatePrice }}
+    Сума замовлення {{ cartStore.totalPrice() | updatePrice }}
   </p>
   <button
     (click)="continueShopping()"

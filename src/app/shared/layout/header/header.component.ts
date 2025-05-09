@@ -1,9 +1,14 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { AuthApiService } from '../../../authentication/data-access/api/auth-api.service';
 import { CartModalStore } from '../../../cart/data-access/store/cart-modal.store';
-import { CartApiService } from '../../../cart/data-access/api/cart-api.service';
+import { CartStore } from '../../../cart/data-access/store/cart.store';
 
 @Component({
   selector: 'header[appHeader]',
@@ -13,10 +18,10 @@ import { CartApiService } from '../../../cart/data-access/api/cart-api.service';
   styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   readonly authApiService = inject(AuthApiService);
   readonly cartModalStore = inject(CartModalStore);
-  readonly cartApiService = inject(CartApiService);
+  public readonly cartStore = inject(CartStore);
 
   onOpenModal(isAuthorized: boolean) {
     if (!isAuthorized) this.authApiService.updateModalState(true);
@@ -25,5 +30,9 @@ export class HeaderComponent {
     isAuthorized
       ? this.cartModalStore.open()
       : this.authApiService.updateModalState(true);
+  }
+
+  ngOnInit(): void {
+    this.cartStore.loadCartItems();
   }
 }

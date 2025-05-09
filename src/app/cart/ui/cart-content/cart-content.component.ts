@@ -21,12 +21,10 @@ import { AuthStore } from '../../../authentication/data-access/store/auth.store'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CartContentComponent {
-  readonly cartModalStore = inject(CartModalStore);
-  readonly cartStore = inject(CartStore);
+  private readonly cartModalStore = inject(CartModalStore);
+  public readonly cartStore = inject(CartStore);
   readonly authStore = inject(AuthStore);
   private router = inject(Router);
-  public data = computed(() => this.cartStore.cartItems());
-  public fullCost = this.cartStore.priceForAll;
   private currentUrl = this.router.url;
 
   continueShopping() {
