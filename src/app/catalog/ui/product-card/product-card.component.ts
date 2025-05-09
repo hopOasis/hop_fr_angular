@@ -60,7 +60,24 @@ export class ProductCardComponent implements OnInit {
   changeAmountOfItems(amount: number) {
     this.productStore.changeAmountOfItems(amount);
   }
-  onMoveProduct(isAuthorized: boolean) {}
+
+  onAddToCart() {
+    this.productStore.addProductToCart({
+      ...this.productStore.infoRemoveDto(),
+      quantity: this.quantity(),
+    });
+  }
+
+  onRemoveFromCart() {
+    console.log(this.productStore.infoRemoveDto());
+    this.productStore.removeProductFromCart({
+      ...this.productStore.infoRemoveDto(),
+    });
+  }
+
+  onToggleProductIntoCart() {
+    this.currentOptionInCart() ? this.onRemoveFromCart() : this.onAddToCart();
+  }
 
   onAddToFavorite() {}
   ngOnInit(): void {

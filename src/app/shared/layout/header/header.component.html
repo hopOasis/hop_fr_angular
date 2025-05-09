@@ -54,7 +54,13 @@
       (click)="openCartModal(authApiService.isAuth())"
       class="header__actions-link"
     >
-      <span class="header__icon icon icon-shopping-cart"> </span>
+      <span class="header__icon icon icon-shopping-cart">
+        @if(cartStore.totalItems()){
+        <span class="cart-amount" [class.big]="cartStore.totalItems() > 9">{{
+          cartStore.totalItems()
+        }}</span>
+        }
+      </span>
     </button>
   </div>
 </div>

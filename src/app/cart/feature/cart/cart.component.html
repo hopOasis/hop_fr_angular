@@ -10,7 +10,13 @@
     <ng-template pTemplate="header">
       <h3 class="cart__title">Кошик</h3>
     </ng-template>
-    <ng-template pTemplate="content"> </ng-template>
+    <ng-template pTemplate="content">
+      @if(cartStore.totalItems() > 0) {
+      <app-cart-content></app-cart-content>
+      } @else {
+      <app-empty-cart></app-empty-cart>
+      }
+    </ng-template>
     <ng-template pTemplate="footer">
       <app-cart-special-offer></app-cart-special-offer>
     </ng-template>

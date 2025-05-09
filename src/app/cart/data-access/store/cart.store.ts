@@ -5,14 +5,17 @@ import { CartItemResponse } from '../models/cart-item-response.model';
 import { CartApiService } from '../api/cart-api.service';
 import { CartItemAddDto } from '../models/cart-item-add-dto.model';
 import { CartItemRemoveDto } from '../models/cart-item-remove-dto.model';
+import { catchError, tap, throwError } from 'rxjs';
 
 interface ICartStore {
+  cartId: number | null;
   items: CartItemResponse[];
   isLoading: boolean;
   error: string | null;
 }
 
 const initialState: ICartStore = {
+  cartId: null,
   items: [],
   isLoading: false,
   error: null,
@@ -26,8 +29,11 @@ export const CartStore = signalStore(
       patchState(store, { isLoading: true, error: null });
       cartApiService.getCartItems().subscribe({
         next: (response) => {
-          console.log(response);
-          patchState(store, { items: response.items, isLoading: false });
+          patchState(store, {
+            items: response.items,
+            isLoading: false,
+            cartId: response.cartId,
+          });
         },
         error: (err) => {
           patchState(store, {
@@ -37,73 +43,64 @@ export const CartStore = signalStore(
         },
       });
     },
-    addCartItem(cartItem: CartItemResponse) {
+    addCartItem(cartItem: CartItemAddDto) {
       patchState(store, { isLoading: true, error: null });
 
-      const input: CartItemAddDto = {
-        itemId: cartItem.itemId,
-        itemType: cartItem.itemType,
-        measureValue: cartItem.measureValue,
-        quantity: cartItem.quantity,
-      };
-
-      cartApiService.addCartItem(input).subscribe({
-        next: (newItem) => {
+      return cartApiService.addCartItem(cartItem).pipe(
+        tap((newItem) => {
           const currentItems = store.items();
           const existingItemIndex = currentItems.findIndex(
             (item) => item.itemId === newItem.itemId
           );
 
-          let updatedItems;
-          if (existingItemIndex > -1) {
-            updatedItems = currentItems.map((item) =>
-              item.itemId === newItem.itemId
-                ? {
-                    ...item,
-                    quantity: item.quantity + newItem.quantity,
-                    totalCost: item.totalCost + newItem.totalCost,
-                  }
-                : item
-            );
-          } else {
-            updatedItems = [...currentItems, newItem];
-          }
+          const updatedItems =
+            existingItemIndex > -1
+              ? currentItems.map((item) =>
+                  item.itemId === newItem.itemId
+                    ? {
+                        ...item,
+                        quantity: item.quantity + newItem.quantity,
+                        totalCost: item.totalCost + newItem.totalCost,
+                      }
+                    : item
+                )
+              : [...currentItems, newItem];
 
           patchState(store, { items: updatedItems, isLoading: false });
-        },
-        error: (err) => {
+        }),
+        catchError((err) => {
           patchState(store, {
             isLoading: false,
             error: err instanceof Error ? err.message : 'Something went wrong',
           });
-        },
-      });
+          return throwError(() => err);
+        })
+      );
     },
 
-    removeCartItem({
-      cartId,
-      removeDto,
-    }: {
-      cartId: number;
-      removeDto: CartItemRemoveDto;
-    }) {
+    removeCartItem(removeDto: CartItemRemoveDto) {
+      const cartId = store.cartId();
+
       patchState(store, { isLoading: true, error: null });
-      cartApiService.removeCartItem(cartId, removeDto).subscribe({
-        next: () => {
+
+      return cartApiService.removeCartItem(cartId, removeDto).pipe(
+        tap(() => {
           const updatedItems = store
             .items()
             .filter((item) => item.itemId !== removeDto.itemId);
           patchState(store, { items: updatedItems, isLoading: false });
-        },
-        error: (err) => {
+        }),
+        catchError((err) => {
           patchState(store, {
             isLoading: false,
             error: err instanceof Error ? err.message : 'Something went wrong',
           });
-        },
-      });
+          return throwError(() => err);
+        })
+      );
     },
   })),
+
   withComputed((store) => ({
     totalItems: computed(() =>
       store.items().reduce((acc, el) => acc + el.quantity, 0)

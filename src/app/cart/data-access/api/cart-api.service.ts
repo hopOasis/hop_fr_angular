@@ -16,7 +16,7 @@ export class CartApiService {
   }
 
   removeCartItem(
-    cartId: number,
+    cartId: number | null,
     productInfo: CartItemRemoveDto
   ): Observable<string> {
     return this.cartService.removeCartItem(cartId, productInfo);

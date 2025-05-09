@@ -100,11 +100,9 @@ export const ProductStore = signalStore(
     (
       store,
       shopService = inject(ShopService),
-      cartStore = inject(CartStore),
-      authApi = inject(AuthApiService)
+      cartStore = inject(CartStore)
     ) => ({
       defineCurrentOption(): ProductOption | undefined {
-        this.itemQuantityController();
         return store
           .productData()!
           .options.find((option) =>
@@ -159,9 +157,20 @@ export const ProductStore = signalStore(
               }),
           });
       },
-      removeProductFromCart(cartInfo: CartItemRemoveDto) {},
-      addProductToCart(cartInfo: CartItemAddDto, price: number) {},
-      itemQuantityController() {},
+      removeProductFromCart(cartInfo: CartItemRemoveDto) {
+        patchState(store, { isProcessing: true });
+        cartStore.removeCartItem(cartInfo).subscribe({
+          next: () => patchState(store, { isProcessing: false }),
+          error: () => patchState(store, { isProcessing: false }),
+        });
+      },
+      addProductToCart(cartInfo: CartItemAddDto) {
+        patchState(store, { isProcessing: true });
+        cartStore.addCartItem(cartInfo).subscribe({
+          next: () => patchState(store, { isProcessing: false }),
+          error: () => patchState(store, { isProcessing: false }),
+        });
+      },
     })
   )
 );

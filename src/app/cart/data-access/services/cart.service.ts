@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { throwError, catchError, Observable } from 'rxjs';
+import { throwError, catchError, Observable, defer } from 'rxjs';
 
 import { CartItemResponse } from '../models/cart-item-response.model';
 import { CartItemRemoveDto } from '../models/cart-item-remove-dto.model';
@@ -27,14 +27,24 @@ export class CartService {
   }
 
   removeCartItem(
-    cartId: number,
+    cartId: number | null,
     productInfo: CartItemRemoveDto
   ): Observable<string> {
-    return this.httpClient
-      .delete<string>(`${environment.apiUrl}/carts/remove/${cartId}`, {
-        body: productInfo,
-        responseType: 'text' as 'json',
-      })
-      .pipe(catchError(() => throwError(() => 'Не вдалось видалити товар')));
+    return defer(() => {
+      if (cartId === null) {
+        return throwError(() => new Error('Invalid cart ID'));
+      }
+
+      return this.httpClient
+        .delete<string>(`${environment.apiUrl}/carts/remove/${cartId}`, {
+          body: productInfo,
+          responseType: 'text' as 'json',
+        })
+        .pipe(
+          catchError(() =>
+            throwError(() => new Error('Не вдалось видалити товар'))
+          )
+        );
+    });
   }
 }
