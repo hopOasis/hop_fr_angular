@@ -47,4 +47,29 @@ export class CartService {
         );
     });
   }
+
+  changeCartItemQuantity(
+    cartId: number | null,
+    productInfo: CartItemAddDto
+  ): Observable<string> {
+    return defer(() => {
+      if (cartId === null) {
+        return throwError(() => new Error('Invalid cart ID'));
+      }
+
+      return this.httpClient
+        .put<string>(
+          `${environment.apiUrl}/carts/update/${cartId}`,
+          productInfo,
+          {
+            responseType: 'text' as 'json',
+          }
+        )
+        .pipe(
+          catchError(() =>
+            throwError(() => new Error('Не вдалось оновити кількість товару'))
+          )
+        );
+    });
+  }
 }

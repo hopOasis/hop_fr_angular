@@ -25,4 +25,11 @@ export class CartApiService {
   addCartItem(cart: CartItemAddDto): Observable<CartItemResponse> {
     return this.cartService.addCartItem(cart);
   }
+
+  changeCartItemQuantity(
+    cartId: number | null,
+    productInfo: CartItemAddDto
+  ): Observable<string> {
+    return this.cartService.changeCartItemQuantity(cartId, productInfo);
+  }
 }

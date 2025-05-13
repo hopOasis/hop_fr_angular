@@ -107,7 +107,33 @@ export const CartStore = signalStore(
         })
       );
     },
+    changeCartItemQuantity(cartItem: CartItemAddDto) {
+      const cartId = store.cartId();
+      patchState(store, { isLoading: true, error: null });
 
+      return cartApiService.changeCartItemQuantity(cartId, cartItem).pipe(
+        tap(() => {
+          const updatedItems = store.items().map((item) =>
+            item.itemId === cartItem.itemId &&
+            item.measureValue === cartItem.measureValue
+              ? {
+                  ...item,
+                  quantity: cartItem.quantity,
+                }
+              : item
+          );
+
+          patchState(store, { items: updatedItems, isLoading: false });
+        }),
+        catchError((err) => {
+          patchState(store, {
+            isLoading: false,
+            error: err instanceof Error ? err.message : 'Something went wrong',
+          });
+          return throwError(() => err);
+        })
+      );
+    },
     clearCart() {
       patchState(store, {
         cartId: null,

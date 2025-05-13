@@ -1,14 +1,15 @@
 import {
+  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   inject,
   input,
 } from '@angular/core';
 import { CartItemResponse } from '../../data-access/models/cart-item-response.model';
-import { CartService } from '../../data-access/services/cart.service';
 import { CartStore } from '../../data-access/store/cart.store';
-import { ProductStore } from '../../../catalog/data-access/store/product.store';
 import { UpdatePricePipe } from '../../../catalog/utils/update-price.pipe';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
+import untilDestroyed from '../../../catalog/utils/until-destroyed';
 
 @Component({
   selector: 'app-cart-item',
@@ -21,6 +22,25 @@ import { UpdatePricePipe } from '../../../catalog/utils/update-price.pipe';
 export class CartItemComponent {
   public itemData = input.required<CartItemResponse>();
   private cartStore = inject(CartStore);
+  private quantitySubject = new Subject<number>();
+  private destroyed = untilDestroyed();
+
+  constructor() {
+    afterNextRender(() => {
+      this.quantitySubject
+        .pipe(debounceTime(400), distinctUntilChanged(), this.destroyed())
+        .subscribe((quantity) => {
+          this.cartStore
+            .changeCartItemQuantity({
+              itemId: this.itemData().itemId,
+              itemType: this.itemData().itemType,
+              measureValue: this.itemData().measureValue,
+              quantity,
+            })
+            .subscribe();
+        });
+    });
+  }
 
   onRemoveItem() {
     this.cartStore
@@ -31,7 +51,9 @@ export class CartItemComponent {
       })
       .subscribe();
   }
+
   onChangeAmountOfItems(quantity: number) {
-    console.log(quantity);
+    if (quantity < 1) return;
+    this.quantitySubject.next(quantity);
   }
 }
