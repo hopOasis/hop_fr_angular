@@ -23,12 +23,11 @@ export class CartItemComponent {
   private cartStore = inject(CartStore);
 
   onRemoveItem() {
-    console.log(this.itemData());
     this.cartStore
       .removeCartItem({
         itemId: this.itemData().itemId,
         itemType: this.itemData().itemType,
-        measureValue: 0.5,
+        measureValue: this.itemData().measureValue,
       })
       .subscribe();
   }

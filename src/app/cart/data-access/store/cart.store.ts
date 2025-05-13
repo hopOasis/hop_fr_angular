@@ -50,13 +50,15 @@ export const CartStore = signalStore(
         tap((newItem) => {
           const currentItems = store.items();
           const existingItemIndex = currentItems.findIndex(
-            (item) => item.itemId === newItem.itemId
+            (item) =>
+              item.itemId === newItem.itemId &&
+              item.measureValue === newItem.measureValue
           );
-
           const updatedItems =
             existingItemIndex > -1
               ? currentItems.map((item) =>
-                  item.itemId === newItem.itemId
+                  item.itemId === newItem.itemId &&
+                  item.measureValue === newItem.measureValue
                     ? {
                         ...item,
                         quantity: item.quantity + newItem.quantity,
@@ -77,7 +79,6 @@ export const CartStore = signalStore(
         })
       );
     },
-
     removeCartItem(removeDto: CartItemRemoveDto) {
       const cartId = store.cartId();
 
@@ -87,7 +88,14 @@ export const CartStore = signalStore(
         tap(() => {
           const updatedItems = store
             .items()
-            .filter((item) => item.itemId !== removeDto.itemId);
+            .filter(
+              (item) =>
+                !(
+                  item.itemId === removeDto.itemId &&
+                  item.measureValue === removeDto.measureValue
+                )
+            );
+
           patchState(store, { items: updatedItems, isLoading: false });
         }),
         catchError((err) => {
@@ -98,6 +106,15 @@ export const CartStore = signalStore(
           return throwError(() => err);
         })
       );
+    },
+
+    clearCart() {
+      patchState(store, {
+        cartId: null,
+        items: [],
+        isLoading: false,
+        error: null,
+      });
     },
   })),
 

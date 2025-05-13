@@ -43,7 +43,7 @@
     </a>
     <a
       [routerLink]="authApiService.isAuth() ? '/my_cabinet' : null"
-      (click)="onOpenModal(authApiService.isAuth())"
+      (click)="onOpenModal()"
       routerLinkActive="active"
       class="header__actions-link"
       routerLinkActive="active"
@@ -51,7 +51,7 @@
     ></a>
     <button
       type="button"
-      (click)="openCartModal(authApiService.isAuth())"
+      (click)="openCartModal()"
       class="header__actions-link"
     >
       <span class="header__icon icon icon-shopping-cart">

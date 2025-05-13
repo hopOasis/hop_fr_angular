@@ -27,6 +27,7 @@ import { CartComponent } from './cart/feature/cart/cart.component';
 })
 export class AppComponent implements OnInit {
   readonly authApi = inject(AuthApiService);
+
   ngOnInit(): void {
     this.authApi.checkTokenInStore();
   }
