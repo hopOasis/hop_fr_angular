@@ -86,7 +86,10 @@ export class ProductCardComponent implements OnInit {
     this.currentOptionInCart() ? this.onRemoveFromCart() : this.onAddToCart();
   }
 
-  onAddToFavorite() {}
+  onAddToFavorite() {
+    console.log('first');
+    console.log(this.quantity(), this.quontityInCart());
+  }
   ngOnInit(): void {
     this.productStore.addData(this.inputData());
     let option = this.productStore.defineCurrentOption();

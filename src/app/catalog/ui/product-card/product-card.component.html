@@ -1,7 +1,6 @@
 <p-toast />
 <div class="product-card">
   <button
-    [disabled]="authApiService.isAuth()"
     [class.active]="isAddedToFavorite()"
     (click)="onAddToFavorite()"
     class="icon-heart product-card__icon"
@@ -57,9 +56,7 @@
             type="button"
             class="amount-wrapper__button decrease"
           ></button>
-          <span class="amount-wrapper__quantity">
-            {{ quantity() }}
-          </span>
+          <span class="amount-wrapper__quantity"> {{ quantity() }} </span>
           <button
             [disabled]="
               currentOptionInCart() || quantity() === currentOption()?.quantity

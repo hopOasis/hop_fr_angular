@@ -47,7 +47,7 @@ export const ProductStore = signalStore(
         .items()
         .some(
           (product) =>
-            product.pricePerItem === store.currentOption()!.price &&
+            product.measureValue === store.currentOption()?.measureValue &&
             product.itemId === store.productData()?.id
         );
     }),
@@ -160,7 +160,13 @@ export const ProductStore = signalStore(
       removeProductFromCart(cartInfo: CartItemRemoveDto) {
         patchState(store, { isProcessing: true });
         cartStore.removeCartItem(cartInfo).subscribe({
-          next: () => patchState(store, { isProcessing: false }),
+          next: () => {
+            patchState(store, { isProcessing: false });
+            this.fetchData(
+              store.productData()!.id,
+              ItemTypesEnum[store.productData()!.itemType]
+            );
+          },
           error: () => patchState(store, { isProcessing: false }),
         });
       },

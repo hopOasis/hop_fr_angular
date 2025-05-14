@@ -28,8 +28,8 @@ export class CartApiService {
 
   changeCartItemQuantity(
     cartId: number | null,
-    productInfo: CartItemAddDto
+    items: CartItemAddDto[]
   ): Observable<string> {
-    return this.cartService.changeCartItemQuantity(cartId, productInfo);
+    return this.cartService.changeCartItemQuantity(cartId, items);
   }
 }

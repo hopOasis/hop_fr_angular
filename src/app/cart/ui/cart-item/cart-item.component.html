@@ -2,22 +2,22 @@
   <h5 class="cart-item__title">{{ itemData().itemTitle }}</h5>
   <div class="amount-wrapper">
     <button
-      [disabled]="itemData().quantity <= 1"
-      (click)="onChangeAmountOfItems(itemData().quantity - 1)"
+      [disabled]="quantity() <= 1"
+      (click)="onChangeAmountOfItems(quantity() - 1)"
       type="button"
       class="amount-wrapper__button decrease"
     ></button>
     <span class="amount-wrapper__quantity">
-      {{ itemData().quantity }}
+      {{ quantity() }}
     </span>
     <button
-      (click)="onChangeAmountOfItems(itemData().quantity + 1)"
+      (click)="onChangeAmountOfItems(quantity() + 1)"
       type="button"
       class="amount-wrapper__button increase"
     ></button>
   </div>
   <p class="cart-item__price">
-    {{ itemData().totalCost | updatePrice }}
+    {{ itemData().pricePerItem * quantity() | updatePrice }}
   </p>
   <button (click)="onRemoveItem()" type="button" class="">
     <span class="cart-item__trash-icon icon-trash-full"></span>

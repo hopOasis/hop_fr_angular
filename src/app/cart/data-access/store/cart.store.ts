@@ -107,23 +107,22 @@ export const CartStore = signalStore(
         })
       );
     },
-    changeCartItemQuantity(cartItem: CartItemAddDto) {
+    changeCartItemQuantity(items?: CartItemResponse[]) {
       const cartId = store.cartId();
+
+      if (!cartId || !items) return;
+
       patchState(store, { isLoading: true, error: null });
+      const updatedItems: CartItemAddDto[] = items.map((item) => ({
+        itemId: item.itemId,
+        itemType: item.itemType,
+        measureValue: item.measureValue,
+        quantity: item.quantity,
+      }));
 
-      return cartApiService.changeCartItemQuantity(cartId, cartItem).pipe(
+      return cartApiService.changeCartItemQuantity(cartId, updatedItems).pipe(
         tap(() => {
-          const updatedItems = store.items().map((item) =>
-            item.itemId === cartItem.itemId &&
-            item.measureValue === cartItem.measureValue
-              ? {
-                  ...item,
-                  quantity: cartItem.quantity,
-                }
-              : item
-          );
-
-          patchState(store, { items: updatedItems, isLoading: false });
+          patchState(store, { items, isLoading: false });
         }),
         catchError((err) => {
           patchState(store, {

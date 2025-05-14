@@ -50,7 +50,7 @@ export class CartService {
 
   changeCartItemQuantity(
     cartId: number | null,
-    productInfo: CartItemAddDto
+    items: CartItemAddDto[]
   ): Observable<string> {
     return defer(() => {
       if (cartId === null) {
@@ -59,8 +59,11 @@ export class CartService {
 
       return this.httpClient
         .put<string>(
-          `${environment.apiUrl}/carts/update/${cartId}`,
-          productInfo,
+          `${environment.apiUrl}/carts`,
+          {
+            cartId,
+            items,
+          },
           {
             responseType: 'text' as 'json',
           }
