@@ -1,0 +1,96 @@
+import {
+  Component,
+  HostListener,
+  inject,
+  OnInit,
+  PLATFORM_ID,
+  signal,
+} from '@angular/core';
+import { isPlatformBrowser, NgClass } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
+import { ProductCardComponent } from '../../catalog/ui/product-card/product-card.component';
+import { ProductDescription } from '../../catalog/data-access/models/product-description.model';
+import { GetProductsService } from './services/get-products.service';
+
+@Component({
+  selector: 'app-page-1',
+  standalone: true,
+  imports: [ProductCardComponent, NgClass],
+  templateUrl: './page-1.component.html',
+  styleUrl: './page-1.component.scss',
+  providers: [GetProductsService],
+})
+export class Page1Component implements OnInit {
+  private productService = inject(GetProductsService);
+  private platformId = inject(PLATFORM_ID);
+  private startIndex = signal(0);
+  private step = signal(4);
+  private weekProducts: ProductDescription[] = [];
+
+  weekProductsCount = 0;
+  disabledLeft = true;
+  disabledRight = false;
+
+  @HostListener('window:resize') onResize() {
+    this.updateStepper();
+  }
+
+  constructor() {
+    // @notice don't forget to unsubscribe
+    this.productService
+      .getProducts()
+      .pipe(takeUntilDestroyed())
+      .subscribe((item) => {
+        this.weekProducts = item;
+        this.weekProductsCount = this.weekProducts.length;
+      });
+  }
+
+  ngOnInit(): void {
+    this.updateStepper();
+  }
+
+  get visibleProducts(): ProductDescription[] {
+    return this.weekProducts.slice(
+      this.startIndex(),
+      this.startIndex() + this.step()
+    );
+  }
+
+  updateStepper() {
+    if (isPlatformBrowser(this.platformId)) {
+      const width = window.innerWidth;
+      if (width < 640) this.step.set(1);
+      else if (width < 1024) this.step.set(2);
+      else if (width < 1440) this.step.set(3);
+      else this.step.set(4);
+    }
+  }
+
+  slideLeft() {
+    if (this.startIndex() > 0) {
+      this.startIndex.update((id) => (id -= this.step()));
+
+      this.disabledLeft = false;
+      this.disabledRight = false;
+    }
+
+    if (this.startIndex() < 1) {
+      this.disabledLeft = true;
+    }
+  }
+
+  slideRight() {
+    if (this.startIndex() + this.step() < this.weekProductsCount - 1) {
+      this.startIndex.update((id) => (id += this.step()));
+
+      this.disabledRight = false;
+      this.disabledLeft = false;
+    }
+
+    if (this.weekProductsCount - 1 <= this.startIndex() + this.step()) {
+      this.disabledRight = true;
+    }
+  }
+}

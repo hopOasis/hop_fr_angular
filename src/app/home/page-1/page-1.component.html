@@ -1,0 +1,27 @@
+<div class="page-1__wrapper">
+  <div class="page-1__header w-full flex justify-between">
+    <h2>Товари тижня</h2>
+    <div class="page-1__actions flex gap-10 justify-self-end">
+      <button
+        class="icon-arrow-left"
+        [ngClass]="disabledLeft ? 'icon__arrow__disabled' : ''"
+        [disabled]="disabledLeft"
+        (click)="slideLeft()"
+      ></button>
+      <button
+        class="icon-arrow-right icon__arrow-right__disabled"
+        [ngClass]="disabledRight ? 'icon__arrow__disabled' : ''"
+        [disabled]="disabledRight"
+        (click)="slideRight()"
+      ></button>
+    </div>
+  </div>
+  <div class="page-1__card">
+    @if (!weekProductsCount) {
+    <p>Наразі немає товарів тижня. Завітайте пізніше!</p>
+    } @for (weekProduct of visibleProducts; track $index) {
+    <app-product-card [inputData]="weekProduct" />
+
+    }
+  </div>
+</div>
