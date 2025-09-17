@@ -2,11 +2,23 @@
   <img class="home__bg-image" src="./home-bg.png" />
   <div class="home__description">
     <h2 class="home__title">Завітай до нашої оази!</h2>
-    <p class="home__text">
+    <h3 class="home__text">
       Спробуй наші авторські види пива та відпочинь від повсякденної метушні
-    </p>
+    </h3>
     <div class="home__actions">
-      <button class="btn">Магазин</button>
+      <button class="btn" (click)="redirectToShop()">Магазин</button>
+    </div>
+  </div>
+  <div class="home__footer">
+    <div class="home__footer__body">
+      <p class="home__footer__text">Акція діє до 31.05</p>
+      <h2 class="home__footer__title">
+        Спробуй наш новий смак пива та отримай знижку 20% на всю наступну
+        покупку
+      </h2>
+    </div>
+    <div class="home__footer__actions">
+      <button class="btn__home__footer icon-arrow-right"></button>
     </div>
   </div>
 </div>
