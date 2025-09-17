@@ -1,10 +1,14 @@
 import {
+  ChangeDetectionStrategy,
   Component,
+  computed,
+  effect,
   HostListener,
   inject,
   OnInit,
   PLATFORM_ID,
   signal,
+  WritableSignal,
 } from '@angular/core';
 import { isPlatformBrowser, NgClass } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -20,14 +24,20 @@ import { GetProductsService } from './services/get-products.service';
   templateUrl: './page-1.component.html',
   styleUrl: './page-1.component.scss',
   providers: [GetProductsService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Page1Component implements OnInit {
   private productService = inject(GetProductsService);
   private platformId = inject(PLATFORM_ID);
   private startIndex = signal(0);
   private step = signal(4);
-  private weekProducts: ProductDescription[] = [];
-
+  private weekProducts: WritableSignal<ProductDescription[]> = signal([]);
+  currentProducts = computed(() =>
+    this.weekProducts().slice(
+      this.startIndex(),
+      this.startIndex() + this.step()
+    )
+  );
   weekProductsCount = 0;
   disabledLeft = true;
   disabledRight = false;
@@ -42,8 +52,8 @@ export class Page1Component implements OnInit {
       .getProducts()
       .pipe(takeUntilDestroyed())
       .subscribe((item) => {
-        this.weekProducts = item;
-        this.weekProductsCount = this.weekProducts.length;
+        this.weekProducts.set(item);
+        this.weekProductsCount = this.weekProducts().length;
       });
   }
 
@@ -51,12 +61,12 @@ export class Page1Component implements OnInit {
     this.updateStepper();
   }
 
-  get visibleProducts(): ProductDescription[] {
-    return this.weekProducts.slice(
-      this.startIndex(),
-      this.startIndex() + this.step()
-    );
-  }
+  // get visibleProducts(): ProductDescription[] {
+  //   return this.weekProducts().slice(
+  //     this.startIndex(),
+  //     this.startIndex() + this.step()
+  //   );
+  // }
 
   updateStepper() {
     if (isPlatformBrowser(this.platformId)) {

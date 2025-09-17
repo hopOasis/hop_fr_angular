@@ -19,7 +19,7 @@
   <div class="page-1__card">
     @if (!weekProductsCount) {
     <p>Наразі немає товарів тижня. Завітайте пізніше!</p>
-    } @for (weekProduct of visibleProducts; track $index) {
+    } @for (weekProduct of currentProducts(); track $index) {
     <app-product-card [inputData]="weekProduct" />
 
     }
