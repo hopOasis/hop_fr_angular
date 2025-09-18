@@ -55,10 +55,14 @@
     justify-content: space-around;
     align-items: center;
     background: #131313;
-    padding-top: rem(16);
+    padding: rem(16) 0;
 
     @media (min-width: 1400px) {
-      padding: rem(16) rem(150) 0;
+      padding: rem(16) rem(150);
+    }
+
+    @media (max-width: 1120px) {
+      padding: rem(16) rem(16);
     }
 
     &__body {
