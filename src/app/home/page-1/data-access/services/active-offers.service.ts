@@ -12,12 +12,15 @@ export class ActiveOffersService {
   private httpClient = inject(HttpClient);
   private readonly url = environment.apiUrl;
 
-  getActiveOffers(): Observable<ProductDescription[] | null> {
+  getActiveOffers(prodName: string): Observable<ProductDescription[] | null> {
     return this.httpClient.get<Offer[]>(`${this.url}/special-offers`).pipe(
       map((item) => {
         const products: ProductDescription[] = [];
         item.forEach((prod) => {
-          if (prod.active) {
+          if (
+            prod.active &&
+            prod.name.toLowerCase().trim() === prodName.toLowerCase().trim()
+          ) {
             products.push(...prod.specialOfferBeers);
             products.push(...prod.specialOfferCiders);
             products.push(...prod.specialOfferProductBundles);

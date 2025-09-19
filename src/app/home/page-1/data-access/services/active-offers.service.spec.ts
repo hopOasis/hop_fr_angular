@@ -19,7 +19,7 @@ describe('GetProductsService', () => {
   });
 
   it('should return value', (done: Done) => {
-    service.getActiveOffers().subscribe((products) => {
+    service.getActiveOffers('').subscribe((products) => {
       expect(products?.length).toBeGreaterThanOrEqual(0);
       done();
     });

@@ -48,7 +48,7 @@ export class Page1Component implements OnInit {
 
   constructor() {
     this.activeOffersService
-      .getActiveOffers()
+      .getActiveOffers('Set of the week')
       .pipe(takeUntilDestroyed())
       .subscribe((item) => {
         if (item) {
