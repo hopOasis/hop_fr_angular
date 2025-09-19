@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  effect,
   HostListener,
   inject,
   OnInit,
@@ -13,9 +12,9 @@ import {
 import { isPlatformBrowser, NgClass } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { ProductCardComponent } from '../../catalog/ui/product-card/product-card.component';
-import { ProductDescription } from '../../catalog/data-access/models/product-description.model';
-import { GetProductsService } from './services/get-products.service';
+import { ProductCardComponent } from '../../../catalog/ui/product-card/product-card.component';
+import { ProductDescription } from '../../../catalog/data-access/models/product-description.model';
+import { ActiveOffersService } from '../data-access/services/active-offers.service';
 
 @Component({
   selector: 'app-page-1',
@@ -23,37 +22,41 @@ import { GetProductsService } from './services/get-products.service';
   imports: [ProductCardComponent, NgClass],
   templateUrl: './page-1.component.html',
   styleUrl: './page-1.component.scss',
-  providers: [GetProductsService],
+  providers: [ActiveOffersService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Page1Component implements OnInit {
-  private productService = inject(GetProductsService);
+  private activeOffersService = inject(ActiveOffersService);
   private platformId = inject(PLATFORM_ID);
   private startIndex = signal(0);
   private step = signal(4);
   private weekProducts: WritableSignal<ProductDescription[]> = signal([]);
-  currentProducts = computed(() =>
+
+  public currentProducts = computed(() =>
     this.weekProducts().slice(
       this.startIndex(),
       this.startIndex() + this.step()
     )
   );
-  weekProductsCount = 0;
-  disabledLeft = true;
-  disabledRight = false;
+  public weekProductsCount = 0;
+  public disabledLeft = true;
+  public disabledRight = true;
 
   @HostListener('window:resize') onResize() {
     this.updateStepper();
   }
 
   constructor() {
-    // @notice don't forget to unsubscribe
-    this.productService
-      .getProducts()
+    this.activeOffersService
+      .getActiveOffers()
       .pipe(takeUntilDestroyed())
       .subscribe((item) => {
-        this.weekProducts.set(item);
-        this.weekProductsCount = this.weekProducts().length;
+        if (item) {
+          this.weekProducts.set(item);
+          this.weekProductsCount = this.weekProducts().length;
+
+          if (this.weekProductsCount) this.disabledRight = false;
+        }
       });
   }
 

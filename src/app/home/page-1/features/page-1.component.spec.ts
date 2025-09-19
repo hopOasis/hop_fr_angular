@@ -5,13 +5,13 @@ import { PLATFORM_ID } from '@angular/core';
 import { of } from 'rxjs';
 
 import { Page1Component } from './page-1.component';
-import { GetProductsService } from './services/get-products.service';
-import { ProductDescription } from '../../catalog/data-access/models/product-description.model';
+import { ActiveOffersService } from '../data-access/services/active-offers.service';
+import { ProductDescription } from '../../../catalog/data-access/models/product-description.model';
 
 describe('Page1Component', () => {
   let component: Page1Component;
   let fixture: ComponentFixture<Page1Component>;
-  let productsSpy: jasmine.SpyObj<GetProductsService>;
+  let productsSpy: jasmine.SpyObj<ActiveOffersService>;
 
   const mockProducts: ProductDescription[] = [
     {
@@ -161,16 +161,16 @@ describe('Page1Component', () => {
     },
   ];
 
-  let service: GetProductsService;
+  let service: ActiveOffersService;
   beforeEach(async () => {
     productsSpy = jasmine.createSpyObj('GetProductsService', ['getProducts']);
-    productsSpy.getProducts.and.returnValue(of(mockProducts));
+    productsSpy.getActiveOffers.and.returnValue(of(mockProducts));
 
     await TestBed.configureTestingModule({
       imports: [Page1Component],
       providers: [
         provideHttpClient(),
-        { provide: GetProductsService, useValue: productsSpy },
+        { provide: ActiveOffersService, useValue: productsSpy },
         { provide: PLATFORM_ID, useValue: 'browser' },
       ],
     }).compileComponents();
