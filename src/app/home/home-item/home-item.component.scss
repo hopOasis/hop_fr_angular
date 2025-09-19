@@ -1,13 +1,19 @@
 @function rem($px) {
   @return calc($px * 0.063rem);
 }
+
 .home {
   position: relative;
 
   &__bg-image {
     background-repeat: no-repeat;
-    background-size: cover;
+    object-fit: cover;
     width: 100vw;
+
+    @media (max-width: 660px) {
+      // width: auto;
+      height: rem(272);
+    }
   }
 
   &__title {
@@ -16,6 +22,10 @@
     font-weight: 600;
     font-family: Montserrat;
     color: #fffbf4;
+
+    @media (max-width: 745px) {
+      font-size: rem(16);
+    }
   }
 
   &__text {
@@ -28,42 +38,44 @@
     color: #fffbf4;
     padding-top: 8px;
     padding-bottom: 24px;
+
+    @media (max-width: 745px) {
+      font-size: rem(12);
+    }
   }
 
   &__description {
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: rem(316);
-    left: rem(124);
+    top: rem(269);
+    left: rem(240);
     width: rem(484);
     height: rem(206);
-    margin-left: rem(100);
 
     @media (max-width: 1300px) {
       top: rem(216);
+      left: rem(10);
       margin-left: 0;
     }
 
     @media (max-width: 1100px) {
-      top: rem(116);
+      top: rem(150);
+    }
+
+    @media (max-width: 745px) {
+      width: rem(198);
+      height: rem(122);
+      left: rem(20);
     }
   }
 
   &__footer {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     background: #131313;
-    padding: rem(16) 0;
-
-    @media (min-width: 1400px) {
-      padding: rem(16) rem(150);
-    }
-
-    @media (max-width: 1120px) {
-      padding: rem(16) rem(16);
-    }
+    padding-top: rem(16);
 
     &__body {
       display: flex;
@@ -82,6 +94,10 @@
       line-height: 100%;
       letter-spacing: 0%;
       color: #ff9a00;
+
+      @media (max-width: 745px) {
+        font-size: rem(12);
+      }
     }
 
     &__title {
@@ -92,6 +108,9 @@
       line-height: 100%;
       letter-spacing: 0%;
       color: #fffbf4;
+      @media (max-width: 745px) {
+        font-size: rem(10);
+      }
     }
   }
 }
@@ -107,15 +126,29 @@
   line-height: 100%;
   letter-spacing: 0%;
 
-  @media (max-width: 900px) {
-    width: rem(153);
-    height: rem(57);
-    font-size: rem(18);
+  @media (max-width: 745px) {
+    width: rem(125);
+    height: rem(38);
+    font-size: rem(12);
   }
 
   &__home__footer {
-    padding: rem(8) rem(16);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: rem(56);
+    height: rem(40);
     border: 1px solid #ff9a00;
     color: #ff9a00;
+
+    @media (max-width: 745px) {
+      width: rem(25);
+      height: rem(18);
+    }
   }
+}
+
+.footer__wrapper {
+  width: 100wv;
+  background: #131313;
 }
