@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable } from 'rxjs';
 
 import { environment } from '../../../../environments/environment';
 import { Offer } from '../models/offer.interface';
@@ -15,20 +15,23 @@ export class ActiveOffersService {
   getActiveOffers(prodName: string): Observable<ProductDescription[] | null> {
     return this.httpClient.get<Offer[]>(`${this.url}/special-offers`).pipe(
       map((item) => {
-        const products: ProductDescription[] = [];
+        const offers: ProductDescription[] = [];
         item.forEach((prod) => {
           if (
             prod.active &&
             prod.name.toLowerCase().trim() === prodName.toLowerCase().trim()
           ) {
-            products.push(...prod.specialOfferBeers);
-            products.push(...prod.specialOfferCiders);
-            products.push(...prod.specialOfferProductBundles);
-            products.push(...prod.specialOfferSnacks);
+            offers.push(...prod.specialOfferBeers);
+            offers.push(...prod.specialOfferCiders);
+            offers.push(...prod.specialOfferProductBundles);
+            offers.push(...prod.specialOfferSnacks);
           }
         });
 
-        return products;
+        return offers;
+      }),
+      catchError((err) => {
+        throw `Error in active offers on product name: ${prodName}. Details: ${err}`;
       })
     );
   }

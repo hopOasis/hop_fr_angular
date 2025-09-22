@@ -51,25 +51,21 @@ export class Page1Component implements OnInit {
       .getActiveOffers('Set of the week')
       .pipe(takeUntilDestroyed())
       .subscribe((item) => {
-        if (item) {
+        next: if (item) {
           this.weekProducts.set(item);
           this.weekProductsCount = this.weekProducts().length;
 
           if (this.weekProductsCount) this.disabledRight = false;
         }
+        error: (err: any) => {
+          console.error(err);
+        };
       });
   }
 
   ngOnInit(): void {
     this.updateStepper();
   }
-
-  // get visibleProducts(): ProductDescription[] {
-  //   return this.weekProducts().slice(
-  //     this.startIndex(),
-  //     this.startIndex() + this.step()
-  //   );
-  // }
 
   updateStepper() {
     if (isPlatformBrowser(this.platformId)) {
@@ -84,7 +80,6 @@ export class Page1Component implements OnInit {
   slideLeft() {
     if (this.startIndex() > 0) {
       this.startIndex.update((id) => (id -= this.step()));
-
       this.disabledLeft = false;
       this.disabledRight = false;
     }
@@ -102,7 +97,7 @@ export class Page1Component implements OnInit {
       this.disabledLeft = false;
     }
 
-    if (this.weekProductsCount - 1 <= this.startIndex() + this.step()) {
+    if (this.startIndex() + this.step() >= this.weekProductsCount - 1) {
       this.disabledRight = true;
     }
   }
