@@ -12,6 +12,8 @@ import { NgOptimizedImage } from '@angular/common';
 export class HomeItemComponent {
   private router = inject(Router);
 
+  constructor() {}
+
   redirectToShop() {
     this.router.navigate(['/shop']);
   }

@@ -125,6 +125,20 @@
   font-size: rem(24);
   line-height: 100%;
   letter-spacing: 0%;
+  border-radius: 4px;
+
+  &__actions {
+    transition-duration: 400ms;
+    &:hover {
+      background: #ff9a00;
+      color: #fffbf4;
+    }
+
+    &:active {
+      background: #e88c00;
+      color: #fffbf4;
+    }
+  }
 
   @media (max-width: 745px) {
     width: rem(125);
@@ -139,6 +153,7 @@
     width: rem(56);
     height: rem(40);
     border: 1px solid #ff9a00;
+    border-radius: 4px;
     color: #ff9a00;
 
     @media (max-width: 745px) {
