@@ -2,6 +2,11 @@
   @return calc($px * 0.063rem);
 }
 
+:host {
+  min-height: 100%;
+  flex-grow: 1;
+}
+
 .home {
   position: relative;
 
@@ -161,6 +166,12 @@
       height: rem(18);
     }
   }
+}
+.action__container {
+  max-width: 81.25rem;
+  margin: 0 auto;
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
 }
 
 .footer__wrapper {
