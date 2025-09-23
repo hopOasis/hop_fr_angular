@@ -17,4 +17,8 @@ export class HomeItemComponent {
   redirectToShop() {
     this.router.navigate(['/shop']);
   }
+
+  goToAction() {
+    this.router.navigate(['/special-offers']);
+  }
 }
