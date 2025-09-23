@@ -1,5 +1,11 @@
 import { ViewportScroller } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CatalogStore } from '../../data-access/store/catalog.store';
 
@@ -9,7 +15,7 @@ import { CatalogStore } from '../../data-access/store/catalog.store';
   imports: [],
   templateUrl: './pagination.component.html',
   styleUrl: './pagination.component.scss',
-  changeDetection:ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaginationComponent {
   private activatedRoute = inject(ActivatedRoute);
@@ -19,6 +25,7 @@ export class PaginationComponent {
   public currentPage = this.catalogStore.page;
   public availablePages = input.required<number>();
   public arrayOfPages = computed<number[]>(() => this.calculatePagination());
+
   onChangePage(page: number) {
     this.catalogStore.updateInfo({ page: page });
     this.viewportScroller.scrollToPosition([0, 0]);
@@ -28,6 +35,7 @@ export class PaginationComponent {
       queryParamsHandling: 'merge',
     });
   }
+
   calculatePagination() {
     let arr = [];
     let counter = 5;

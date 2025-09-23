@@ -1,0 +1,14 @@
+:host {
+  min-height: 100%;
+  flex-grow: 1;
+}
+
+.main__container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.page-1 {
+  padding-top: calc(72 * 0.063rem);
+}
