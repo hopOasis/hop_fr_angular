@@ -1,10 +1,16 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './shared/layout/header/header.component';
 import { FooterComponent } from './shared/layout/footer/footer.component';
 import { AuthModalComponent } from './authentication/feature/auth-modal/auth-modal.component';
 import { CartModalComponent } from './cart/feature/cart-modal/cart-modal.component';
 import { AuthApiService } from './authentication/data-access/api/auth-api.service';
+import { AgeConfirmationComponent } from './age-confirmation/age-confirmation.component';
 
 @Component({
   selector: 'app-root',
@@ -15,9 +21,11 @@ import { AuthApiService } from './authentication/data-access/api/auth-api.servic
     FooterComponent,
     AuthModalComponent,
     CartModalComponent,
+    AgeConfirmationComponent,
   ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',changeDetection:ChangeDetectionStrategy.OnPush
+  styleUrl: './app.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
   readonly authApi = inject(AuthApiService);
