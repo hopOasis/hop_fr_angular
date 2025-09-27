@@ -35,6 +35,12 @@ h2 {
     max-width: rem.rem(1400);
     max-height: rem.rem(500);
   }
+
+  &__spinner {
+    position: relative;
+    max-width: 1400px;
+    max-height: 500px;
+  }
 }
 
 .products {
