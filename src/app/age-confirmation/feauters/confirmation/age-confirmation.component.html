@@ -1,0 +1,20 @@
+@if (!is18Confirmed.canActivate && isConfirm) {
+<div class="age__wrapper">
+  <div class="age">
+    <div class="logo">
+      <img src="header-logo.png" alt="" />
+    </div>
+    <p class="age__text">Вам виповнилось 18?</p>
+    <div class="age__actions">
+      <button class="btn" (click)="confirmed(true)">Так</button>
+      <button class="btn" (click)="confirmed(false)">Ні</button>
+    </div>
+  </div>
+</div>
+} @else {
+<div class="age__wrapper">
+  <p class="text-grey-900 text-xl font-bold">
+    Sorry!!! You have to be over 18 years old to visit our site!
+  </p>
+</div>
+}

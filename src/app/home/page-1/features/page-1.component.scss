@@ -37,6 +37,12 @@ h2 {
     padding-bottom: rem(72);
     padding-top: rem(40);
   }
+
+  &__spinner {
+    position: relative;
+    max-width: 1400px;
+    max-height: 500px;
+  }
 }
 
 .products {
