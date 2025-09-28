@@ -10,7 +10,6 @@ import { FooterComponent } from './shared/layout/footer/footer.component';
 import { AuthModalComponent } from './authentication/feature/auth-modal/auth-modal.component';
 import { CartModalComponent } from './cart/feature/cart-modal/cart-modal.component';
 import { AuthApiService } from './authentication/data-access/api/auth-api.service';
-import { AgeConfirmationComponent } from './age-confirmation/age-confirmation.component';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +20,6 @@ import { AgeConfirmationComponent } from './age-confirmation/age-confirmation.co
     FooterComponent,
     AuthModalComponent,
     CartModalComponent,
-    AgeConfirmationComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
