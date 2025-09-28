@@ -9,3 +9,13 @@ export interface Offer {
   specialOfferSnacks: ProductDescription[];
   specialOfferProductBundles: ProductDescription[];
 }
+
+export interface OfferStoreData {
+  productData: ProductDescription[] | null;
+  step: number;
+  startIndex: number;
+  disabledLeft: boolean;
+  disabledRight: boolean;
+  loading: boolean;
+  error: boolean;
+}

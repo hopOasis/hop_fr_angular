@@ -1,66 +1,38 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
   HostListener,
   inject,
   OnInit,
   PLATFORM_ID,
-  signal,
-  WritableSignal,
 } from '@angular/core';
 import { isPlatformBrowser, NgClass } from '@angular/common';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { ProductCardComponent } from '../../../catalog/ui/product-card/product-card.component';
-import { ProductDescription } from '../../../catalog/data-access/models/product-description.model';
 import { ActiveOffersService } from '../data-access/services/active-offers.service';
+import { OfferStore } from '../data-access/store/signal-store';
+import { SpinnerComponent } from '../../../shared/ui/spinner/spinner.component';
 
 @Component({
   selector: 'app-page-1',
   standalone: true,
-  imports: [ProductCardComponent, NgClass],
+  imports: [ProductCardComponent, NgClass, SpinnerComponent],
   templateUrl: './page-1.component.html',
   styleUrl: './page-1.component.scss',
-  providers: [ActiveOffersService],
+  providers: [ActiveOffersService, OfferStore],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Page1Component implements OnInit {
-  private activeOffersService = inject(ActiveOffersService);
-  private platformId = inject(PLATFORM_ID);
-  private startIndex = signal(0);
-  private step = signal(4);
-  private weekProducts: WritableSignal<ProductDescription[]> = signal([]);
+  public readonly store = inject(OfferStore);
 
-  public currentProducts = computed(() =>
-    this.weekProducts().slice(
-      this.startIndex(),
-      this.startIndex() + this.step()
-    )
-  );
-  public weekProductsCount = 0;
-  public disabledLeft = true;
-  public disabledRight = true;
+  private platformId = inject(PLATFORM_ID);
 
   @HostListener('window:resize') onResize() {
     this.updateStepper();
   }
 
   constructor() {
-    this.activeOffersService
-      .getActiveOffers('Set of the week')
-      .pipe(takeUntilDestroyed())
-      .subscribe((item) => {
-        next: if (item) {
-          this.weekProducts.set(item);
-          this.weekProductsCount = this.weekProducts().length;
-
-          if (this.weekProductsCount) this.disabledRight = false;
-        }
-        error: (err: any) => {
-          console.error(err);
-        };
-      });
+    this.store.loadOffers();
   }
 
   ngOnInit(): void {
@@ -70,35 +42,41 @@ export class Page1Component implements OnInit {
   updateStepper() {
     if (isPlatformBrowser(this.platformId)) {
       const width = window.innerWidth;
-      if (width < 640) this.step.set(1);
-      else if (width < 1024) this.step.set(2);
-      else if (width < 1440) this.step.set(3);
-      else this.step.set(4);
+      if (width < 640) this.store.updateStepper(1);
+      else if (width < 1024) this.store.updateStepper(2);
+      else if (width < 1440) this.store.updateStepper(3);
+      else this.store.updateStepper(4);
     }
   }
 
   slideLeft() {
-    if (this.startIndex() > 0) {
-      this.startIndex.update((id) => (id -= this.step()));
-      this.disabledLeft = false;
-      this.disabledRight = false;
+    if (this.store.startIndex() > 0) {
+      this.store.startIndexUpdate(this.store.startIndex() - this.store.step());
+      this.store.disabledLeftUpdate(false);
+      this.store.disabledRightUpdate(false);
     }
 
-    if (this.startIndex() < 1) {
-      this.disabledLeft = true;
+    if (this.store.startIndex() < 1) {
+      this.store.disabledLeftUpdate(true);
     }
   }
 
   slideRight() {
-    if (this.startIndex() + this.step() < this.weekProductsCount - 1) {
-      this.startIndex.update((id) => (id += this.step()));
+    if (
+      this.store.startIndex() + this.store.step() <
+      this.store.weekProductCount() - 1
+    ) {
+      this.store.startIndexUpdate(this.store.startIndex() + this.store.step());
 
-      this.disabledRight = false;
-      this.disabledLeft = false;
+      this.store.disabledRightUpdate(false);
+      this.store.disabledLeftUpdate(false);
     }
 
-    if (this.startIndex() + this.step() >= this.weekProductsCount - 1) {
-      this.disabledRight = true;
+    if (
+      this.store.startIndex() + this.store.step() >=
+      this.store.weekProductCount() - 1
+    ) {
+      this.store.disabledRightUpdate(true);
     }
   }
 }
