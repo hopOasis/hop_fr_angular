@@ -5,7 +5,15 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import bootstrap from './src/main.server';
 
-// The Express app is exported so that it can be used by serverless Functions.
+/**
+ * Create and configure an Express application for server-side rendering of the Angular Universal app.
+ *
+ * The returned server is configured with HTML view settings, serves static assets from the browser
+ * distribution with long-term caching, and routes all other requests to the Angular CommonEngine for
+ * server-side rendering. Intended to be exported for use in serverless Functions or a standalone server.
+ *
+ * @returns An Express application configured for Angular Universal server-side rendering
+ */
 export function app(): express.Express {
   const server = express();
   const serverDistFolder = dirname(fileURLToPath(import.meta.url));
