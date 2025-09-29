@@ -2,14 +2,15 @@ services:
   - type: web
     name: hop_fr_angular
     env: node
-    buildCommand: npm install && npm run build
+    buildCommand: npm install && npm run build:ssr
     startCommand: npm run serve:ssr:hop_fr_angular
     envVars:
       - key: NODE_ENV
         value: production
     repo: https://github.com/hopOasis/hop_fr_angular
     branch: main
-    autoDeployTrigger: commit
+    autoDeploy: free
+    plan: free
     resources:
       cpu: 0.25
       memory: 512MB
