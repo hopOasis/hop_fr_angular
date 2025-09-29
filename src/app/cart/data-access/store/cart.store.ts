@@ -1,52 +1,154 @@
 import { patchState, withMethods, withState } from '@ngrx/signals';
 import { signalStore, withComputed } from '@ngrx/signals';
-import { CartResponse } from '../models/cart-response.model';
 import { computed, inject } from '@angular/core';
-import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { pipe, switchMap, tap } from 'rxjs';
-import { tapResponse } from '@ngrx/operators';
-import { CartDataService } from '../services/cart-data.service';
+import { CartItemResponse } from '../models/cart-item-response.model';
+import { CartApiService } from '../api/cart-api.service';
+import { CartItemAddDto } from '../models/cart-item-add-dto.model';
+import { CartItemRemoveDto } from '../models/cart-item-remove-dto.model';
+import { catchError, tap, throwError } from 'rxjs';
 
-const initialState: { cartDetails: CartResponse | null; loading: boolean } = {
-  cartDetails: null,
-  loading: false,
+interface ICartStore {
+  cartId: number | null;
+  items: CartItemResponse[];
+  isLoading: boolean;
+  error: string | null;
+}
+
+const initialState: ICartStore = {
+  cartId: null,
+  items: [],
+  isLoading: false,
+  error: null,
 };
+
 export const CartStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
-  withMethods((store, cartDataService = inject(CartDataService)) => ({
-    triggerCartApdating: rxMethod<boolean>(
-      pipe(
-        tap(() => patchState(store, { loading: true })),
-        switchMap((data) => cartDataService.getProduct(data)),
-        tapResponse({
-          next: (data) => {
-            patchState(store, {
-              cartDetails: data,
-              loading: false,
-            });
-          },
-          error: () => {
-            patchState(store, {
-              cartDetails: null,
-              loading: false,
-            });
-            console.error('Корзина пуста або не вдалося отримати данні');
-          },
+  withMethods((store, cartApiService = inject(CartApiService)) => ({
+    loadCartItems() {
+      patchState(store, { isLoading: true, error: null });
+      cartApiService.getCartItems().subscribe({
+        next: (response) => {
+          patchState(store, {
+            items: response.items,
+            isLoading: false,
+            cartId: response.cartId,
+          });
+        },
+        error: (err) => {
+          patchState(store, {
+            isLoading: false,
+            error: err instanceof Error ? err.message : 'Something went wrong',
+          });
+        },
+      });
+    },
+    addCartItem(cartItem: CartItemAddDto) {
+      patchState(store, { isLoading: true, error: null });
+
+      return cartApiService.addCartItem(cartItem).pipe(
+        tap((newItem) => {
+          const currentItems = store.items();
+          const existingItemIndex = currentItems.findIndex(
+            (item) =>
+              item.itemId === newItem.itemId &&
+              item.measureValue === newItem.measureValue
+          );
+          const updatedItems =
+            existingItemIndex > -1
+              ? currentItems.map((item) =>
+                  item.itemId === newItem.itemId &&
+                  item.measureValue === newItem.measureValue
+                    ? {
+                        ...item,
+                        quantity: item.quantity + newItem.quantity,
+                        totalCost: item.totalCost + newItem.totalCost,
+                      }
+                    : item
+                )
+              : [...currentItems, newItem];
+
+          patchState(store, { items: updatedItems, isLoading: false });
+        }),
+        catchError((err) => {
+          patchState(store, {
+            isLoading: false,
+            error: err instanceof Error ? err.message : 'Something went wrong',
+          });
+          return throwError(() => err);
         })
-      )
-    ),
+      );
+    },
+    removeCartItem(removeDto: CartItemRemoveDto) {
+      const cartId = store.cartId();
+
+      patchState(store, { isLoading: true, error: null });
+
+      return cartApiService.removeCartItem(cartId, removeDto).pipe(
+        tap(() => {
+          const updatedItems = store
+            .items()
+            .filter(
+              (item) =>
+                !(
+                  item.itemId === removeDto.itemId &&
+                  item.measureValue === removeDto.measureValue
+                )
+            );
+
+          patchState(store, { items: updatedItems, isLoading: false });
+        }),
+        catchError((err) => {
+          patchState(store, {
+            isLoading: false,
+            error: err instanceof Error ? err.message : 'Something went wrong',
+          });
+          return throwError(() => err);
+        })
+      );
+    },
+    changeCartItemQuantity(items?: CartItemResponse[]) {
+      const cartId = store.cartId();
+
+      if (!cartId || !items) return;
+
+      patchState(store, { isLoading: true, error: null });
+      const updatedItems: CartItemAddDto[] = items.map((item) => ({
+        itemId: item.itemId,
+        itemType: item.itemType,
+        measureValue: item.measureValue,
+        quantity: item.quantity,
+      }));
+
+      return cartApiService.changeCartItemQuantity(cartId, updatedItems).pipe(
+        tap(() => {
+          patchState(store, { items, isLoading: false });
+        }),
+        catchError((err) => {
+          patchState(store, {
+            isLoading: false,
+            error: err instanceof Error ? err.message : 'Something went wrong',
+          });
+          return throwError(() => err);
+        })
+      );
+    },
+    clearCart() {
+      patchState(store, {
+        cartId: null,
+        items: [],
+        isLoading: false,
+        error: null,
+      });
+    },
   })),
-  withComputed(({ cartDetails }) => ({
-    cartId: computed(() =>
-      cartDetails()?.items[0] ? cartDetails()!.items[0].cartId : 0
+
+  withComputed((store) => ({
+    totalItems: computed(() =>
+      store.items().reduce((acc, el) => acc + el.quantity, 0)
     ),
-    amountOfItems: computed(() =>
-      cartDetails() ? cartDetails()!.items.length : 0
-    ),
-    cartItems: computed(() => (cartDetails() ? cartDetails()!.items : [])),
-    priceForAll: computed(() =>
-      !cartDetails ? 0 : cartDetails()!.priceForAll
+    totalPrice: computed(() =>
+      store.items().reduce((acc, el) => acc + el.totalCost, 0)
     ),
   }))
 );

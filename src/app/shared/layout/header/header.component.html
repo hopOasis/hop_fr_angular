@@ -43,7 +43,7 @@
     </a>
     <a
       [routerLink]="authApiService.isAuth() ? '/my_cabinet' : null"
-      (click)="onOpenModal(authApiService.isAuth())"
+      (click)="onOpenModal()"
       routerLinkActive="active"
       class="header__actions-link"
       routerLinkActive="active"
@@ -55,12 +55,10 @@
       class="header__actions-link"
     >
       <span class="header__icon icon icon-shopping-cart">
-        @if(cartApiService.amountOfItems()){
-        <span
-          class="cart-amount"
-          [class.big]="cartApiService.amountOfItems() > 9"
-          >{{ cartApiService.amountOfItems() }}</span
-        >
+        @if(cartStore.totalItems()){
+        <span class="cart-amount" [class.big]="cartStore.totalItems() > 9">{{
+          cartStore.totalItems()
+        }}</span>
         }
       </span>
     </button>

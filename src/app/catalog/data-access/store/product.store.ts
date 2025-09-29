@@ -16,6 +16,7 @@ import { CartItemRemoveDto } from '../../../cart/data-access/models/cart-item-re
 import { AuthApiService } from '../../../authentication/data-access/api/auth-api.service';
 import { CartItemResponse } from '../../../cart/data-access/models/cart-item-response.model';
 import { ItemTypesEnum } from '../models/item-types-enum.model';
+import { CartStore } from '../../../cart/data-access/store/cart.store';
 interface ProductStoreData {
   productData: ProductDescription | null;
   loading: boolean;
@@ -36,25 +37,25 @@ const initialState: ProductStoreData = {
 };
 export const ProductStore = signalStore(
   withState<ProductStoreData>(initialState),
-  withComputed((store, cartApi = inject(CartApiService)) => ({
+  withComputed((store, cartStore = inject(CartStore)) => ({
     priceOfFirstOption: computed(() => {
       return store.productData()?.options[0].price || 0;
     }),
     currentOptionInCart: computed<boolean>(() => {
-      if (!store.currentOption() || !cartApi.cartItems().length) return false;
-      return cartApi
-        .cartItems()
+      if (!store.currentOption() || !cartStore.items().length) return false;
+      return cartStore
+        .items()
         .some(
           (product) =>
-            product.pricePerItem === store.currentOption()!.price &&
+            product.measureValue === store.currentOption()?.measureValue &&
             product.itemId === store.productData()?.id
         );
     }),
     quontityInCart: computed<number>(() => {
-      if (!cartApi.cartItems().length || !store.currentOption()) return 0;
+      if (!cartStore.items().length || !store.currentOption()) return 0;
       return (
-        cartApi
-          .cartItems()
+        cartStore
+          .items()
           .find(
             (product) =>
               store.currentOption()!.price === product.pricePerItem &&
@@ -99,18 +100,16 @@ export const ProductStore = signalStore(
     (
       store,
       shopService = inject(ShopService),
-      cartApi = inject(CartApiService),
-      authApi = inject(AuthApiService)
+      cartStore = inject(CartStore)
     ) => ({
       defineCurrentOption(): ProductOption | undefined {
-        this.itemQuantityController();
         return store
           .productData()!
           .options.find((option) =>
             option.quantity
               ? true
-              : cartApi
-                  .cartItems()
+              : cartStore
+                  .items()
                   .some((product) => product.pricePerItem === option.price)
           );
       },
@@ -158,70 +157,24 @@ export const ProductStore = signalStore(
               }),
           });
       },
-      toggleCartItem(): Observable<string | CartItemResponse> {
+      removeProductFromCart(cartInfo: CartItemRemoveDto) {
         patchState(store, { isProcessing: true });
-        const cartInfo = store.infoRemoveDto();
-        const price = store.currentOption()!.price;
-        if (store.currentOptionInCart())
-          return this.removeProductFromCart(cartInfo, price);
-        else
-          return this.addProductToCart(
-            { quantity: store.quantity(), ...cartInfo },
-            price
-          );
+        cartStore.removeCartItem(cartInfo).subscribe({
+          next: () => {
+            patchState(store, { isProcessing: false });
+            this.fetchData(
+              store.productData()!.id,
+              ItemTypesEnum[store.productData()!.itemType]
+            );
+          },
+          error: () => patchState(store, { isProcessing: false }),
+        });
       },
-      removeProductFromCart(
-        cartInfo: CartItemRemoveDto,
-        price: number
-      ): Observable<string> {
-        return cartApi.removeProduct(cartInfo, price, authApi.isAuth()).pipe(
-          tap({
-            next: () => {
-              cartApi.triggerCartUpdate(authApi.isAuth());
-              patchState(store, { isProcessing: false });
-              this.fetchData(
-                store.productData()!.id,
-                ItemTypesEnum[store.productData()!.itemType]
-              );
-            },
-            error: () => patchState(store, { isProcessing: false }),
-          }),
-          switchMap(() => of('rem'))
-        );
-      },
-      addProductToCart(
-        cartInfo: CartItemAddDto,
-        price: number
-      ): Observable<CartItemResponse> {
-        return cartApi
-          .addProduct(cartInfo, price, store.productName(), authApi.isAuth())
-          .pipe(
-            tap({
-              next: () => {
-                cartApi.triggerCartUpdate(authApi.isAuth());
-                patchState(store, { isProcessing: false });
-              },
-              error: () => patchState(store, { isProcessing: false }),
-            })
-          );
-      },
-      itemQuantityController() {
-        if (authApi.isAuth()) return;
-        store.productData()?.options.forEach((option) => {
-          cartApi.cartItems().forEach((product) => {
-            if (
-              option.price === product.pricePerItem &&
-              option.quantity < product.quantity
-            ) {
-              patchState(store, { currentOption: option });
-              this.removeProductFromCart(
-                store.infoRemoveDto(),
-                store.currentOption()!.price
-              )
-                .pipe(take(1))
-                .subscribe();
-            }
-          });
+      addProductToCart(cartInfo: CartItemAddDto) {
+        patchState(store, { isProcessing: true });
+        cartStore.addCartItem(cartInfo).subscribe({
+          next: () => patchState(store, { isProcessing: false }),
+          error: () => patchState(store, { isProcessing: false }),
         });
       },
     })

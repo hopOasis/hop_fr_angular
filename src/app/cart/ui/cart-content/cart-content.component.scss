@@ -1,0 +1,43 @@
+.cart-content {
+  &__actions {
+    padding-inline: 64px;
+    padding-block: 24px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 0 16px;
+  }
+  &__amount {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 32px;
+    color: #292929;
+    font-family: 'Montserrat', sans-serif;
+    justify-self: end;
+  }
+ &__make-order-btn {
+    width: max-content;
+    justify-self: end;
+    font-size: 18px;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+    border-radius: 4px;
+    background-color: #292929;
+    color: #FFFBF4;
+    padding: 16px 56px;
+    border: none;
+    cursor: pointer;
+  }
+  &__continue-shopping-btn {
+    width: max-content;
+    justify-self: start;
+    font-size: 18px;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+    border-radius: 4px;
+    color: #292929;
+    padding: 16px 56px;
+    border: 1px solid #292929;
+    cursor: pointer;
+  }
+}

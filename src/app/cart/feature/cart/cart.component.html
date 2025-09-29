@@ -1,41 +1,24 @@
-<div class="cart">
-  <div class="cart__body">
-    @if(data() && data().length!==0){
-    <div class="cart__wrapper">
-      @for (item of data(); track item.itemId) {
-      <app-cart-product-item [itemData]="item"></app-cart-product-item>
+<div class="cart-dialog-wrapper">
+  <p-dialog
+    [(visible)]="isOpenedSignal"
+    [modal]="true"
+    [closable]="true"
+    [dismissableMask]="true"
+    [draggable]="false"
+    [style]="{ maxWidth: '1080px', width: '100%' }"
+  >
+    <ng-template pTemplate="header">
+      <h3 class="cart__title">Кошик</h3>
+    </ng-template>
+    <ng-template pTemplate="content">
+      @if(cartStore.totalItems() > 0) {
+      <app-cart-content></app-cart-content>
+      } @else {
+      <app-empty-cart></app-empty-cart>
       }
-    </div>
-    <p class="cart__amount-info">
-      Сума замовлення {{ fullCost() | updatePrice }}
-    </p>
-    <div class="cart__actions">
-      <div class="cart__button-wrapper">
-        <a
-          (click)="onCloseModal()"
-          routerLink="/shop"
-          [queryParams]="{ page: 0 }"
-          type="button"
-          class="hover:text-accent-500 active:text-accent-600 active:border-accent-600 hover:border-accent-500 text-black-500 border-solid border border-black-50 px-16 py-6 cart__button-continue"
-        >
-          Продовжити покупки
-        </a>
-      </div>
-      <div class="cart__button-wrapper">
-        <button type="button" class="px-16 py-6 cart__button-make-order">
-          Оформити замовлення
-        </button>
-      </div>
-    </div>
-    }@else {
-    <div class="cart__empty-wrapper">
-      <div class="cart__image">
-        <img src="./cart.png" alt="Cart" />
-      </div>
-      <h2 class="cart__title">Ваш кошик порожній</h2>
-      <p class="cart__text">Та ви завжди можете додати до нього товари</p>
-    </div>
-
-    }
-  </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <app-cart-special-offer></app-cart-special-offer>
+    </ng-template>
+  </p-dialog>
 </div>

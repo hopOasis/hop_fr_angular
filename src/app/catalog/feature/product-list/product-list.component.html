@@ -9,10 +9,7 @@
   <div class="product-list__body">
     @if(productData()){ @for (product of productData()!.content; track
     product.id) {
-    <app-product-card
-      
-      [inputData]="product"
-    ></app-product-card>
+    <app-product-card [inputData]="product"></app-product-card>
     } } @if(catalogDataStore.loading()){
     <app-spinner></app-spinner>
     }

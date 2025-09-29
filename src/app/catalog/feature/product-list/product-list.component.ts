@@ -18,7 +18,7 @@ import { CatalogDataStore } from '../../data-access/store/catalog-data.store';
   ],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss',
-  changeDetection:ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductListComponent {
   readonly catalogDataStore = inject(CatalogDataStore);
