@@ -1,14 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { TeamRecommendationsSectionComponent } from '../team-recommendations-section/team-recommendations-section.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [TeamRecommendationsSectionComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
-  changeDetection:ChangeDetectionStrategy.OnPush
-
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent {
-
-}
+export class HomeComponent {}

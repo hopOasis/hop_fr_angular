@@ -6,7 +6,7 @@
   flex-direction: column;
   position: relative;
   transition: all 0.2s ease;
-  &:hover .product-card__image img {
+  &:hover .product-card__image-box img {
     transform: scale(1.1);
   }
   &__icon {
