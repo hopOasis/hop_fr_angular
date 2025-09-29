@@ -1,11 +1,24 @@
+@use "../../../styles/global/colors" as c;
+@use "../../../styles/utils/rem";
+
 .age {
   position: absolute;
   top: 50%;
   left: 50%;
-  translate: -45% -50%;
-  width: 844px;
-  height: 470px;
-  background: #131313;
+  translate: -50% -55%;
+  width: rem.rem(844);
+  height: rem.rem(470);
+  background: c.$black-500;
+
+  @media (max-width: rem.em(870)) {
+    scale: 0.7;
+  }
+  @media (max-width: rem.em(620)) {
+    scale: 0.5;
+  }
+  @media (max-width: rem.em(440)) {
+    scale: 0.4;
+  }
 
   &__wrapper {
     display: flex;
@@ -21,19 +34,19 @@
   &__text {
     text-align: center;
     font-family: Montserrat;
+    font-size: rem.rem(40);
     font-weight: 600;
-    font-size: 40px;
     line-height: 100%;
     letter-spacing: 0%;
 
-    color: #fffbf4;
+    color: c.$white-500;
   }
 
   &__actions {
     display: flex;
     justify-content: center;
     gap: 17px;
-    padding-top: 40px;
+    padding-top: rem.rem(40);
   }
 }
 
@@ -50,17 +63,20 @@
 }
 
 .btn {
+  font-size: rem.rem(16);
+  font-weight: 600;
   padding: 18px 72px;
-  background: #fffbf4;
+  background: c.$white-500;
   border-radius: 4px;
-  transition-duration: 400ms;
+  transition: 400ms ease-out;
+
   &:hover {
-    background: #ff9a00;
-    color: #fffbf4;
+    background: c.$accent-500;
+    color: c.$white-500;
   }
 
   &:active {
-    background: #e88c00;
-    color: #fffbf4;
+    background: c.$accent-600;
+    color: c.$white-500;
   }
 }
