@@ -7,6 +7,9 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
+    repo: https://github.com/hopOasis/hop_fr_angular
+    branch: main
+    autoDeployTrigger: commit
     resources:
       cpu: 0.25
       memory: 512MB
