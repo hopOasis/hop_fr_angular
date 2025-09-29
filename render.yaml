@@ -3,7 +3,7 @@ services:
     name: hop_fr_angular
     env: node
     buildCommand: npm install && npm run build
-    startCommand: npm start
+    startCommand: node dist/hop_fr_angular/server/main.server.mjs
     envVars:
       - key: NODE_ENV
         value: production
