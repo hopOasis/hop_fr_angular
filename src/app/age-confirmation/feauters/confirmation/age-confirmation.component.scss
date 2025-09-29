@@ -53,4 +53,14 @@
   padding: 18px 72px;
   background: #fffbf4;
   border-radius: 4px;
+  transition-duration: 400ms;
+  &:hover {
+    background: #ff9a00;
+    color: #fffbf4;
+  }
+
+  &:active {
+    background: #e88c00;
+    color: #fffbf4;
+  }
 }
