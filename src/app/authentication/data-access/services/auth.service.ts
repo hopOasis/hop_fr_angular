@@ -3,7 +3,11 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, Observable, take, throwError } from 'rxjs';
 import { Login, Register } from '../models/auth.model';
 import { Token } from '../models/token.model';
+<<<<<<< HEAD
 import { environment } from '../../../environments/environment.prod';
+=======
+import { environment } from '../../../../environments/environment.prod';
+>>>>>>> ee1d40f (fix-deploy-bag)
 import { FetchedError } from '../models/error.model';
 
 @Injectable({
