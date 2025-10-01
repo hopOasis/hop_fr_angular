@@ -1,0 +1,112 @@
+@use "../../../styles/global/colors" as c;
+@use "../../../styles/utils/rem";
+
+.sorting {
+  display: flex;
+  align-items: center;
+  gap: rem.rem(28);
+  width: rem.rem(370);
+  height: rem.rem(51);
+  overflow: hidden;
+
+  &__text {
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: rem.rem(20);
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: c.$black-500;
+  }
+}
+
+.box-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 21px;
+  cursor: pointer;
+
+  &__text {
+    @extend .sorting__text;
+    font-weight: 600;
+    font-size: rem.rem(16);
+    color: c.$black-500;
+
+    &:hover {
+      color: c.$accent-500;
+    }
+  }
+
+  &__arrow {
+    width: rem.rem(14);
+    height: rem.rem(14);
+    transform: rotate(-45deg);
+    border-right: none;
+    border-top: none;
+    border-left: 2px solid c.$black-500;
+    border-bottom: 2px solid c.$black-500;
+    animation: rotate-down 300ms ease-out alternate;
+  }
+
+  &__active {
+    border-left: 2px solid c.$black-500;
+    border-bottom: 2px solid c.$black-500;
+    transform: rotate(135deg);
+    animation: rotate-up 300ms ease-out;
+  }
+}
+
+.disabled {
+  color: c.$black-100;
+  cursor: auto;
+
+  &:hover {
+    color: c.$black-100;
+  }
+}
+
+@keyframes rotate-up {
+  from {
+    transform: rotate(-45deg);
+    border-right: none;
+    border-top: none;
+    border-left: 2px solid c.$black-500;
+    border-bottom: 2px solid c.$black-500;
+  }
+  50% {
+    transform: rotate(135deg);
+    border-left: none;
+    border-bottom: none;
+    border-right: 2px solid c.$black-500;
+    border-top: 2px solid c.$black-500;
+  }
+  to {
+    transform: rotate(135deg);
+    border-right: none;
+    border-top: none;
+    border-left: 2px solid c.$black-500;
+    border-bottom: 2px solid c.$black-500;
+  }
+}
+
+@keyframes rotate-down {
+  from {
+    border-left: 2px solid c.$black-500;
+    border-bottom: 2px solid c.$black-500;
+    transform: rotate(135deg);
+  }
+  50% {
+    transform: rotate(-45deg);
+    border-left: none;
+    border-bottom: none;
+    border-right: 2px solid c.$black-500;
+    border-top: 2px solid c.$black-500;
+  }
+  to {
+    transform: rotate(-45deg);
+    border-right: none;
+    border-top: none;
+    border-left: 2px solid c.$black-500;
+    border-bottom: 2px solid c.$black-500;
+  }
+}

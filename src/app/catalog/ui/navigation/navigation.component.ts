@@ -1,21 +1,25 @@
-import { ChangeDetectionStrategy, OnInit } from '@angular/core';
-import { Component, DestroyRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, DestroyRef, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
 import { SortingTypes } from '../../data-access/models/sorting-types.model';
 import { CatalogStore } from '../../data-access/store/catalog.store';
+import { SortingComponent } from '../sorting/sorting.component';
+
 @Component({
   selector: 'app-navigation',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, SortingComponent],
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.scss',
-  changeDetection:ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavigationComponent implements OnInit {
   private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
   private activatedRoute = inject(ActivatedRoute);
-  public destroyRef = inject(DestroyRef);
   readonly catalogStore = inject(CatalogStore);
   public productRoutes = new Set(['all-products', 'beers', 'snacks', 'ciders']);
   public currentPage = this.catalogStore.page;
@@ -29,6 +33,7 @@ export class NavigationComponent implements OnInit {
       queryParams: { sort_by: type },
     });
   }
+
   checkForParams() {
     const { typeOfProduct } = this.activatedRoute.snapshot.params;
     const { page, sort_by } = this.activatedRoute.snapshot.queryParams;
@@ -39,6 +44,7 @@ export class NavigationComponent implements OnInit {
     });
     this.navigatePage(this.currentTypeOfProduct());
   }
+
   navigatePage(typeOfProduct: string) {
     this.router.navigate([`/shop/${typeOfProduct}`], {
       relativeTo: this.activatedRoute,
@@ -48,10 +54,13 @@ export class NavigationComponent implements OnInit {
       },
     });
   }
+
   ngOnInit(): void {
     this.checkForParams();
-    const paramsSubscription = this.activatedRoute.params.subscribe(
-      ({ typeOfProduct }) => {
+
+    this.activatedRoute.params
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(({ typeOfProduct }) => {
         if (!this.productRoutes.has(typeOfProduct))
           return this.navigatePage('all-products');
         else if (
@@ -76,19 +85,15 @@ export class NavigationComponent implements OnInit {
         this.catalogStore.updateInfo({
           productCategory: typeOfProduct,
         });
-      }
-    );
-    const queryParamSubscription = this.activatedRoute.queryParams.subscribe(
-      ({ sort_by, page }) => {
+      });
+
+    this.activatedRoute.queryParams
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(({ sort_by, page }) => {
         this.catalogStore.updateInfo({
           page: page,
           sortDirection: sort_by,
         });
-      }
-    );
-    this.destroyRef.onDestroy(() => {
-      paramsSubscription.unsubscribe();
-      queryParamSubscription.unsubscribe();
-    });
+      });
   }
 }

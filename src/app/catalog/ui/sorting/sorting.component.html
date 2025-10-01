@@ -1,0 +1,16 @@
+<div class="sorting">
+  <p class="sorting__text">Сортування</p>
+  <div class="box-button" [class.disabled]="disabled() === 'all-products'">
+    <p
+      class="box-button__text"
+      [class.disabled]="disabled() === 'all-products'"
+    >
+      {{ isActive ? "Від дорогих" : "Від дешевих" }}
+    </p>
+    <div
+      class="box-button__arrow"
+      [class.disabled]="disabled() === 'all-products'"
+      [class.box-button__active]="isActive"
+    ></div>
+  </div>
+</div>
