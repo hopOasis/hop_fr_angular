@@ -2,7 +2,10 @@ import { Routes } from '@angular/router';
 import { shopRoutes } from './catalog/feature/product.routes';
 import { checkUserPermission } from './authentication/data-access/guards/auth.guard';
 import { userCabinetRoutes } from './user/feature/user-cabinet.routes';
+<<<<<<< HEAD
 import { ageGuard } from './age-confirmation/data-access/age.guard';
+=======
+>>>>>>> 6bc1499 (cart functionality)
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
