@@ -5,11 +5,7 @@ import { catchError, combineLatest, Observable, of } from 'rxjs';
 import { CartItemResponse } from '../models/cart-item-response.model';
 import { CartItemRemoveDto } from '../models/cart-item-remove-dto.model';
 import { LocalCartService } from './local-cart.service';
-<<<<<<< HEAD
 import { environment } from '../../../environments/environment.prod';
-=======
-import { environment } from '../../../../environments/environment.prod';
->>>>>>> ee1d40f (fix-deploy-bag)
 import { CartItemAddDto } from '../models/cart-item-add-dto.model';
 import { CartStore } from '../store/cart.store';
 

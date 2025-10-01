@@ -3,12 +3,8 @@ import { LocalCartService } from './local-cart.service';
 import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
 import { CartResponse } from '../models/cart-response.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-<<<<<<< HEAD
 import { environment } from '../../../environments/environment';
 
-=======
-import { environment } from '../../../../environments/environment.prod';
->>>>>>> ee1d40f (fix-deploy-bag)
 @Injectable({ providedIn: 'root' })
 export class CartDataService {
   private httpClient = inject(HttpClient);
