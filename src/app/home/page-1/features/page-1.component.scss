@@ -1,16 +1,8 @@
-@use "sass:math";
-
-@function rem($px) {
-  @return calc($px * 0.063rem);
-}
-
-@function em($px) {
-  @return math.div($px, 16) + em;
-}
+@use "../../../styles/global/colors" as c;
+@use "../../../styles/utils/rem";
 
 h2 {
   font-family: Montserrat;
-  font-size: 2rem;
   line-height: 100%;
   font-weight: 500;
 }
@@ -25,7 +17,7 @@ h2 {
   &__actions {
     display: flex;
     gap: 10px;
-    min-width: rem(58);
+    min-width: rem.rem(58);
   }
 
   &__card {
@@ -34,25 +26,25 @@ h2 {
     justify-content: center;
     overflow: hidden;
     gap: 24px;
-    padding-bottom: rem(72);
-    padding-top: rem(40);
+    padding-bottom: rem.rem(72);
+    padding-top: rem.rem(40);
   }
 
   &__spinner {
     position: relative;
-    max-width: 1400px;
-    max-height: 500px;
+    max-width: rem.rem(1400);
+    max-height: rem.rem(500);
   }
 }
 
 .products {
   &__week {
-    padding-top: rem(40);
+    padding-top: rem.rem(40);
   }
 }
 
 .icon {
   &__arrow__disabled {
-    color: #b3b3b2;
+    color: c.$black-50;
   }
 }

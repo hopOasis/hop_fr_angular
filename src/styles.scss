@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @font-face {
   font-family: "icomoon";
   src: url("../public/fonts/icomoon.eot?9ik3d9");
@@ -160,7 +161,7 @@ h4,
 h5,
 h6 {
   font-weight: inherit;
-  font-size: inherit;
+  font-size: initial;
 }
 html,
 body {
