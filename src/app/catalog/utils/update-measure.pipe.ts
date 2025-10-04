@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class UpdateMeasurePipe implements PipeTransform {
   transform(value: number, itemType: string): string {
-    if (itemType === 'SNACK') return `${value} ГР`;
+    if (itemType === 'SNACK') return `${value} гр`;
     return `${value} л`;
   }
 }
