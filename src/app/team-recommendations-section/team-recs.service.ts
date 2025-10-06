@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-// import { Olena } from './assets/olena.png';
-// import { Andrew } from './assets/andrew.png';
-// import { Oleg } from './assets/oleg.jpg';
 
 export interface Recommendation {
   photo: string;

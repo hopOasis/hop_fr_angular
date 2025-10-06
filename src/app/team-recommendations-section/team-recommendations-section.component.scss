@@ -1,4 +1,9 @@
 .team-recommendations {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 72px 0;
+
   &__title {
     font-weight: 500;
     font-size: 32px;
@@ -8,7 +13,6 @@
   .cards-grid {
     display: flex;
     justify-content: center;
-    width: 1440px;
     max-height: 800px;
     flex-wrap: wrap;
     gap: 54px;

@@ -46,10 +46,26 @@
 
   &.single {
     display: flex;
-    height: 588px;
     width: 351px;
     flex-direction: column;
     gap: 0;
+
+    .card__content {
+      padding: 0 16px;
+      margin: 49px 0;
+    }
+
+    .card__image-box {
+      width: 351px;
+    }
+
+    .product-link {
+      margin-bottom: 16px;
+    }
+
+    .comment {
+      margin: 7px 0 16px 0;
+    }
   }
 }
 
