@@ -5,25 +5,29 @@ import { FetchedProductData } from '../../../../catalog/data-access/models/produ
 import { map, Observable } from 'rxjs';
 import { ProductDescription } from '../../../../catalog/data-access/models/product-description.model';
 
-Injectable();
+@Injectable()
 export class SearchResultService {
   private httpClient = inject(HttpClient);
   private readonly URL = environment.apiUrl;
 
   getAllProducts(searchWord: string): Observable<ProductDescription[]> {
+    if (searchWord.length < 3) {
+      return this.httpClient
+        .get<FetchedProductData>(`${this.URL}/all-products?size=100`)
+        .pipe(map(() => []));
+    }
     return this.httpClient
       .get<FetchedProductData>(`${this.URL}/all-products?size=100`)
       .pipe(
         map((products) =>
-          products.content.filter((product) =>
-            searchWord.length >= 3
-              ? product.name
-                  ?.toLocaleLowerCase()
-                  .includes(searchWord.toLowerCase()) ||
-                product.description
-                  .toLowerCase()
-                  .includes(searchWord.toLowerCase())
-              : ''
+          products.content.filter(
+            (product) =>
+              product.name
+                ?.toLocaleLowerCase()
+                .includes(searchWord.toLowerCase()) ||
+              product.description
+                .toLowerCase()
+                .includes(searchWord.toLowerCase())
           )
         )
       );

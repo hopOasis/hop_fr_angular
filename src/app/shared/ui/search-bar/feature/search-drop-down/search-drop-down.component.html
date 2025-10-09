@@ -1,6 +1,8 @@
 <div
   class="drop-down"
-  (click)="redirect(searchResult()!.id, searchResult()!.itemType)"
+  (click)="
+    searchResult() && redirect(searchResult()!.id, searchResult()!.itemType)
+  "
 >
   @if(searchResult()?.name) {
   <picture>
@@ -13,7 +15,7 @@
   <div class="drop-down__body">
     <div class="drop-down__description">
       <p class="drop-down__text">{{ searchResult()?.description }}</p>
-      <p class="dorp-down__amount">
+      <p class="drop-down__amount">
         {{ searchResult()?.amount | updateMeasure : searchResult()?.itemType }}
       </p>
     </div>

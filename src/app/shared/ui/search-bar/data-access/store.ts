@@ -2,7 +2,8 @@ import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { inject } from '@angular/core';
 import { SearchResultService } from './search-result.service';
 import { SearchResult } from '../../../interfaces/search-result.interface';
-import { map } from 'rxjs';
+import { catchError, map, of, pipe, switchMap, tap } from 'rxjs';
+import { rxMethod } from '@ngrx/signals/rxjs-interop';
 
 interface InitialState {
   productData: SearchResult[];
@@ -20,17 +21,14 @@ export const ResultStore = signalStore(
   withState(initialState),
 
   withMethods((store, searchResultService = inject(SearchResultService)) => ({
-    loadSearchResult(searchWord: string) {
-      patchState(store, { loading: true });
-      searchResultService
-        .getAllProducts(searchWord)
-        .pipe(
-          map((products) =>
-            products.map((product) => {
-              const result: SearchResult[] = [];
-
-              product.options.forEach((item) => {
-                result.push({
+    loadSearchResult: rxMethod<string>(
+      pipe(
+        tap(() => patchState(store, { loading: true })),
+        switchMap((searchWord) =>
+          searchResultService.getAllProducts(searchWord).pipe(
+            map((products) =>
+              products.flatMap((product) =>
+                product.options.map((item) => ({
                   id: product.id,
                   imageUrl: product.imageName?.[0],
                   description: product.description,
@@ -38,22 +36,19 @@ export const ResultStore = signalStore(
                   amount: item.measureValue,
                   name: product.name,
                   itemType: product.itemType,
-                });
-              });
-
-              return result;
-            })
+                }))
+              )
+            )
           )
-        )
-        .subscribe({
-          next: (result) => {
-            patchState(store, {
-              productData: result.flatMap((item) => item),
-              loading: false,
-            });
-          },
-          error: () => patchState(store, { error: true }),
-        });
-    },
+        ),
+        tap((productData) =>
+          patchState(store, { productData, loading: false, error: false })
+        ),
+        catchError(() => {
+          patchState(store, { error: true, loading: false });
+          return of([]);
+        })
+      )
+    ),
   }))
 );
