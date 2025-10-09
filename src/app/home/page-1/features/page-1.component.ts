@@ -9,9 +9,9 @@ import {
 import { isPlatformBrowser, NgClass } from '@angular/common';
 
 import { ProductCardComponent } from '../../../catalog/ui/product-card/product-card.component';
-import { ActiveOffersService } from '../data-access/services/active-offers.service';
 import { OfferStore } from '../data-access/store/signal-store';
 import { SpinnerComponent } from '../../../shared/ui/spinner/spinner.component';
+import { ActiveOffersService } from '../data-access/services/active-offers.service';
 
 @Component({
   selector: 'app-page-1',
@@ -19,7 +19,7 @@ import { SpinnerComponent } from '../../../shared/ui/spinner/spinner.component';
   imports: [ProductCardComponent, NgClass, SpinnerComponent],
   templateUrl: './page-1.component.html',
   styleUrl: './page-1.component.scss',
-  providers: [ActiveOffersService, OfferStore],
+  providers: [OfferStore, ActiveOffersService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Page1Component implements OnInit {
