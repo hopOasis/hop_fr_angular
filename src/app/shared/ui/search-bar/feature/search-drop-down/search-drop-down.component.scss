@@ -1,0 +1,50 @@
+@use "../../../../../styles/utils/rem";
+@use "../../../../../styles/global/colors" as c;
+
+.drop-down {
+  display: flex;
+  padding: rem.rem(20);
+  gap: 14px;
+  cursor: pointer;
+
+  &__body {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  &__image {
+    max-width: rem.rem(80);
+    max-height: rem.rem(80);
+  }
+
+  &__description {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: rem.rem(670);
+  }
+
+  &__text {
+    font-family: Montserrat;
+    font-weight: 400;
+    font-size: rem.rem(16);
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: c.$grey-500;
+  }
+
+  &__amount {
+    @extend .drop-down__text;
+
+    font-size: rem.rem(14);
+    font-weight: 500;
+  }
+
+  &__price {
+    @extend .drop-down__text;
+
+    font-weight: 600;
+    color: c.$accent-500;
+  }
+}

@@ -1,0 +1,27 @@
+<div class="search__wrapper" [class.search__wide]="searchFocus()">
+  <input
+    #input
+    class="search__input"
+    [(ngModel)]="searchWord"
+    type="text"
+    placeholder="Пошук"
+    (keyup)="search()"
+  />
+  <div class="search__clear" (click)="clearSearch()">
+    <div class="search__clear__line-one"></div>
+    <div class="search__clear__line-two"></div>
+  </div>
+  <div class="search__icon" (click)="search()">
+    <span class="icon-search"></span>
+  </div>
+  @if(searchWord && searchFocus()) {
+  <div class="search__result">
+    @if(!store.productData().length) {
+    <app-search-drop-down [searchResult]="empty" />
+    } @for(result of store.productData(); track $index) {
+
+    <app-search-drop-down [searchResult]="result" />
+    }
+  </div>
+  }
+</div>

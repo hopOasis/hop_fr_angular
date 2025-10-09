@@ -8,8 +8,9 @@
     align-items: center;
     min-height: 5.875rem;
     gap: 1.875rem;
-    @media (max-width: 650px) {
+    @media (max-width: 700px) {
       gap: 1rem;
+      flex-direction: column;
     }
   }
   &__logo {
@@ -146,5 +147,23 @@
     border-radius: 50%;
     background: rgb(255, 154, 0);
     color: #fff;
+  }
+}
+
+.search {
+  &__focus {
+    display: none;
+
+    @media (max-width: 700px) {
+      display: flex;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    width: 70%;
+  }
+
+  @media (max-width: 900px) {
+    width: 50%;
   }
 }

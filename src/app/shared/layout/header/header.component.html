@@ -4,7 +4,7 @@
       <img src="./header-logo.png" alt="Brand name logo" class="header__logo"
     /></a>
   </div>
-  <nav class="header__menu menu">
+  <nav class="header__menu menu" [class.search__focus]="searchFocus">
     <a routerLinkActive="active" routerLink="#" class="menu__link"
       >Про броварню</a
     >
@@ -15,24 +15,12 @@
       >Доставка і оплата</a
     >
   </nav>
-  <!-- @if(isShowedInput()){
-  <div class="header__input-wrapper">
-    <input
-      (blur)="onShowInput(false)"
-      appAutoFocus
-      #input
-      type="text"
-      name="search"
-      placeholder="Пошук"
-      class="header__input"
-    />
-    <span class="icon input-icon icon-search"></span>
+
+  <div class="search">
+    <app-search-bar (searchOnFocus)="searchOnFocus($event)" />
   </div>
-  } -->
+
   <div class="header__actions">
-    <button type="button" class="header__actions-link button">
-      <span class="icon icon-search"></span>
-    </button>
     <a
       [routerLink]="authApiService.isAuth() ? '/my_cabinet/favorite' : null"
       class="header__actions-link"

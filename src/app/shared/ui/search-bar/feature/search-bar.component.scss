@@ -1,0 +1,72 @@
+@use "../../../../styles/global/colors" as c;
+@use "../../../../styles/utils/rem";
+
+.search {
+  &__wrapper {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: space-between;
+    padding: rem.rem(4) rem.rem(8) rem.rem(4) rem.rem(16);
+    border-radius: 4px;
+    background: c.$white-500;
+    // margin-right: rem.rem(99);
+  }
+
+  &__wide {
+    width: rem.rem(870);
+    // margin-right: rem.rem(55);
+
+    @media (max-width: rem.em(1200)) {
+      width: 100%;
+    }
+  }
+
+  &__input {
+    width: 100%;
+    outline: none;
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: rem.rem(14);
+    line-height: 100%;
+    letter-spacing: 0%;
+    background: c.$white-500;
+    color: c.$black-100;
+  }
+
+  &__result {
+    position: absolute;
+    max-height: 100vh;
+    overflow-y: auto;
+    top: 41px;
+    left: 0;
+    background: c.$white-500;
+    z-index: 1000;
+    width: -moz-available;
+    width: -webkit-fill-available;
+  }
+
+  &__clear {
+    padding: rem.rem(6);
+    cursor: pointer;
+
+    &__line-one,
+    &__line-two {
+      width: rem.rem(12);
+      height: rem.rem(12);
+      border-bottom: 2px solid c.$black-100;
+    }
+
+    &__line-one {
+      transform: translateY(1px) rotate(45deg);
+    }
+    &__line-two {
+      transform: translateY(-4px) rotate(125deg);
+    }
+  }
+
+  &__icon {
+    cursor: pointer;
+    padding: rem.rem(3);
+  }
+}

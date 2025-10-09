@@ -1,0 +1,27 @@
+<div
+  class="drop-down"
+  (click)="
+    searchResult() && redirect(searchResult()!.id, searchResult()!.itemType)
+  "
+>
+  @if(searchResult()?.name) {
+  <picture>
+    <img
+      class="drop-down__image"
+      [src]="searchResult()?.imageUrl"
+      [alt]="searchResult()?.name"
+    />
+  </picture>
+  <div class="drop-down__body">
+    <div class="drop-down__description">
+      <p class="drop-down__text">{{ searchResult()?.description }}</p>
+      <p class="drop-down__amount">
+        {{ searchResult()?.amount | updateMeasure : searchResult()?.itemType }}
+      </p>
+    </div>
+    <div class="drop-down__price">{{ searchResult()?.price }} грн</div>
+  </div>
+  } @else {
+  <p>Співпадінь не знайдено!!!</p>
+  }
+</div>
