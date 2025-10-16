@@ -1,0 +1,24 @@
+@use "../../../styles/global/colors" as c;
+@use "../../../styles/utils/rem";
+
+.filter-rating {
+  &__section {
+    display: flex;
+    // align-items: center;
+    justify-content: space-between;
+  }
+
+  &__title {
+    color: c.$grey-500;
+  }
+}
+
+.rating {
+  padding-top: rem.rem(15);
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: rem.rem(5);
+  }
+}

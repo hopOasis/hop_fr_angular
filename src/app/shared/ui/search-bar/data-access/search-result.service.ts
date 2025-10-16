@@ -1,9 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { environment } from '../../../../environments/environment';
-import { FetchedProductData } from '../../../../catalog/data-access/models/product-api-response.model';
+
 import { map, Observable } from 'rxjs';
+
+import { FetchedProductData } from '../../../../catalog/data-access/models/product-api-response.model';
+import { environment } from '../../../../environments/environment';
 import { ProductDescription } from '../../../../catalog/data-access/models/product-description.model';
+import { trimmedLowerCase } from './trimmedLower';
 
 @Injectable()
 export class SearchResultService {
@@ -22,12 +25,12 @@ export class SearchResultService {
         map((products) =>
           products.content.filter(
             (product) =>
-              product.name
-                ?.toLocaleLowerCase()
-                .includes(searchWord.toLowerCase()) ||
-              product.description
-                .toLowerCase()
-                .includes(searchWord.toLowerCase())
+              trimmedLowerCase(product.name).includes(
+                trimmedLowerCase(searchWord)
+              ) ||
+              trimmedLowerCase(product.description).includes(
+                trimmedLowerCase(searchWord)
+              )
           )
         )
       );

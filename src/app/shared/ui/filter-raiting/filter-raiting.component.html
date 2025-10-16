@@ -1,0 +1,21 @@
+<div class="filter-rating__section">
+  <p class="filter-rating__title title-h5-semi-bold">Рейтинг</p>
+  <p
+    class="arrow-angle"
+    [class.arrow-angle__active]="arrowActive"
+    (click)="arrowToggle()"
+  ></p>
+</div>
+@if(ratingFilterActive) {
+<div class="rating">
+  <div class="rating__items">
+    @for(item of ratingOptions; track $index) {
+    <div class="rating__item">
+      <app-checkbox>
+        {{ $index + 1 }} {{ "зірка" | ending : $index }} і більше</app-checkbox
+      >
+    </div>
+    }
+  </div>
+</div>
+}

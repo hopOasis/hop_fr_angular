@@ -32,8 +32,9 @@
 
   <div class="main__sort-by">
     <app-sorting
+      [name]="'sorting'"
       [disabled]="currentTypeOfProduct()"
-      [currentSorting]="currentTypeOfSorting()"
+      [selectOptions]="selectOptions()"
       (sortBy)="onChangeType($event)"
     />
   </div>

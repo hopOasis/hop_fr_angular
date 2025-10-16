@@ -1,0 +1,23 @@
+@use "../../../styles/global/colors" as c;
+@use "../../../styles/utils/rem";
+
+.filter-volume {
+  &__section {
+    display: flex;
+    // align-items: center;
+    justify-content: space-between;
+  }
+
+  &__title {
+    color: c.$grey-500;
+  }
+}
+
+.volume {
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: rem.rem(5);
+    padding-top: rem.rem(15);
+  }
+}

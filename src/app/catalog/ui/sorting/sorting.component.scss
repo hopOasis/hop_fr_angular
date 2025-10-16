@@ -36,24 +36,6 @@
       color: c.$accent-500;
     }
   }
-
-  &__arrow {
-    width: rem.rem(14);
-    height: rem.rem(14);
-    transform: rotate(-45deg);
-    border-right: none;
-    border-top: none;
-    border-left: 2px solid c.$black-500;
-    border-bottom: 2px solid c.$black-500;
-    animation: rotate-down 300ms ease-out alternate;
-  }
-
-  &__active {
-    border-left: 2px solid c.$black-500;
-    border-bottom: 2px solid c.$black-500;
-    transform: rotate(135deg);
-    animation: rotate-up 300ms ease-out;
-  }
 }
 
 .disabled {
@@ -62,51 +44,5 @@
 
   &:hover {
     color: c.$black-100;
-  }
-}
-
-@keyframes rotate-up {
-  from {
-    transform: rotate(-45deg);
-    border-right: none;
-    border-top: none;
-    border-left: 2px solid c.$black-500;
-    border-bottom: 2px solid c.$black-500;
-  }
-  50% {
-    transform: rotate(135deg);
-    border-left: none;
-    border-bottom: none;
-    border-right: 2px solid c.$black-500;
-    border-top: 2px solid c.$black-500;
-  }
-  to {
-    transform: rotate(135deg);
-    border-right: none;
-    border-top: none;
-    border-left: 2px solid c.$black-500;
-    border-bottom: 2px solid c.$black-500;
-  }
-}
-
-@keyframes rotate-down {
-  from {
-    border-left: 2px solid c.$black-500;
-    border-bottom: 2px solid c.$black-500;
-    transform: rotate(135deg);
-  }
-  50% {
-    transform: rotate(-45deg);
-    border-left: none;
-    border-bottom: none;
-    border-right: 2px solid c.$black-500;
-    border-top: 2px solid c.$black-500;
-  }
-  to {
-    transform: rotate(-45deg);
-    border-right: none;
-    border-top: none;
-    border-left: 2px solid c.$black-500;
-    border-bottom: 2px solid c.$black-500;
   }
 }

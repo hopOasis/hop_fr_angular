@@ -45,6 +45,10 @@ export const OfferStore = signalStore(
           error: () => patchState(store, { error: true }),
         });
     },
+
+    clearProductData() {
+      patchState(store, { productData: [] });
+    },
     updateStepper(step: number) {
       patchState(store, { step });
     },

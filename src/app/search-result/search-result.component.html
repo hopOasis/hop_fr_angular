@@ -1,0 +1,20 @@
+<section class="main__container">
+  <app-breadcrumb [position]="'left'" [breadCrumb]="breadcrumb()" />
+  <div class="search__grid-container">
+    <div class="search__filter" [class.search__filter__opened]="isOpened()">
+      <app-filter (opened)="opened($event)" />
+    </div>
+    <div class="search__sorting" [class.search__sorting__opened]="isOpened()">
+      <app-sorting [name]="'sorting'" (sortBy)="sortBy($event)" />
+    </div>
+    @for(product of productData(); track $index) {
+    <div class="search__result">
+      <app-product-card [inputData]="product" />
+    </div>
+    } @if(availablePages() >1){
+    <div class="search__pagination">
+      <app-pagination [availablePages]="availablePages()" />
+    </div>
+    }
+  </div>
+</section>

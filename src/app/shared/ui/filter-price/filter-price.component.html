@@ -1,0 +1,60 @@
+<div class="filter-price__section">
+  <p class="filter-price__title title-h5-semi-bold">Ціна</p>
+  <p
+    class="arrow-angle"
+    [class.arrow-angle__active]="arrowActive"
+    (click)="arrowToggle()"
+  ></p>
+</div>
+@if(priceFilterActive) {
+
+<div class="input__items">
+  <div class="input__items__number">
+    <div class="input__item">
+      <label for="minPrice">
+        <img src="./svg/icon-uah.svg" alt="min price for filtering" />
+      </label>
+      <input
+        #minInputRange
+        id="minPrice"
+        type="number"
+        [(ngModel)]="minPrice"
+        (change)="onMinChange(minPrice)"
+      />
+    </div>
+    <p>to</p>
+    <div class="input__item">
+      <label for="maxPrice">
+        <img src="./svg/icon-uah.svg" alt="max price for filtering" />
+      </label>
+      <input
+        #maxInputRange
+        id="maxPrice"
+        type="number"
+        [(ngModel)]="maxPrice"
+        (change)="onMaxChange(maxPrice)"
+      />
+    </div>
+  </div>
+  <div class="input__items__range">
+    <div class="input__range">
+      <input
+        type="range"
+        [min]="min"
+        [max]="max"
+        [step]="step"
+        [(ngModel)]="fromRange"
+        (ngModelChange)="onMinChange(fromRange)"
+      />
+      <input
+        type="range"
+        [min]="min"
+        [max]="max"
+        [step]="step"
+        [(ngModel)]="toRange"
+        (ngModelChange)="onMaxChange(toRange)"
+      />
+    </div>
+  </div>
+</div>
+}

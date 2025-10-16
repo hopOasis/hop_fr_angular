@@ -12,6 +12,7 @@ import { SearchDropDownComponent } from './search-drop-down/search-drop-down.com
 import { ResultStore } from '../data-access/store';
 import { SearchResultService } from '../data-access/search-result.service';
 import { SearchResult } from '../../../interfaces/search-result.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-bar',
@@ -23,8 +24,9 @@ import { SearchResult } from '../../../interfaces/search-result.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchBarComponent {
-  private elementRef = inject(ElementRef);
-  private readonly searchService = inject(SearchResultService);
+  private readonly elementRef = inject(ElementRef);
+  private readonly router = inject(Router);
+
   store = inject(ResultStore);
   searchOnFocus = output<boolean>();
   searchFocus = signal<boolean>(false);
@@ -50,13 +52,20 @@ export class SearchBarComponent {
     }
   }
 
-  search() {
+  search(searchWord: string) {
     /**
      * @dev uncomment it if you want user to see the previous search result
      * before user apply a new search result*/
     // if (this.searchWord.length >= 3) {
-    this.store.loadSearchResult(this.searchWord);
+    this.store.loadSearchResult(searchWord);
     // }
+  }
+
+  searchResult() {
+    this.search(this.searchWord);
+    this.router.navigate(['/searchresult'], {
+      queryParams: { searchWord: this.searchWord },
+    });
   }
 
   clearSearch(): void {

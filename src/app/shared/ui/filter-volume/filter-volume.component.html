@@ -1,0 +1,19 @@
+<div class="filter-volume__section">
+  <p class="filter-volume__title title-h5-semi-bold">Об'єм</p>
+  <p
+    class="arrow-angle"
+    [class.arrow-angle__active]="arrowActive"
+    (click)="arrowToggle()"
+  ></p>
+</div>
+@if(volumeFilterActive) {
+<div class="volume">
+  <div class="volume__items">
+    @for(item of volumeOptions; track $index) {
+    <div class="volume__item">
+      <app-checkbox> {{ item }} л.</app-checkbox>
+    </div>
+    }
+  </div>
+</div>
+}

@@ -1,4 +1,10 @@
-import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
+import {
+  patchState,
+  signalStore,
+  withComputed,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
 import { inject } from '@angular/core';
 import { SearchResultService } from './search-result.service';
 import { SearchResult } from '../../../interfaces/search-result.interface';
@@ -19,6 +25,7 @@ const initialState: InitialState = {
 
 export const ResultStore = signalStore(
   withState(initialState),
+  // withComputed(({ productData }) => ({})),
 
   withMethods((store, searchResultService = inject(SearchResultService)) => ({
     loadSearchResult: rxMethod<string>(
