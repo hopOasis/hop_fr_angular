@@ -76,7 +76,7 @@
 
 .disabled {
   color: c.$black-100;
-  cursor: auto;
+  cursor: not-allowed;
 
   &:hover {
     color: c.$black-100;

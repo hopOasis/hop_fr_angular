@@ -17,6 +17,7 @@ import { ProductDescription } from '../catalog/data-access/models/product-descri
 import { PaginationComponent } from '../catalog/ui/pagination/pagination.component';
 import { FilterComponent } from '../shared/ui/filter/filter.component';
 import { SortingComponent } from '../shared/ui/sorting/sorting.component';
+import { FilterBy } from '../shared/interfaces/filter-by.interface';
 
 @Component({
   selector: 'app-search-result',

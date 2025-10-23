@@ -1,5 +1,6 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { SearchResultSignalService } from '../search-bar/data-access/search-result-signal.service';
 
 @Component({
   selector: 'app-filter-price',
@@ -9,6 +10,8 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './filter-price.component.scss',
 })
 export class FilterPriceComponent {
+  private searchResultSignal = inject(SearchResultSignalService);
+
   arrowActive = false;
   priceFilterActive = false;
   minPrice = 0;
@@ -29,7 +32,7 @@ export class FilterPriceComponent {
 
   onMaxChange(value: string | number) {
     let maxValue = typeof value === 'string' ? parseInt(value, 10) : value;
-    console.log(`max ${value}`);
+    console.log(this.searchResultSignal.getSearchResultData());
     if (this.fromRange < maxValue) {
       this.toRange = maxValue;
       this.maxPrice = this.toRange;

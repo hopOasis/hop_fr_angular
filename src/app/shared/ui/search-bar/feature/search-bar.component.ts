@@ -13,6 +13,7 @@ import { ResultStore } from '../data-access/store';
 import { SearchResultService } from '../data-access/search-result.service';
 import { SearchResult } from '../../../interfaces/search-result.interface';
 import { Router } from '@angular/router';
+import { SearchResultSignalService } from '../data-access/search-result-signal.service';
 
 @Component({
   selector: 'app-search-bar',
@@ -26,6 +27,7 @@ import { Router } from '@angular/router';
 export class SearchBarComponent {
   private readonly elementRef = inject(ElementRef);
   private readonly router = inject(Router);
+  private searchResultSignal = inject(SearchResultSignalService);
 
   store = inject(ResultStore);
   searchOnFocus = output<boolean>();
@@ -39,6 +41,8 @@ export class SearchBarComponent {
     description: '',
     price: 0,
     amount: 0,
+    quantity: 0,
+    averageRating: 0,
   };
 
   @HostListener('document:click', ['$event']) onClick(event: Event) {
@@ -58,6 +62,8 @@ export class SearchBarComponent {
      * before user apply a new search result*/
     // if (this.searchWord.length >= 3) {
     this.store.loadSearchResult(searchWord);
+    this.searchResultSignal.setSearchResultData(this.store.productData());
+
     // }
   }
 

@@ -5,11 +5,12 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
-import { inject } from '@angular/core';
+import { computed, inject } from '@angular/core';
 import { SearchResultService } from './search-result.service';
 import { SearchResult } from '../../../interfaces/search-result.interface';
 import { catchError, map, of, pipe, switchMap, tap } from 'rxjs';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
+import { tapResponse } from '@ngrx/operators';
 
 interface InitialState {
   productData: SearchResult[];
@@ -25,7 +26,20 @@ const initialState: InitialState = {
 
 export const ResultStore = signalStore(
   withState(initialState),
-  // withComputed(({ productData }) => ({})),
+
+  withComputed((store) => ({
+    inStock: computed((): number => {
+      let inStockQuantity = 0;
+
+      store.productData().forEach((item) => {
+        if (item?.quantity > 0) {
+          inStockQuantity += 1;
+        }
+      });
+      console.log(store.productData());
+      return inStockQuantity;
+    }),
+  })),
 
   withMethods((store, searchResultService = inject(SearchResultService)) => ({
     loadSearchResult: rxMethod<string>(
@@ -43,17 +57,17 @@ export const ResultStore = signalStore(
                   amount: item.measureValue,
                   name: product.name,
                   itemType: product.itemType,
+                  averageRating: product.averageRating,
+                  quantity: item.quantity,
                 }))
               )
             )
           )
         ),
-        tap((productData) =>
-          patchState(store, { productData, loading: false, error: false })
-        ),
-        catchError(() => {
-          patchState(store, { error: true, loading: false });
-          return of([]);
+        tapResponse({
+          next: (productData) =>
+            patchState(store, { productData, loading: false }),
+          error: () => patchState(store, { error: true, loading: false }),
         })
       )
     ),

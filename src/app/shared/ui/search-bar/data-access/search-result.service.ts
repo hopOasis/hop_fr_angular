@@ -12,18 +12,23 @@ import { trimmedLowerCase } from './trimmedLower';
 export class SearchResultService {
   private httpClient = inject(HttpClient);
   private readonly URL = environment.apiUrl;
+  private readonly _elementsOnPage = 1000;
 
   getAllProducts(searchWord: string): Observable<ProductDescription[]> {
     if (searchWord.length < 3) {
       return this.httpClient
-        .get<FetchedProductData>(`${this.URL}/all-products?size=100`)
+        .get<FetchedProductData>(
+          `${this.URL}/all-products?size=${this._elementsOnPage}`
+        )
         .pipe(map(() => []));
     }
     return this.httpClient
-      .get<FetchedProductData>(`${this.URL}/all-products?size=100`)
+      .get<FetchedProductData>(
+        `${this.URL}/all-products?size=${this._elementsOnPage}`
+      )
       .pipe(
-        map((products) =>
-          products.content.filter(
+        map((products) => {
+          return products.content.filter(
             (product) =>
               trimmedLowerCase(product.name).includes(
                 trimmedLowerCase(searchWord)
@@ -31,8 +36,8 @@ export class SearchResultService {
               trimmedLowerCase(product.description).includes(
                 trimmedLowerCase(searchWord)
               )
-          )
-        )
+          );
+        })
       );
   }
 }
