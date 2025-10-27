@@ -24,11 +24,17 @@
 
   &.vertical {
     height: 588px;
-    max-width: 351px;
+    width: 351px;
 
     .card__content {
       padding: 0 16px;
       margin: 49px 0;
+    }
+
+    .name {
+      margin: 0;
+      padding: 0;
+      margin-bottom: 7px;
     }
 
     .card__image-box {
@@ -36,17 +42,20 @@
     }
 
     .product-link {
-      margin-bottom: 16px;
+      margin: 16px 0 0 0;
+      padding: 0;
     }
 
     .comment {
-      margin: 0 0 16px 0;
+      margin: 0;
+      padding: 0;
     }
   }
 
   &.single {
     display: flex;
-    width: 351px;
+    width: 531px;
+    height: fit-content;
     flex-direction: column;
     gap: 0;
 
@@ -57,10 +66,6 @@
 
     .card__image-box {
       width: 351px;
-    }
-
-    .product-link {
-      margin-bottom: 16px;
     }
 
     .comment {
@@ -124,6 +129,7 @@
 :host-context(.grid-2).vertical,
 :host-context(.grid-1).single {
   padding: 10px 3px 10px 10px;
+  height: fit-content;
 
   .card__content {
     width: auto;

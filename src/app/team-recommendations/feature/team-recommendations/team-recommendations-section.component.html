@@ -9,7 +9,7 @@
     </div>
 
     <div
-      *ngIf="!loading && !error && recommendations.length === 0"
+      *ngIf="!loading && !error && (recommendations?.length ?? 0) === 0"
       class="no-recommendations"
     >
       Ми готуємо нові рекомендації від нашої команди, повертайтеся згодом!

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { TeamRecommendationsSectionComponent } from '../team-recommendations-section/team-recommendations-section.component';
+import { TeamRecommendationsSectionComponent } from '../team-recommendations/feature/team-recommendations/team-recommendations-section.component';
 
 @Component({
   selector: 'app-home',
