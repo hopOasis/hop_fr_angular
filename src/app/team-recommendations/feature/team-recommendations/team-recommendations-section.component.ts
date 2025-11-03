@@ -39,61 +39,23 @@ export class TeamRecommendationsSectionComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.destroy$),
         catchError((err) => {
-          console.error('Error loading recommendations:', err);
-          this.error = true;
+          if (
+            err.status === 400 &&
+            err.error?.errors?.ResourceNotFoundException ===
+              'There are no recommendations'
+          ) {
+            this.recommendations = [];
+            this.error = false;
+          } else {
+            console.error('Error loading recommendations:', err);
+            this.error = true;
+          }
           return of([]);
         }),
-        finalize(() => {
-          this.loading = false;
-        })
+        finalize(() => (this.loading = false))
       )
-      .subscribe((data: any) => {
-        if (Array.isArray(data)) {
-          this.recommendations = data;
-        } else if (data?.errors) {
-          console.warn('No recommendations returned from API:', data.errors);
-          this.recommendations = [];
-        } else {
-          this.recommendations = [];
-        }
+      .subscribe((data: Recommendation[]) => {
+        this.recommendations = Array.isArray(data) ? data : [];
       });
   }
 }
-
-// @Component({
-//   selector: 'app-team-recommendations-section',
-//   standalone: true,
-//   imports: [CommonModule, RecommendationCardComponent],
-//   templateUrl: './team-recommendations-section.component.html',
-//   styleUrls: ['./team-recommendations-section.component.scss'],
-// })
-// export class TeamRecommendationsSectionComponent implements OnInit {
-//   recommendations: Recommendation[] = [];
-//   loading = true;
-//   error = false;
-
-//   constructor(private teamRecsService: TeamRecsService) {}
-
-//   ngOnInit() {
-//     this.loadRecommendations();
-//   }
-
-//   private loadRecommendations(): void {
-//     this.loading = true;
-//     this.error = false;
-
-//     this.teamRecsService
-//       .getRecommendations()
-//       .pipe(
-//         finalize(() => (this.loading = false)),
-//         catchError((err) => {
-//           console.error('Error loading recommendations:', err);
-//           this.error = true;
-//           return of([]);
-//         })
-//       )
-//       .subscribe((data) => {
-//         this.recommendations = data;
-//       });
-//   }
-// }
