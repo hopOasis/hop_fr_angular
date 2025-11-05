@@ -1,5 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { TeamRecommendationsService } from '../../data-access/service/team-recommendations.service';
 import { Recommendation } from '../../data-access/models/team-recommendation.model';
 import { RecommendationCardComponent } from '../recommendation-card/recommendation-card.component';
@@ -19,40 +25,49 @@ export class TeamRecommendationsSectionComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private teamRecsService: TeamRecommendationsService) {}
+  constructor(
+    private teamRecsService: TeamRecommendationsService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit() {
-    this.loadRecommendations();
+    if (isPlatformBrowser(this.platformId)) {
+      this.loadRecommendations();
+    } else {
+      this.loading = false;
+      this.recommendations = [];
+    }
   }
 
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
   }
+  checkedOnce = false;
 
   private loadRecommendations(): void {
     this.loading = true;
     this.error = false;
+    this.checkedOnce = false;
 
     this.teamRecsService
       .getRecommendations()
       .pipe(
         takeUntil(this.destroy$),
         catchError((err) => {
-          if (
-            err.status === 400 &&
-            err.error?.errors?.ResourceNotFoundException ===
-              'There are no recommendations'
-          ) {
+          console.error('Error loading recommendations:', err);
+          if (err.status === 404) {
             this.recommendations = [];
             this.error = false;
           } else {
-            console.error('Error loading recommendations:', err);
             this.error = true;
           }
           return of([]);
         }),
-        finalize(() => (this.loading = false))
+        finalize(() => {
+          this.loading = false;
+          this.checkedOnce = true;
+        })
       )
       .subscribe((data: Recommendation[]) => {
         this.recommendations = Array.isArray(data) ? data : [];

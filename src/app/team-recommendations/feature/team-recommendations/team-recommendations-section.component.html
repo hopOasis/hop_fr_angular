@@ -2,7 +2,9 @@
   <div class="team-recommendations__container">
     <h2 class="team-recommendations__title">Пропозиції від нашої команди</h2>
 
-    <div *ngIf="loading" class="loading-state">Завантаження...</div>
+    <div *ngIf="loading" class="loading-state">
+      Ми готуємо нові рекомендації від нашої команди, повертайтеся згодом!
+    </div>
 
     <div *ngIf="!loading && error" class="error-state">
       Сталася помилка при завантаженні.
@@ -12,7 +14,7 @@
       *ngIf="!loading && !error && (recommendations?.length ?? 0) === 0"
       class="no-recommendations"
     >
-      Ми готуємо нові рекомендації від нашої команди, повертайтеся згодом!
+      Завантаження...
     </div>
 
     <div
