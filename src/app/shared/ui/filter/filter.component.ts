@@ -1,11 +1,10 @@
-import { Component, computed, inject, output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { ButtonComponent } from '../button/button.component';
 import { SlideToggleComponent } from '../slide-toggle/slide-toggle.component';
 import { FilterPriceComponent } from '../filter-price/filter-price.component';
 import { FilterRaitingComponent } from '../filter-raiting/filter-raiting.component';
 import { FilterVolumeComponent } from '../filter-volume/filter-volume.component';
-import { ResultStore } from '../search-bar/data-access/store';
-import { SearchResultSignalService } from '../search-bar/data-access/search-result-signal.service';
+import { SearchStore } from '../search-bar/data-access/search.store';
 
 @Component({
   selector: 'app-filter',
@@ -19,22 +18,25 @@ import { SearchResultSignalService } from '../search-bar/data-access/search-resu
   ],
   templateUrl: './filter.component.html',
   styleUrl: './filter.component.scss',
-  providers: [ResultStore],
+  providers: [SearchStore],
 })
 export class FilterComponent {
-  private readonly searchResultSignal = inject(SearchResultSignalService);
+  public readonly searchStore = inject(SearchStore);
+
   opened = output<boolean>();
   icon = './svg/filter.svg';
   isOpen = false;
-  inStock = computed(
-    () =>
-      this.searchResultSignal
-        .getSearchResultData()
-        .filter((item) => item.quantity > 0).length
-  );
+  inStock = input(0);
 
   clicked() {
     this.isOpen = !this.isOpen;
     this.opened.emit(this.isOpen);
+  }
+
+  onChecked(checked: boolean) {
+    if (checked) {
+      this.searchStore.applyFilter('inStock', null);
+      console.log(this.searchStore.filtered());
+    }
   }
 }

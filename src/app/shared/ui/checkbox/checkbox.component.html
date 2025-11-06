@@ -1,4 +1,9 @@
-<label class="checkbox__label" for="">
-  <input class="checkbox__input" type="checkbox" />
+<label class="checkbox__label">
+  <input
+    class="checkbox__input"
+    type="checkbox"
+    [(ngModel)]="checked"
+    (click)="onClick()"
+  />
   <ng-content />
 </label>

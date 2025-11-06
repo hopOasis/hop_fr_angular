@@ -4,22 +4,22 @@
     searchResult() && redirect(searchResult()!.id, searchResult()!.itemType)
   "
 >
-  @if(searchResult()?.name) {
+  @if(searchResult() ) {
   <picture>
     <img
       class="drop-down__image"
-      [src]="searchResult()?.imageUrl"
+      [src]="searchResult()?.imageName ?? ''"
       [alt]="searchResult()?.name"
     />
   </picture>
   <div class="drop-down__body">
     <div class="drop-down__description">
       <p class="drop-down__text">{{ searchResult()?.description }}</p>
-      <p class="drop-down__amount">
+      <!-- <p class="drop-down__amount">
         {{ searchResult()?.amount | updateMeasure : searchResult()?.itemType }}
-      </p>
+      </p> -->
     </div>
-    <div class="drop-down__price">{{ searchResult()?.price }} грн</div>
+    <div class="drop-down__price">{{ price }} грн</div>
   </div>
   } @else {
   <p>Співпадінь не знайдено!!!</p>

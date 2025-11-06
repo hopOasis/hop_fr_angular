@@ -1,8 +1,16 @@
-import { SearchResult } from '../../../interfaces/search-result.interface';
+import { ProductDescription } from '../../../../catalog/data-access/models/product-description.model';
 
-export const filterByPrice = (
-  filterData: SearchResult[],
-  minValue: number,
-  maxValue: number
-) =>
-  filterData.filter((item) => item.price >= minValue && item.price <= maxValue);
+// const filterByPrice = (
+//   filterData: ProductDescription[],
+//   minValue: number,
+//   maxValue: number
+// ): ProductDescription[] =>
+//   filterData.flatMap((data) =>
+//     data.options.filter(
+//       (prod) => prod.price >= minValue && prod.price <= maxValue
+//     )
+//   );
+
+export const filtering = {
+  price: '',
+};

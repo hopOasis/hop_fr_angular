@@ -1,23 +1,20 @@
 import {
   Component,
   computed,
-  DestroyRef,
   HostListener,
   inject,
   signal,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { BreadcrumbComponent } from '../catalog/ui/breadcrumb/breadcrumb.component';
 import { BreadCrumb } from '../catalog/data-access/models/bread-crumb.model';
-import { SearchResultService } from '../shared/ui/search-bar/data-access/search-result.service';
 import { ProductCardComponent } from '../catalog/ui/product-card/product-card.component';
 import { ProductDescription } from '../catalog/data-access/models/product-description.model';
 import { PaginationComponent } from '../catalog/ui/pagination/pagination.component';
 import { FilterComponent } from '../shared/ui/filter/filter.component';
 import { SortingComponent } from '../shared/ui/sorting/sorting.component';
-import { FilterBy } from '../shared/interfaces/filter-by.interface';
+import { SearchStore } from '../shared/ui/search-bar/data-access/search.store';
 
 @Component({
   selector: 'app-search-result',
@@ -31,12 +28,11 @@ import { FilterBy } from '../shared/interfaces/filter-by.interface';
   ],
   templateUrl: './search-result.component.html',
   styleUrl: './search-result.component.scss',
-  providers: [SearchResultService],
+  providers: [SearchStore],
 })
 export class SearchResultComponent {
   private readonly route = inject(ActivatedRoute);
-  private readonly destroyRef = inject(DestroyRef);
-  private searchResultService = inject(SearchResultService);
+  public searchStore = inject(SearchStore);
 
   public availablePages = computed(() =>
     Math.floor(this.productData().length / 6)
@@ -79,12 +75,7 @@ export class SearchResultComponent {
       ? this.searchWord.set(queryParams['searchWord'])
       : this.searchWord.set('');
 
-    this.searchResultService
-      .getAllProducts(this.searchWord())
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((product) => {
-        this.productData.set(product);
-      });
+    this.searchStore.getData(this.searchWord());
   }
 
   sortBy(value: string) {

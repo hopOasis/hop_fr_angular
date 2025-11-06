@@ -1,6 +1,12 @@
-import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SearchResultSignalService } from '../search-bar/data-access/search-result-signal.service';
+import { SearchStore } from '../search-bar/data-access/search.store';
 
 @Component({
   selector: 'app-filter-price',
@@ -8,14 +14,15 @@ import { SearchResultSignalService } from '../search-bar/data-access/search-resu
   imports: [FormsModule],
   templateUrl: './filter-price.component.html',
   styleUrl: './filter-price.component.scss',
+  providers: [SearchStore],
 })
 export class FilterPriceComponent {
-  private searchResultSignal = inject(SearchResultSignalService);
+  private searchStore = inject(SearchStore);
 
   arrowActive = false;
   priceFilterActive = false;
-  minPrice = 0;
-  maxPrice = 1000;
+  minPrice = signal(0);
+  maxPrice = signal(1000);
   fromRange = 0;
   toRange = 1000;
   step = 10;
@@ -32,15 +39,27 @@ export class FilterPriceComponent {
 
   onMaxChange(value: string | number) {
     let maxValue = typeof value === 'string' ? parseInt(value, 10) : value;
-    console.log(this.searchResultSignal.getSearchResultData());
+
     if (this.fromRange < maxValue) {
       this.toRange = maxValue;
-      this.maxPrice = this.toRange;
+      this.maxPrice.set(this.toRange);
+
+      this.searchStore.applyFilter('price', {
+        minValue: this.minPrice(),
+        maxValue: this.maxPrice(),
+      });
     } else {
       this.toRange = this.fromRange + this.step;
       this.maxInputRange.nativeElement.value = this.toRange.toString();
-      this.maxPrice = this.toRange;
+      this.maxPrice.set(this.toRange);
+
+      this.searchStore.applyFilter('price', {
+        minValue: this.minPrice(),
+        maxValue: this.maxPrice(),
+      });
     }
+
+    this.searchStore.filtered();
   }
 
   onMinChange(value: string | number) {
@@ -48,11 +67,22 @@ export class FilterPriceComponent {
 
     if (this.toRange > minValue) {
       this.fromRange = minValue;
-      this.minPrice = this.fromRange;
+      this.minPrice.set(this.fromRange);
+
+      this.searchStore.applyFilter('price', {
+        minValue: this.minPrice(),
+        maxValue: this.maxPrice(),
+      });
     } else {
       this.fromRange = this.toRange - this.step;
       this.minInputRange.nativeElement.value = this.fromRange.toString();
-      this.minPrice = this.fromRange;
+      this.minPrice.set(this.fromRange);
+
+      this.searchStore.applyFilter('price', {
+        minValue: this.minPrice(),
+        maxValue: this.maxPrice(),
+      });
     }
+    this.searchStore.filtered();
   }
 }

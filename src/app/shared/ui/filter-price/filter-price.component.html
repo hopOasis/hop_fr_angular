@@ -19,7 +19,7 @@
         id="minPrice"
         type="number"
         [(ngModel)]="minPrice"
-        (change)="onMinChange(minPrice)"
+        (change)="onMinChange(minPrice())"
       />
     </div>
     <p>to</p>
@@ -32,7 +32,7 @@
         id="maxPrice"
         type="number"
         [(ngModel)]="maxPrice"
-        (change)="onMaxChange(maxPrice)"
+        (change)="onMaxChange(maxPrice())"
       />
     </div>
   </div>

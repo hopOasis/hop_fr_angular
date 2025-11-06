@@ -8,7 +8,7 @@ import { environment } from '../../../../environments/environment';
 import { ProductDescription } from '../../../../catalog/data-access/models/product-description.model';
 import { trimmedLowerCase } from './trimmedLower';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SearchResultService {
   private httpClient = inject(HttpClient);
   private readonly URL = environment.apiUrl;

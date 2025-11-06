@@ -4,7 +4,7 @@
   >
   <div class="filter__actions" [class.filter__open]="isOpen">
     <div class="slide-toggle">
-      <app-slide-toggle>
+      <app-slide-toggle (checked)="onChecked($event)">
         <div class="slide-toggle__label">В наявності ({{ inStock() }})</div>
       </app-slide-toggle>
     </div>

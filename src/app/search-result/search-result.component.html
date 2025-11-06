@@ -2,12 +2,15 @@
   <app-breadcrumb [position]="'left'" [breadCrumb]="breadcrumb()" />
   <div class="search__grid-container">
     <div class="search__filter" [class.search__filter__opened]="isOpened()">
-      <app-filter (opened)="opened($event)" />
+      <app-filter
+        (opened)="opened($event)"
+        [inStock]="searchStore.filterOptions()?.inStock ?? 0"
+      />
     </div>
     <div class="search__sorting" [class.search__sorting__opened]="isOpened()">
       <app-sorting [name]="'sorting'" (sortBy)="sortBy($event)" />
     </div>
-    @for(product of productData(); track $index) {
+    @for(product of searchStore.productData(); track $index) {
     <div class="search__result">
       <app-product-card [inputData]="product" />
     </div>

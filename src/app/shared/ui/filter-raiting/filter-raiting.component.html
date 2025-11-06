@@ -11,7 +11,7 @@
   <div class="rating__items">
     @for(item of ratingOptions; track $index) {
     <div class="rating__item">
-      <app-checkbox>
+      <app-checkbox (isChecked)="isChecked($event, $index)">
         {{ $index + 1 }} {{ "зірка" | ending : $index }} і більше</app-checkbox
       >
     </div>
