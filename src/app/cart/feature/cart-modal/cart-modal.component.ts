@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, computed, ElementRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  ElementRef,
+} from '@angular/core';
 import { inject, viewChild } from '@angular/core';
 import { CartComponent } from '../cart/cart.component';
 import {
@@ -9,6 +14,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { CartModalStore } from '../../data-access/store/cart-modal.store';
+import { AuthApiService } from '../../../authentication/data-access/api/auth-api.service';
 @Component({
   selector: 'app-cart-modal',
   standalone: true,
@@ -40,7 +46,7 @@ import { CartModalStore } from '../../data-access/store/cart-modal.store';
   ],
   templateUrl: './cart-modal.component.html',
   styleUrl: './cart-modal.component.scss',
-  changeDetection:ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CartModalComponent {
   private button = viewChild<ElementRef<HTMLSpanElement>>('buttonCloseModal');
@@ -48,6 +54,8 @@ export class CartModalComponent {
     this.cartModalStore.isOpened() ? 'open' : 'close'
   );
   readonly cartModalStore = inject(CartModalStore);
+  readonly authService = inject(AuthApiService);
+
   onCloseModal(event: MouseEvent) {
     if (
       (event.target as HTMLDialogElement).classList.contains('dialog') ||

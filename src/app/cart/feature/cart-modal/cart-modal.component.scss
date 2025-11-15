@@ -1,7 +1,7 @@
 .dialog {
   overflow: hidden;
   position: fixed;
-  
+
   z-index: 15;
   &.visible {
     background-color: #8181817c;
@@ -50,4 +50,17 @@
   }
 }
 .icon-add-plus {
+}
+
+.message__auth {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  padding: 1.5rem;
+  font-size: 1.5rem;
+  text-align: center;
+  z-index: 100;
+  transform: translate(-50%);
+  background: #fff;
 }

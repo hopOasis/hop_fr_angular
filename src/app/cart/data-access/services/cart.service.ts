@@ -8,6 +8,7 @@ import { LocalCartService } from './local-cart.service';
 import { environment } from '../../../environments/environment.prod';
 import { CartItemAddDto } from '../models/cart-item-add-dto.model';
 import { CartStore } from '../store/cart.store';
+import { ProductType } from '../../../catalog/data-access/models/product-types.model';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
@@ -25,6 +26,9 @@ export class CartService {
     cart: CartItemAddDto,
     itemCost: number,
     itemTitle: string,
+    imageName: string[],
+    measureValue: number,
+    itemType: ProductType,
     isAuth: boolean
   ): Observable<CartItemResponse> {
     return of(isAuth).pipe(
@@ -32,7 +36,14 @@ export class CartService {
       switchMap((isAuth) =>
         isAuth
           ? this.addProductToApi(cart)
-          : this.localCartService.addProduct(cart, itemCost, itemTitle)
+          : this.localCartService.addProduct(
+              cart,
+              itemCost,
+              itemTitle,
+              imageName,
+              measureValue,
+              itemType
+            )
       )
     );
   }

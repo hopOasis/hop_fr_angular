@@ -6,7 +6,7 @@
       <app-cart-product-item [itemData]="item"></app-cart-product-item>
       }
     </div>
-    <p class="cart__amount-info">
+    <p class="cart__amount-info" (click)="show()">
       Сума замовлення {{ fullCost() | updatePrice }}
     </p>
     <div class="cart__actions">

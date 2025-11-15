@@ -6,6 +6,7 @@ import { CartItemAddDto } from '../models/cart-item-add-dto.model';
 import { CartItemRemoveDto } from '../models/cart-item-remove-dto.model';
 import { CartService } from '../services/cart.service';
 import { Observable } from 'rxjs';
+import { ProductType } from '../../../catalog/data-access/models/product-types.model';
 
 @Injectable({ providedIn: 'root' })
 export class CartApiService {
@@ -15,7 +16,7 @@ export class CartApiService {
   updateState(state: boolean): void {
     this.cartModalStore.updateState(state);
   }
-   get priceForAll(): Signal<number> {
+  get priceForAll(): Signal<number> {
     return this.cartStore.priceForAll;
   }
   triggerCartUpdate(isAuth: boolean): void {
@@ -41,8 +42,19 @@ export class CartApiService {
     cart: CartItemAddDto,
     itemCost: number,
     itemTitle: string,
+    imageName: string[],
+    measureValue: number,
+    itemType: ProductType,
     isAuth: boolean
   ): Observable<CartItemResponse> {
-    return this.cartService.addProduct(cart, itemCost, itemTitle, isAuth);
+    return this.cartService.addProduct(
+      cart,
+      itemCost,
+      itemTitle,
+      imageName,
+      measureValue,
+      itemType,
+      isAuth
+    );
   }
 }

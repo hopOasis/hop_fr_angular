@@ -194,7 +194,15 @@ export const ProductStore = signalStore(
         price: number
       ): Observable<CartItemResponse> {
         return cartApi
-          .addProduct(cartInfo, price, store.productName(), authApi.isAuth())
+          .addProduct(
+            cartInfo,
+            price,
+            store.productName(),
+            store.productData()?.imageName || [],
+            store.productData()?.options[0].measureValue!,
+            store.productData()?.itemType!,
+            authApi.isAuth()
+          )
           .pipe(
             tap({
               next: () => {

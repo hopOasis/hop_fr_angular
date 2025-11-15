@@ -1,26 +1,85 @@
+@use "../../../styles/utils/rem";
+@use "../../../styles/global/colors" as c;
+
 .card {
   &__wrapper {
     display: flex;
+    justify-content: space-between;
     padding-top: 2rem;
-    border-bottom: 1px solid rgb(179, 179, 178);
+    border-bottom: 1px solid c.$black-50;
     padding-bottom: 0.4rem;
     padding-left: 4rem;
     padding-right: 4rem;
   }
 
+  &__header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: rem.rem(16);
+    width: rem.rem(392);
+  }
+
   &__image {
+    &__item {
+      max-width: rem.rem(63);
+      max-height: rem.rem(93);
+    }
   }
 
   &__title {
+    font-family: Montserrat;
+    font-weight: 600;
+    font-size: rem.rem(16);
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: c.$black-500;
   }
 
   &__counter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    height: rem.rem(32);
+
+    &__quantity {
+      padding: rem.rem(3) rem.rem(22);
+      border-top: 1px solid c.$black-100;
+      border-bottom: 1px solid c.$black-100;
+      font-family: Roboto;
+      font-weight: 600;
+      font-size: rem.rem(18);
+      line-height: 100%;
+      letter-spacing: 0%;
+      color: c.$grey-500;
+    }
+  }
+
+  &__icon {
+    padding: rem.rem(4) rem.rem(23);
+    border: 1px solid c.$black-100;
+    border-radius: 2px;
+    cursor: pointer;
+
+    &:hover {
+      color: c.$accent-500;
+    }
   }
 
   &__price {
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: -4%;
+    color: c.$grey-500;
+    padding-left: 1.5rem;
   }
 
   &__delete-button {
+    display: flex;
+    align-items: flex-start;
+    color: c.$black-50;
   }
 }
 .icon-trash-full {
