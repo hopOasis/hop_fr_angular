@@ -36,7 +36,6 @@ export class FilterComponent {
   onChecked(checked: boolean) {
     if (checked) {
       this.searchStore.applyFilter('inStock', null);
-      console.log(this.searchStore.filtered());
     }
   }
 }

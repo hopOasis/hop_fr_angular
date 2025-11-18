@@ -37,11 +37,8 @@ export const SearchStore = signalStore(
 
   withComputed(({ productData, filterBy, filterOptions }) => ({
     filtered: computed(() => {
-      console.log(`filter by: ${filterBy()}`);
-      console.log(`products length: ${productData().length}`);
       switch (filterBy()) {
         case 'inStock':
-          console.log(productData());
           return productData().map((data) =>
             data.options.filter((item) => item.quantity > 0)
           );

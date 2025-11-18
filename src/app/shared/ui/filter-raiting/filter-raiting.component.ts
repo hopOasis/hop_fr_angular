@@ -25,7 +25,6 @@ export class FilterRaitingComponent {
   isChecked(checked: boolean, index: number) {
     console.log(checked, index + 1);
     if (checked) {
-      console.log(this.searchResultSignal.filtered('rating'));
     }
   }
 }
