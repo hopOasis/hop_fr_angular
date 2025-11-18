@@ -65,8 +65,6 @@ export class CartService {
     cartId: number,
     productInfo: CartItemRemoveDto
   ): Observable<string> {
-    console.log(productInfo);
-
     return this.httpClient
       .delete<string>(`${environment.apiUrl}/carts/remove/${cartId}`, {
         body: productInfo,

@@ -1,9 +1,17 @@
 <div class="card__wrapper">
+  @if (isLoading()) {
+  <div class="spinner">
+    <app-spinner />
+  </div>
+  }
   <div class="card__header">
     <div class="card__image">
       <img class="card__image__item" [src]="imageUrl" alt="" />
     </div>
-    <h3 class="card__title">{{ itemData().itemTitle }} {{ measureValue }}</h3>
+    <h3 class="card__title">
+      {{ itemData().itemTitle }}
+      {{ measureValue | updateMeasure : itemData().itemType }}
+    </h3>
   </div>
   <div class="card__counter">
     <div

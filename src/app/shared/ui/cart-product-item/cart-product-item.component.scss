@@ -31,7 +31,7 @@
     font-weight: 600;
     font-size: rem.rem(16);
     line-height: 100%;
-    letter-spacing: 0%;
+    letter-spacing: 0;
     color: c.$black-500;
   }
 
@@ -50,7 +50,7 @@
       font-weight: 600;
       font-size: rem.rem(18);
       line-height: 100%;
-      letter-spacing: 0%;
+      letter-spacing: 0;
       color: c.$grey-500;
     }
   }
@@ -71,7 +71,7 @@
     font-weight: 500;
     font-size: 20px;
     line-height: 100%;
-    letter-spacing: -4%;
+    letter-spacing: -4;
     color: c.$grey-500;
     padding-left: 1.5rem;
   }
@@ -83,4 +83,12 @@
   }
 }
 .icon-trash-full {
+}
+
+.spinner {
+  position: absolute;
+  max-width: rem.rem(1400);
+  max-height: rem.rem(500);
+  left: 50%;
+  transform: translate(-50%);
 }

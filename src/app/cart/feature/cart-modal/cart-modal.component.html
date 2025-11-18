@@ -17,14 +17,6 @@
     @if(authService.isAuth()) {
 
     <app-cart />
-    } @else {
-
-    <div
-      class="message__auth"
-      [style]="authService.isAuth() ? 'display: block' : 'display: none'"
-    >
-      Щоб продовжити потрібно увійти або зареєструватися.
-    </div>
     }
   </div>
 </div>

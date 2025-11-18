@@ -11,7 +11,7 @@ import { ProductOption } from '../../data-access/models/product-oprion';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ProductDescription } from '../../data-access/models/product-description.model';
 import { ProductStore } from '../../data-access/store/product.store';
 import { AuthApiService } from '../../../authentication/data-access/api/auth-api.service';
@@ -37,7 +37,9 @@ import { BigBasketButtonComponent } from '../big-basket-button/big-basket-button
 export class ProductCardComponent implements OnInit {
   private messageService = inject(MessageService);
   readonly productStore = inject(ProductStore);
+  private readonly route = inject(Router);
   authApiService = inject(AuthApiService);
+
   productName = this.productStore.productName;
   imageUrl = this.productStore.imageUrl;
   quantity = this.productStore.quantity;
@@ -61,24 +63,28 @@ export class ProductCardComponent implements OnInit {
     this.productStore.changeAmountOfItems(amount);
   }
   onMoveProduct() {
-    this.productStore.toggleCartItem().subscribe({
-      next: (data) => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail:
-            data === 'rem'
-              ? 'Товар видалено з корзини'
-              : 'Товар додано до корзини!',
-        });
-      },
-      error: (error: string) =>
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Success',
-          detail: error,
-        }),
-    });
+    if (this.authApiService.isAuth()) {
+      this.productStore.toggleCartItem().subscribe({
+        next: (data) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail:
+              data === 'rem'
+                ? 'Товар видалено з корзини'
+                : 'Товар додано до корзини!',
+          });
+        },
+        error: (error: string) =>
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Success',
+            detail: error,
+          }),
+      });
+    } else {
+      this.authApiService.updateModalState(true);
+    }
   }
 
   onAddToFavorite() {}

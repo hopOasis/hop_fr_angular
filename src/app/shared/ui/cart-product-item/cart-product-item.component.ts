@@ -4,30 +4,35 @@ import {
   DestroyRef,
   inject,
   input,
+  signal,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
 import { CartItemResponse } from '../../../cart/data-access/models/cart-item-response.model';
 import { CartService } from '../../../cart/data-access/services/cart.service';
 import { AuthApiService } from '../../../authentication/data-access/api/auth-api.service';
 import { CartStore } from '../../../cart/data-access/store/cart.store';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { UpdateMeasurePipe } from '../../../catalog/utils/update-measure.pipe';
 
 @Component({
   selector: 'app-cart-product-item',
   standalone: true,
-  imports: [],
+  imports: [SpinnerComponent, UpdateMeasurePipe],
   templateUrl: './cart-product-item.component.html',
   styleUrl: './cart-product-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CartProductItemComponent {
   private destroyRef = inject(DestroyRef);
-  public itemData = input.required<CartItemResponse>();
   private cartService = inject(CartService);
   private cartStore = inject(CartStore);
   private authService = inject(AuthApiService);
+  public itemData = input.required<CartItemResponse>();
+  public isLoading = signal(false);
 
   get imageUrl(): string {
-    return this.itemData()?.imageName[0];
+    return this.itemData()?.imageName[0] ?? '';
   }
 
   get quantity(): number {
@@ -35,13 +40,14 @@ export class CartProductItemComponent {
   }
 
   get measureValue(): number {
-    return this.itemData()?.measureValue;
+    return this.itemData()?.measureValue ?? 0;
   }
 
   increase(cartItem: CartItemResponse, q: number | undefined): void {
     const { itemId, measureValue, itemType } = cartItem;
     if (q) {
       const quantity = 1;
+      this.isLoading.set(true);
 
       this.cartService
         .addProductToApi({
@@ -51,15 +57,17 @@ export class CartProductItemComponent {
           quantity,
         })
         .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe(() =>
-          this.cartStore.triggerCartApdating(this.authService.isAuth())
-        );
+        .subscribe(() => {
+          this.cartStore.triggerCartApdating(this.authService.isAuth());
+          this.isLoading.set(false);
+        });
     }
   }
 
   decrease(cartItem: CartItemResponse, q: number | undefined): void {
     const { itemId, measureValue, itemType } = cartItem;
     if (q && q > 0) {
+      this.isLoading.set(true);
       this.cartService
         .addProductToApi({
           itemId,
@@ -68,9 +76,10 @@ export class CartProductItemComponent {
           quantity: -1,
         })
         .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe(() =>
-          this.cartStore.triggerCartApdating(this.authService.isAuth())
-        );
+        .subscribe(() => {
+          this.cartStore.triggerCartApdating(this.authService.isAuth());
+          this.isLoading.set(false);
+        });
     }
     if (q === 0) {
       this.removeFromCart(cartItem);
@@ -79,6 +88,7 @@ export class CartProductItemComponent {
 
   removeFromCart(cartItem: CartItemResponse) {
     const { itemId, measureValue, itemType } = cartItem;
+    this.isLoading.set(true);
     this.cartService
       .removeProduct(
         { itemId, itemType, measureValue },
@@ -88,6 +98,7 @@ export class CartProductItemComponent {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
         this.cartStore.triggerCartApdating(this.authService.isAuth());
+        this.isLoading.set(false);
       });
   }
 }

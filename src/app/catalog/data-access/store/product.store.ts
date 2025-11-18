@@ -162,13 +162,11 @@ export const ProductStore = signalStore(
         patchState(store, { isProcessing: true });
         const cartInfo = store.infoRemoveDto();
         const price = store.currentOption()!.price;
-        if (store.currentOptionInCart())
-          return this.removeProductFromCart(cartInfo, price);
-        else
-          return this.addProductToCart(
-            { quantity: store.quantity(), ...cartInfo },
-            price
-          );
+        
+        return this.addProductToCart(
+          { quantity: store.quantity(), ...cartInfo },
+          price
+        );
       },
       removeProductFromCart(
         cartInfo: CartItemRemoveDto,
