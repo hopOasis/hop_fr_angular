@@ -1,0 +1,50 @@
+@use "../../../styles/global/colors" as c;
+@use "../../../styles/utils/rem";
+
+.checkbox {
+  &__label {
+    display: flex;
+    align-items: center;
+    gap: rem.rem(8);
+  }
+
+  &__input {
+    width: rem.rem(24);
+    height: rem.rem(24);
+  }
+}
+
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  font: inherit;
+  color: currentColor;
+  width: rem.rem(24);
+  height: rem.rem(24);
+  border: 0.5px solid c.$grey-500;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 300ms ease-out;
+}
+
+input[type="checkbox"]:checked {
+  // background-color: c.$accent-500;
+  // border: none;
+}
+
+input[type="checkbox"]::before {
+  content: "";
+  width: rem.rem(11);
+  height: rem.rem(11);
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  background: c.$accent-500;
+  transform-origin: bottom left;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+input[type="checkbox"]:checked::before {
+  transform: scale(1, 1);
+}

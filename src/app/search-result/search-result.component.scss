@@ -1,0 +1,64 @@
+@use "../styles/utils/rem";
+
+:host {
+  margin-top: 2.5rem;
+  min-height: 100%;
+  flex-grow: 1;
+}
+
+.main__container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.search {
+  &__result {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(rem.rem(280), rem.rem(302)));
+    position: relative;
+    justify-content: center;
+    margin-bottom: 2rem;
+    flex-grow: 1;
+    transition: 500ms;
+
+    @media (max-width: rem.em(1300)) {
+      gap: 2rem;
+      justify-content: center;
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(rem.rem(260), rem.rem(302))
+      );
+    }
+  }
+
+  &__filter {
+    padding-bottom: rem.rem(72);
+    grid-column: span 2;
+
+    &__opened {
+      grid-column: span 1;
+      align-self: self-start;
+      grid-row: span 4;
+    }
+  }
+
+  &__sorting {
+    @extend .search__filter;
+
+    justify-self: end;
+    padding-top: 2rem;
+
+    &__opened {
+      grid-column: span 3;
+    }
+  }
+
+  &__grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto;
+    align-items: center;
+  }
+}

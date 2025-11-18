@@ -8,10 +8,10 @@ import {
   signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+
 import { SearchDropDownComponent } from './search-drop-down/search-drop-down.component';
-import { ResultStore } from '../data-access/store';
-import { SearchResultService } from '../data-access/search-result.service';
-import { SearchResult } from '../../../interfaces/search-result.interface';
+import { SearchStore } from '../data-access/search.store';
 
 @Component({
   selector: 'app-search-bar',
@@ -19,25 +19,17 @@ import { SearchResult } from '../../../interfaces/search-result.interface';
   imports: [FormsModule, SearchDropDownComponent],
   templateUrl: './search-bar.component.html',
   styleUrl: './search-bar.component.scss',
-  providers: [ResultStore, SearchResultService],
+  providers: [SearchStore],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchBarComponent {
-  private elementRef = inject(ElementRef);
-  private readonly searchService = inject(SearchResultService);
-  store = inject(ResultStore);
+  private readonly elementRef = inject(ElementRef);
+  private readonly router = inject(Router);
+  readonly searchStore = inject(SearchStore);
+
   searchOnFocus = output<boolean>();
   searchFocus = signal<boolean>(false);
   searchWord = '';
-  empty: SearchResult = {
-    id: '',
-    name: '',
-    imageUrl: '',
-    itemType: '',
-    description: '',
-    price: 0,
-    amount: 0,
-  };
 
   @HostListener('document:click', ['$event']) onClick(event: Event) {
     const target = event.target as HTMLElement;
@@ -50,13 +42,15 @@ export class SearchBarComponent {
     }
   }
 
-  search() {
-    /**
-     * @dev uncomment it if you want user to see the previous search result
-     * before user apply a new search result*/
-    // if (this.searchWord.length >= 3) {
-    this.store.loadSearchResult(this.searchWord);
-    // }
+  search(searchWord: string) {
+    this.searchStore.getData(searchWord);
+  }
+
+  searchResult() {
+    this.search(this.searchWord);
+    this.router.navigate(['/searchresult'], {
+      queryParams: { searchWord: this.searchWord },
+    });
   }
 
   clearSearch(): void {

@@ -5,20 +5,21 @@
     [(ngModel)]="searchWord"
     type="text"
     placeholder="Пошук"
-    (keyup)="search()"
+    (keyup)="search(searchWord)"
+    (keyup.enter)="searchResult()"
   />
   <div class="search__clear" (click)="clearSearch()">
     <div class="search__clear__line-one"></div>
     <div class="search__clear__line-two"></div>
   </div>
-  <div class="search__icon" (click)="search()">
+  <div class="search__icon" (click)="searchResult()">
     <span class="icon-search"></span>
   </div>
   @if(searchWord && searchFocus()) {
   <div class="search__result">
-    @if(!store.productData().length) {
-    <app-search-drop-down [searchResult]="empty" />
-    } @for(result of store.productData(); track $index) {
+    @if(!searchStore.productData().length) {
+    <app-search-drop-down [searchResult]="null" />
+    } @for(result of searchStore.productData(); track $index) {
 
     <app-search-drop-down [searchResult]="result" />
     }

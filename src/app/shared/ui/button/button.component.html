@@ -1,0 +1,13 @@
+<div
+  class="btn"
+  (click)="onClick()"
+  [class.btn__active]="isActive() && !disabled()"
+  [class.disabled]="disabled()"
+>
+  <div class="btn__content" [class.disabled]="disabled()">
+    <ng-content />
+  </div>
+  @if(icon()) {
+  <img class="btn__icon" [src]="icon()" />
+  }
+</div>

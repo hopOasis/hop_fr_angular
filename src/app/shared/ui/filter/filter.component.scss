@@ -1,0 +1,60 @@
+@use "../../../styles/utils/rem";
+@use "../../../styles/global/colors" as c;
+.filter {
+  padding-top: 2rem;
+
+  &__actions {
+    display: none;
+  }
+
+  &__open {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: rem.rem(227);
+    height: 100vh;
+    margin-top: rem.rem(72);
+    animation: fadeIn 500ms ease-in-out;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+app-slide-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.slide-toggle {
+  padding-bottom: rem.rem(16);
+  border-bottom: rem.rem(0.5) solid c.$grey-500;
+
+  &__label {
+    font-family: Montserrat;
+    font-weight: 400;
+    font-size: rem.rem(16);
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: c.$grey-500;
+  }
+}
+
+.filter-items {
+  @extend .slide-toggle;
+}
+
+.arrow-down {
+  width: rem.rem(7);
+  height: rem.rem(7);
+  border-bottom: 2px solid c.$black-500;
+  border-right: 2px solid c.$black-500;
+  transform: rotate(45deg);
+}

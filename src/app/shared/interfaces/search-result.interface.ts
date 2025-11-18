@@ -6,4 +6,6 @@ export interface SearchResult {
   amount: number | undefined;
   name: string | undefined;
   itemType: string;
+  averageRating: number;
+  quantity: number;
 }

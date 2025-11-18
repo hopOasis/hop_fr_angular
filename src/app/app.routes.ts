@@ -38,4 +38,11 @@ export const routes: Routes = [
         './age-confirmation/feauters/confirmation/age-confirmation.component'
       ).then((c) => c.AgeConfirmationComponent),
   },
+  {
+    path: 'searchresult',
+    loadComponent: () =>
+      import('./search-result/search-result.component').then(
+        (c) => c.SearchResultComponent
+      ),
+  },
 ];

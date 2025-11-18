@@ -1,0 +1,54 @@
+@use "../../../styles/utils/rem";
+@use "../../../styles/global/colors" as c;
+
+.switch {
+  display: inline-block;
+  position: relative;
+  width: rem.rem(76);
+  height: rem.rem(32);
+
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: rem.rem(6);
+  border: 1px solid c.$black-100;
+  border-radius: 20px;
+  // background: c.$white-50;
+  transition: 500ms;
+  --webkit-transition: 500ms;
+  cursor: pointer;
+
+  &::before {
+    content: "";
+    position: absolute;
+    height: rem.rem(18);
+    width: rem.rem(18);
+    left: rem.rem(6);
+    bottom: rem.rem(7);
+    background-color: c.$black-50;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+}
+
+input:checked + .slide {
+  background: c.$grey-500;
+}
+
+input:checked + .slide:before {
+  -webkit-transform: translateX(rem.rem(46));
+  -ms-transform: translateX(rem.rem(46));
+  transform: translateX(rem.rem(46));
+  background: c.$white-50;
+}

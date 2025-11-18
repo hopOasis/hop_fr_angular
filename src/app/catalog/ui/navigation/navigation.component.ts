@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, DestroyRef, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  DestroyRef,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -6,7 +11,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { SortingTypes } from '../../data-access/models/sorting-types.model';
 import { CatalogStore } from '../../data-access/store/catalog.store';
-import { SortingComponent } from '../sorting/sorting.component';
+import { SortingComponent } from '../../../shared/ui/sorting/sorting.component';
+import { SelectOption } from '../../../shared/interfaces/select-option.interface';
 
 @Component({
   selector: 'app-navigation',
@@ -26,7 +32,13 @@ export class NavigationComponent implements OnInit {
   public currentTypeOfProduct = this.catalogStore.productCategory;
   public currentTypeOfSorting = this.catalogStore.sortDirection;
 
-  onChangeType(type: SortingTypes) {
+  selectOptions = signal<SelectOption[]>([
+    { value: '', text: 'Сортувати від', selected: true },
+    { value: 'asc', text: 'Дешевих' },
+    { value: 'desc', text: 'Дорогих' },
+  ]);
+
+  onChangeType(type: SortingTypes | string) {
     this.router.navigate(['./'], {
       relativeTo: this.activatedRoute,
       queryParamsHandling: 'merge',
