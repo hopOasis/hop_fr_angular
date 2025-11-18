@@ -162,13 +162,11 @@ export const ProductStore = signalStore(
         patchState(store, { isProcessing: true });
         const cartInfo = store.infoRemoveDto();
         const price = store.currentOption()!.price;
-        if (store.currentOptionInCart())
-          return this.removeProductFromCart(cartInfo, price);
-        else
-          return this.addProductToCart(
-            { quantity: store.quantity(), ...cartInfo },
-            price
-          );
+        
+        return this.addProductToCart(
+          { quantity: store.quantity(), ...cartInfo },
+          price
+        );
       },
       removeProductFromCart(
         cartInfo: CartItemRemoveDto,
@@ -194,7 +192,15 @@ export const ProductStore = signalStore(
         price: number
       ): Observable<CartItemResponse> {
         return cartApi
-          .addProduct(cartInfo, price, store.productName(), authApi.isAuth())
+          .addProduct(
+            cartInfo,
+            price,
+            store.productName(),
+            store.productData()?.imageName || [],
+            store.productData()?.options[0].measureValue!,
+            store.productData()?.itemType!,
+            authApi.isAuth()
+          )
           .pipe(
             tap({
               next: () => {

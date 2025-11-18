@@ -1,11 +1,37 @@
 <div class="card__wrapper">
-  <div class="card__image">
-    <img src="" alt="" />
+  @if (isLoading()) {
+  <div class="spinner">
+    <app-spinner />
   </div>
-  <h3 class="card__title">{{ itemData().itemTitle }}</h3>
-  <div class="card__counter"></div>
-  <p class="card__price"></p>
-  <button class="card__delete-button" type="button">
+  }
+  <div class="card__header">
+    <div class="card__image">
+      <img class="card__image__item" [src]="imageUrl" alt="" />
+    </div>
+    <h3 class="card__title">
+      {{ itemData().itemTitle }}
+      {{ measureValue | updateMeasure : itemData().itemType }}
+    </h3>
+  </div>
+  <div class="card__counter">
+    <div
+      class="icon-remove-minus card__icon"
+      (click)="decrease(itemData(), quantity)"
+    ></div>
+    <div class="card__counter__quantity">
+      {{ quantity }}
+    </div>
+    <div
+      class="icon-add-plus card__icon"
+      (click)="increase(itemData(), quantity)"
+    ></div>
+  </div>
+  <p class="card__price">{{ itemData().pricePerItem }} грн</p>
+  <button
+    class="card__delete-button"
+    type="button"
+    (click)="removeFromCart(itemData())"
+  >
     <span class="icon-trash-full"></span>
   </button>
 </div>

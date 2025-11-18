@@ -20,7 +20,7 @@
     font-size: 1.5rem;
     font-weight: 700;
     line-height: 29px;
-    letter-spacing: 0%;
+    letter-spacing: 0;
     margin-bottom: 1rem;
   }
 
@@ -28,7 +28,7 @@
     font-size: 1rem;
     font-weight: 600;
 
-    letter-spacing: 0%;
+    letter-spacing: 0;
   }
   &__wrapper {
     display: flex;
@@ -63,18 +63,17 @@
   }
 
   &__button-make-order {
-    //padding: 1.5rem 4.5rem;
     color: #fff;
     text-align: center;
     font-size: 1.125rem;
     font-weight: 500;
     line-height: 22px;
-    letter-spacing: -4%;
+    letter-spacing: -4;
     text-align: left;
     border-radius: 4px;
     background: rgb(41, 41, 41);
     opacity: 0.94;
-    //transition: all 0.2s ease;
+
     &:hover {
       background-color: rgb(255, 154, 0);
     }

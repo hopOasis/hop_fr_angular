@@ -14,6 +14,9 @@
         <span #buttonCloseModal class="icon-add-plus"></span>
       </button>
     </div>
-    <app-cart></app-cart>
+    @if(authService.isAuth()) {
+
+    <app-cart />
+    }
   </div>
 </div>

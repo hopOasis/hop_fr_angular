@@ -6,6 +6,7 @@ import { CartItemResponse } from '../models/cart-item-response.model';
 import { LocalCartItem } from '../models/local-cart-item.class';
 import { CartResponse } from '../models/cart-response.model';
 import { CartItemAddDto } from '../models/cart-item-add-dto.model';
+import { ProductType } from '../../../catalog/data-access/models/product-types.model';
 
 @Injectable({ providedIn: 'root' })
 export class LocalCartService {
@@ -33,7 +34,10 @@ export class LocalCartService {
   addProduct(
     cart: CartItemAddDto,
     itemCost: number,
-    itemTitle: string
+    itemTitle: string,
+    imageName: string[],
+    measureValue: number,
+    itemType: ProductType
   ): Observable<CartItemResponse> {
     let newCart = this.updateLocalCart();
     let checkExisting = newCart.items.some(
@@ -44,7 +48,10 @@ export class LocalCartService {
     let newProductItem: CartItemResponse = new LocalCartItem(
       cart,
       itemCost,
-      itemTitle
+      itemTitle,
+      imageName,
+      measureValue,
+      itemType
     );
     newCart.setItem(newProductItem);
     localStorage.setItem('cart', JSON.stringify(newCart));
