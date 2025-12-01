@@ -1,0 +1,12 @@
+<div class="order">
+  <div class="order__item">
+    {{ order().orderNumber }}
+  </div>
+  <div class="order__item">{{ order().createdAt }}</div>
+  <div class="order__item">{{ order().orderStatus }}</div>
+  <div class="order__item">{{ order().totalPrice }}</div>
+  <div class="order__item__actions">
+    <app-button> Переглянути деталі </app-button>
+    <app-button> Перезамовити </app-button>
+  </div>
+</div>

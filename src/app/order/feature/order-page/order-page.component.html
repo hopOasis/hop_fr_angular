@@ -1,0 +1,32 @@
+<section class="orders">
+  <h2>Замовлення</h2>
+  <div class="orders__filtering">
+    <div class="orders__search"></div>
+    <div class="orders__sorting"></div>
+  </div>
+  <div class="orders__subtitle">
+    <h3>Мої замовлення</h3>
+    <div class="orders__actions">
+      <app-button>За ціною</app-button>
+      <mat-form-field>
+        <mat-label>За датою</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input
+            style="display: hidden"
+            matStartDate
+            placeholder="Start date"
+          />
+          <input style="display: hidden" matEndDate placeholder="End date" />
+        </mat-date-range-input>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="orders__body">
+    <app-order-items />
+  </div>
+</section>

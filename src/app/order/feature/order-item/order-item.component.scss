@@ -1,0 +1,20 @@
+@use "../../../styles/global/colors" as c;
+@use "../../../styles/utils/rem";
+
+.order {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) 2fr;
+  justify-items: end;
+  align-items: center;
+  padding: rem.rem(10);
+  border-bottom: 1px solid c.$black-50;
+
+  &__item {
+    &__actions {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      gap: rem.rem(10);
+    }
+  }
+}

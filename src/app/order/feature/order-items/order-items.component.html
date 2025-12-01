@@ -1,0 +1,10 @@
+<div class="order__items">
+  <div class="order__items__header">
+    @for(item of itemsHeader; track $index ) {
+    <div class="order__item__header">{{ item }}</div>
+    }
+  </div>
+  @for(order of orders(); track $index){
+  <app-order-item [order]="order" />
+  }
+</div>

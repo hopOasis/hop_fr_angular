@@ -5,8 +5,8 @@ export const userCabinetRoutes: Routes = [
   {
     path: 'my-orders',
     loadComponent: () =>
-      import('../../order/feature/my-orders/my-orders.component').then(
-        (m) => m.MyOrdersComponent
+      import('../../order/feature/order-page/order-page.component').then(
+        (m) => m.OrderPageComponent
       ),
   },
   {
@@ -19,7 +19,9 @@ export const userCabinetRoutes: Routes = [
   {
     path: 'favorite',
     loadComponent: () =>
-      import('../../wishlist/feature/favorite/favorite.component').then((m) => m.FavoriteComponent),
+      import('../../wishlist/feature/favorite/favorite.component').then(
+        (m) => m.FavoriteComponent
+      ),
   },
   {
     path: 'settings',
