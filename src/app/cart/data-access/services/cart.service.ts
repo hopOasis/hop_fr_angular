@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { switchMap, take, throwError } from 'rxjs';
 import { catchError, combineLatest, Observable, of } from 'rxjs';
@@ -9,19 +9,31 @@ import { environment } from '../../../environments/environment.prod';
 import { CartItemAddDto } from '../models/cart-item-add-dto.model';
 import { CartStore } from '../store/cart.store';
 import { ProductType } from '../../../catalog/data-access/models/product-types.model';
+import { CartPut } from '../models/cart-put.interface';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
   private localCartService = inject(LocalCartService);
   private httpClient = inject(HttpClient);
   readonly cartStore = inject(CartStore);
+  private readonly URL = environment.apiUrl;
+
   addProductToApi(cart: CartItemAddDto): Observable<CartItemResponse> {
     return this.httpClient
-      .post<CartItemResponse>(`${environment.apiUrl}/carts`, cart)
+      .post<CartItemResponse>(`${this.URL}/carts`, cart)
       .pipe(
         catchError(() => throwError(() => 'Не вдалось додати товар до корзини'))
       );
   }
+
+  addExactAmount(cart: CartPut): Observable<CartItemResponse> {
+    return this.httpClient
+      .put<CartItemResponse>(`${this.URL}/carts`, cart)
+      .pipe(
+        catchError(() => throwError(() => 'Не вдалось додати товар до корзини'))
+      );
+  }
+
   addProduct(
     cart: CartItemAddDto,
     itemCost: number,
