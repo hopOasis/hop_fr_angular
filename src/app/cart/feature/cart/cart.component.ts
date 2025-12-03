@@ -5,7 +5,7 @@ import {
   inject,
 } from '@angular/core';
 import { UpdatePricePipe } from '../../../catalog/utils/update-price.pipe';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CartProductItemComponent } from '../../../shared/ui/cart-product-item/cart-product-item.component';
 import { CartModalStore } from '../../data-access/store/cart-modal.store';
 import { CartStore } from '../../data-access/store/cart.store';
@@ -26,10 +26,16 @@ import { SpinnerComponent } from '../../../shared/ui/spinner/spinner.component';
 export class CartComponent {
   readonly cartModalStore = inject(CartModalStore);
   readonly cartStore = inject(CartStore);
+  private readonly router = inject(Router);
+
   public data = this.cartStore.cartItems;
   public fullCost = this.cartStore.priceForAll;
 
   onCloseModal() {
     this.cartModalStore.updateState(false);
+  }
+
+  makeOrder(): void {
+    this.router.navigate(['/my-orders']);
   }
 }
