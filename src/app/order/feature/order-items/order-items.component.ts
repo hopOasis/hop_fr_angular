@@ -3,6 +3,7 @@ import { OrderService } from '../../data-access/order.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { OrderRes } from '../../interfaces/order.interface';
 import { OrderItemComponent } from '../order-item/order-item.component';
+import { getLastItem } from '../../utils/get-last-item';
 
 @Component({
   selector: 'app-order-items',
@@ -16,6 +17,7 @@ export class OrderItemsComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
 
   public orders = signal<OrderRes[]>([]);
+  public getLastItem = getLastItem;
 
   public itemsHeader = [
     'Замовлення №',

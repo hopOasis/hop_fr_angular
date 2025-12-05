@@ -83,6 +83,12 @@ export class CartProductItemComponent implements OnInit {
       const { cartId, itemId, measureValue, itemType } = cartItem;
       this.isLoading.set(true);
 
+      if (quantity <= 1) {
+        this.isDisabled.set(true);
+      } else {
+        this.isDisabled.set(false);
+      }
+
       this.cartService
         .addExactAmount({
           cartId,

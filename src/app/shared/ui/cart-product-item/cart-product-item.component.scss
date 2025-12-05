@@ -100,6 +100,14 @@
   border-top-right-radius: 4px;
 }
 
+.icon-trash-full {
+  color: c.$black-50;
+
+  &:hover {
+    color: c.$accent-500;
+  }
+}
+
 .spinner {
   position: absolute;
   max-width: rem.rem(1400);

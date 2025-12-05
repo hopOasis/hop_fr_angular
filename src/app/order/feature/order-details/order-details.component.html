@@ -1,0 +1,78 @@
+<div class="wrapper">
+  <div class="card">
+    <h5 class="title__h5">Інформація по доставці</h5>
+    <div class="card__body">
+      <p class="title__h6">{{ order().deliveryAddress }}</p>
+      <p class="title__h7">
+        Доставка: {{ deliveryMethod[order().deliveryMethod] }}
+      </p>
+    </div>
+  </div>
+  <div class="card">
+    <h5 class="title__h5">Інформація по оплаті</h5>
+    <div class="card__body">
+      <p class="title__h6">{{ order().deliveryAddress }}</p>
+      <p class="title__h7">Оплата: {{ payment[order().paymentType] }}</p>
+    </div>
+  </div>
+</div>
+<div class="order__items">
+  <h3 class="title__h3">Замовлені товари</h3>
+  <div class="grid grid-cols-6 gap-16 justify-items-center">
+    @for(title of titles; track $index) {
+
+    <p class="title__h5">{{ title }}</p>
+    } @for(item of order().items; track $index) {
+
+    <div class="order__image">
+      <img src="" alt="image" />
+    </div>
+    <p class="title_h6">
+      {{ item.itemTitle }}
+    </p>
+    <p class="title_h6">
+      {{ item.quantity }}
+    </p>
+    <p class="title_h6">
+      {{ item.measureValue }}
+    </p>
+    <p class="title_h6">{{ item.price }} грн.</p>
+    <p class="title_h6 justify-self-end">
+      {{ item.quantity * item.price }} грн.
+    </p>
+    }
+  </div>
+  <div class="card__footer">
+    <div class="order__total">
+      <p class="title__h5 title__fw-400">Сума</p>
+      <div class="order__price title__h5">{{ order().totalPrice }} грн.</div>
+    </div>
+    <div class="order__total">
+      <p class="title__h5 title__fw-400">Доставка</p>
+      <div class="order__price title__h5">{{ order().shippingPrice }} грн.</div>
+    </div>
+    <div class="order__total">
+      <p class="title__h5">Всього</p>
+      <div class="order__price title__h5">
+        {{ order().shippingPrice + order().totalPrice }} грн.
+      </div>
+    </div>
+  </div>
+
+  <div class="card__actions">
+    <div class="card__actions__wrap">
+      <app-button>
+        <mat-icon>save_alt</mat-icon>
+        <p class="title__h6">Завантажи чек</p>
+      </app-button>
+      <app-button>
+        <mat-icon>error_outline</mat-icon>
+        <p class="title__h6">Повідомити про помилку</p>
+      </app-button>
+    </div>
+    <app-button>
+      <mat-icon>star_border</mat-icon>
+      <p class="title__h6">Написати відгук</p>
+    </app-button>
+  </div>
+</div>

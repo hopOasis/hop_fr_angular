@@ -1,25 +1,3 @@
-<!-- <div class="sorting-btn" [class.sorting-btn__active]="isActive()">
-  <div>
-    <select
-      [name]="name()"
-      [ngModel]="selectedOption()"
-      (ngModelChange)="onSelect($event)"
-      class="sorting-btn__items"
-      (click)="isActive.set(!isActive())"
-    >
-      @for(opt of selectOptions()?.length ? selectOptions() : defaultOptions();
-      track $index) {
-      <option [value]="opt.value" class="sorting-btn__item">
-        {{ opt.text }}
-      </option>
-      }
-    </select>
-  </div>
-  <div class="icon__arrows">
-    <img src="./svg/arrows-up-down.svg" alt="" />
-  </div>
-</div> -->
-
 <div class="sort-btn" [class.disabled]="disabled() === 'all-products'">
   <app-button
     (clicked)="onClicked()"
