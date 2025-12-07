@@ -1,5 +1,5 @@
-@use "../../styles/global/colors" as c;
-@use "../../styles/utils/rem";
+@use "../../../styles/global/colors" as c;
+@use "../../../styles/utils/rem";
 
 .datepicker-wrapper {
   position: relative;
@@ -9,10 +9,10 @@
   align-items: center;
   gap: rem.rem(4);
   padding: rem.rem(10) rem.rem(14);
-  border: 1px solid #dcdcdc;
-  border-radius: 6px;
+  border: 1px solid c.$black-50;
+  border-radius: 4px;
   cursor: pointer;
-  max-width: 210px;
+  max-width: rem.rem(210);
 
   &:hover {
     color: c.$accent-600;
@@ -22,38 +22,38 @@
 
 .datepicker-panel {
   position: absolute;
-  top: 48px;
+  top: rem.rem(48);
   right: 0;
   background: white;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
   display: flex;
-  padding: 16px;
-  gap: 20px;
+  padding: rem.rem(16);
+  gap: rem.rem(20);
   z-index: 100;
 }
 
 .quick-options {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: rem.rem(8);
   width: max(70%, rem.rem(151));
 }
 .quick-options .opt {
   cursor: pointer;
-  padding: 4px 0;
+  padding: rem.rem(4) 0;
   color: #333;
 }
 .quick-options .opt:hover {
-  color: #007aff;
+  color: c.$red;
 }
 .quick-options .reset {
   margin-top: 12px;
-  color: #d9534f;
+  color: c.$text-accent;
 }
 
 .calendar {
-  width: 260px;
+  width: rem.rem(260);
 }
 .header {
   display: flex;
@@ -76,7 +76,7 @@
 }
 .weekdays div {
   font-size: rem.rem(12);
-  color: #777;
+  color: c.$black-100;
   margin-bottom: rem.rem(6);
 }
 
@@ -86,7 +86,7 @@
   border-radius: 50%;
 }
 .day.other {
-  color: #bbb;
+  color: c.$black-50;
 }
 .day.selected {
   background: c.$accent-500;

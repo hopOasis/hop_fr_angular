@@ -11,7 +11,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIcon } from '@angular/material/icon';
-import { CustomDatepickerComponent } from '../../../shared/custom-datepicker/custom-datepicker.component';
+import { CustomDatepickerComponent } from '../../../shared/ui/custom-datepicker/custom-datepicker.component';
 
 @Component({
   selector: 'app-order-page',
