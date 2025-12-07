@@ -1,0 +1,47 @@
+<div class="datepicker-wrapper">
+  <div class="datepicker-input" (click)="toggle()">
+    <mat-icon>today</mat-icon> За датою
+  </div>
+  @if(open()) {
+  <div class="datepicker-panel">
+    <div class="quick-options">
+      <div class="opt" (click)="selectToday()">Today</div>
+      <div class="opt" (click)="selectYesterday()">Yesterday</div>
+      <div class="opt" (click)="selectLastWeek()">Last week</div>
+      <div class="opt" (click)="selectLastMonth()">Last month</div>
+      <div class="opt" (click)="selectLastQuarter()">Last quarter</div>
+      <div class="opt reset" (click)="reset()">Reset</div>
+    </div>
+
+    <div class="calendar">
+      <div class="header">
+        <button (click)="prevMonth()">‹</button>
+        <div>{{ monthName(currentMonth()) }} {{ currentYear() }}</div>
+        <button (click)="nextMonth()">›</button>
+      </div>
+
+      <div class="weekdays">
+        @for(d of weekdays; track $index) {
+
+        <div>{{ d }}</div>
+        }
+      </div>
+
+      <div class="days">
+        @for (day of calendarDays(); track $index) {
+
+        <div
+          class="day"
+          [class.other]="day.other"
+          [class.selected]="isSelected(day.date)"
+          [class.between]="isBetween(day.date)"
+          (click)="pick(day.date)"
+        >
+          {{ day.date.getDate() }}
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+  }
+</div>

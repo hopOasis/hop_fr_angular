@@ -31,7 +31,7 @@
   </div>
   <p class="card__price">{{ itemData().pricePerItem }} грн/од.</p>
   <p class="card__price">{{ itemData().pricePerItem * quantity }} грн</p>
-  <button (clicked)="removeFromCart(itemData())">
+  <button (click)="removeFromCart(itemData())">
     <span class="icon-trash-full"></span>
   </button>
 </div>

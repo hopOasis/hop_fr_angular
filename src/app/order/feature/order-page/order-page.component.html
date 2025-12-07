@@ -7,23 +7,9 @@
   <div class="orders__subtitle">
     <h3>Мої замовлення</h3>
     <div class="orders__actions">
-      <app-button>За ціною</app-button>
-      <mat-form-field>
-        <mat-label>За датою</mat-label>
-        <mat-date-range-input [rangePicker]="picker">
-          <input
-            style="display: hidden"
-            matStartDate
-            placeholder="Start date"
-          />
-          <input style="display: hidden" matEndDate placeholder="End date" />
-        </mat-date-range-input>
-        <mat-datepicker-toggle
-          matIconSuffix
-          [for]="picker"
-        ></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
-      </mat-form-field>
+      <app-button> <mat-icon>loyalty</mat-icon> За ціною</app-button>
+
+      <app-custom-datepicker (dateRange)="dateRange($event)" />
     </div>
   </div>
   <div class="orders__body">

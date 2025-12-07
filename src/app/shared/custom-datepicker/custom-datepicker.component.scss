@@ -1,0 +1,108 @@
+@use "../../styles/global/colors" as c;
+@use "../../styles/utils/rem";
+
+.datepicker-wrapper {
+  position: relative;
+}
+.datepicker-input {
+  display: flex;
+  align-items: center;
+  gap: rem.rem(4);
+  padding: rem.rem(10) rem.rem(14);
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  cursor: pointer;
+  max-width: 210px;
+
+  &:hover {
+    color: c.$accent-600;
+    border: 1px solid c.$accent-600;
+  }
+}
+
+.datepicker-panel {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  display: flex;
+  padding: 16px;
+  gap: 20px;
+  z-index: 100;
+}
+
+.quick-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: max(70%, rem.rem(151));
+}
+.quick-options .opt {
+  cursor: pointer;
+  padding: 4px 0;
+  color: #333;
+}
+.quick-options .opt:hover {
+  color: #007aff;
+}
+.quick-options .reset {
+  margin-top: 12px;
+  color: #d9534f;
+}
+
+.calendar {
+  width: 260px;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: rem.rem(10);
+}
+.header button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: rem.rem(20);
+}
+
+.weekdays,
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+}
+.weekdays div {
+  font-size: rem.rem(12);
+  color: #777;
+  margin-bottom: rem.rem(6);
+}
+
+.day {
+  padding: rem.rem(8);
+  cursor: pointer;
+  border-radius: 50%;
+}
+.day.other {
+  color: #bbb;
+}
+.day.selected {
+  background: c.$accent-500;
+  color: c.$white;
+}
+.day.between {
+  background: c.$black-40;
+  border-radius: 50%;
+}
+.day:hover {
+  background: c.$bg-grey;
+}
+
+.opt {
+  font-weight: 400;
+  font-size: rem.rem(16);
+  line-height: rem.rem(20);
+  letter-spacing: rem.rem(-0.18);
+}

@@ -16,7 +16,7 @@ export class ButtonComponent {
   onClick() {
     if (!this.disabled()) {
       this.clicked.emit();
-      this.isActive.set(!this.isActive());
+      // this.isActive.set(!this.isActive());
     }
   }
 }
