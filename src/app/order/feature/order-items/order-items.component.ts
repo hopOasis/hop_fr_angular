@@ -1,9 +1,9 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
-import { OrderService } from '../../data-access/order.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { OrderRes } from '../../interfaces/order.interface';
+import { Component, computed, inject, input, OnInit } from '@angular/core';
+
 import { OrderItemComponent } from '../order-item/order-item.component';
 import { getLastItem } from '../../utils/get-last-item';
+import { OrderStore } from '../../data-access/order.store';
+import { itemsHeader } from '../../utils/order-headers.config';
 
 @Component({
   selector: 'app-order-items',
@@ -13,24 +13,11 @@ import { getLastItem } from '../../utils/get-last-item';
   styleUrl: './order-items.component.scss',
 })
 export class OrderItemsComponent implements OnInit {
-  private orderService = inject(OrderService);
-  private destroyRef = inject(DestroyRef);
+  public orderStore = inject(OrderStore);
 
-  public orders = signal<OrderRes[]>([]);
   public getLastItem = getLastItem;
 
-  public itemsHeader = [
-    'Замовлення №',
-    'Дата та час',
-    'Статус',
-    'Сумма',
-    'Дії',
-  ];
+  public itemsHeader = itemsHeader;
 
-  ngOnInit(): void {
-    this.orderService
-      .getOrder()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((orders) => this.orders.set(orders));
-  }
+  ngOnInit(): void {}
 }

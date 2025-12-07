@@ -1,6 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  inject,
+  OnInit,
   signal,
   WritableSignal,
 } from '@angular/core';
@@ -12,6 +14,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIcon } from '@angular/material/icon';
 import { CustomDatepickerComponent } from '../../../shared/ui/custom-datepicker/custom-datepicker.component';
+import { OrderStore } from '../../data-access/order.store';
+import { OrderRes } from '../../interfaces/order.interface';
 
 @Component({
   selector: 'app-order-page',
@@ -26,11 +30,16 @@ import { CustomDatepickerComponent } from '../../../shared/ui/custom-datepicker/
   ],
   templateUrl: './order-page.component.html',
   styleUrl: './order-page.component.scss',
-  providers: [provideNativeDateAdapter()],
+  providers: [OrderStore],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrderPageComponent {
-  public open: WritableSignal<boolean> = signal<boolean>(false);
+export class OrderPageComponent implements OnInit {
+  private orderStore = inject(OrderStore);
+  public open = signal<boolean>(false);
+
+  ngOnInit(): void {
+    this.orderStore.loadOrders();
+  }
 
   showCalendar() {
     if (this.open()) {
@@ -41,6 +50,13 @@ export class OrderPageComponent {
   }
 
   dateRange(range: string) {
-    console.log(range);
+    const from = new Date(range.split(' ').splice(0, 3).join(' '));
+    const to = new Date(range.split(' ').splice(4, 6).join(' '));
+
+    this.orderStore.setDateRange(from, to);
+  }
+
+  sortByPrice() {
+    this.orderStore.setSort('price');
   }
 }

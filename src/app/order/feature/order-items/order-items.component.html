@@ -10,7 +10,7 @@
     </div>
     }
   </div>
-  @for(order of orders(); track $index){
+  @for(order of orderStore.filteredOrders(); track $index){
   <app-order-item [order]="order" />
   }
 </div>
