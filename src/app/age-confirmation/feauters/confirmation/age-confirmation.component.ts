@@ -28,7 +28,7 @@ export class AgeConfirmationComponent implements OnInit {
     if (value) {
       localStorage.setItem('is18Confirmed', value.toString());
       this.is18Confirmed.confirmation = value;
-      this.router.navigate(['/home']);
+      // this.router.navigate(['/home']);
     } else {
       this.is18Confirmed.confirmation = false;
       localStorage.setItem('is18Confirmed', value.toString());

@@ -25,7 +25,7 @@
     } @for(item of order().items; track $index) {
 
     <div class="order__image">
-      <img src="" alt="image" />
+      <img [src]="item.imageName" alt="image" />
     </div>
     <p class="title_h6">
       {{ item.itemTitle }}
@@ -61,10 +61,10 @@
 
   <div class="card__actions">
     <div class="card__actions__wrap">
-      <app-button>
+      <!-- <app-button>
         <mat-icon>save_alt</mat-icon>
         <p class="title__h6">Завантажи чек</p>
-      </app-button>
+      </app-button> -->
       <app-button>
         <mat-icon>error_outline</mat-icon>
         <p class="title__h6">Повідомити про помилку</p>

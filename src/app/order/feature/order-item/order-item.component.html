@@ -8,7 +8,7 @@
   </div>
   <div class="order__item">{{ order().totalPrice }} грн.</div>
   <div class="order__item__actions">
-    <app-button (clicked)="showDetails()">
+    <app-button (clicked)="showDetails(order().id)">
       <span class="icon-showed-eye"></span>
       <p>Переглянути</p>
     </app-button>
@@ -18,7 +18,7 @@
     </app-button>
   </div>
 </div>
-@if(showMore()){
+@if(isDetails.isDetails){
 <div class="order__details">
   <app-order-details [order]="order()" />
 </div>

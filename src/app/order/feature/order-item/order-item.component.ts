@@ -1,8 +1,8 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
 
 import { MatIcon } from '@angular/material/icon';
 
-import { OrderRes } from '../../interfaces/order.interface';
+import { OrderItem, OrderRes } from '../../interfaces/order.interface';
 import { ButtonComponent } from '../../../shared/ui/button/button.component';
 import { OrderDetailsComponent } from '../order-details/order-details.component';
 import { ORDERSTATUS } from '../../utils/order.config';
@@ -16,20 +16,23 @@ import { Router } from '@angular/router';
   templateUrl: './order-item.component.html',
   styleUrl: './order-item.component.scss',
 })
-export class OrderItemComponent {
+export class OrderItemComponent implements OnInit {
   private cartService = inject(CartService);
   private router = inject(Router);
   public order = input.required<OrderRes>();
   public orderStatus = ORDERSTATUS;
-  public showMore = signal(false);
+  public isDetails!: OrderItem;
 
-  showDetails() {
-    if (this.showMore()) {
-      this.showMore.set(false);
+  ngOnInit(): void {
+    this.isDetails = { isDetails: false, ...this.order() };
+  }
+
+  showDetails(id: number) {
+    if (this.isDetails.id === id) {
+      this.isDetails.isDetails = !this.isDetails.isDetails;
     } else {
-      this.showMore.set(true);
+      this.isDetails.isDetails = false;
     }
-    console.log(this.order());
   }
 
   reorder(order: OrderRes) {

@@ -14,6 +14,7 @@ export interface ProductItem {
   quantity: number;
   measureValue: number;
   price: number;
+  imageName: string;
 }
 
 export interface OrderRes {
@@ -35,4 +36,8 @@ export interface OrderRes {
   shippingPrice: number;
   items: ProductItem[];
   paymentStatus: PaymentStatus;
+}
+
+export interface OrderItem extends OrderRes {
+  isDetails: boolean;
 }

@@ -38,12 +38,10 @@ export class CustomDatepickerComponent {
     }
 
     if (this.start && this.end) {
-      this.dateRange.emit(
-        `${this.format(this.start)} – ${this.format(this.end)}`
-      );
       this.selectedRange.set(
-        `${this.format(this.start)} – ${this.format(this.end)}`
+        `${this.format(this.start)} - ${this.format(this.end)}`
       );
+      this.dateRange.emit(this.selectedRange());
     }
   }
 
@@ -137,6 +135,7 @@ export class CustomDatepickerComponent {
     this.start = null;
     this.end = null;
     this.selectedRange.set('');
+    this.dateRange.emit('reset');
   }
 
   selectToday() {
@@ -144,6 +143,7 @@ export class CustomDatepickerComponent {
     this.start = d;
     this.end = d;
     this.selectedRange.set(this.format(d));
+    this.dateRange.emit(this.selectedRange());
   }
 
   selectYesterday() {
@@ -152,6 +152,8 @@ export class CustomDatepickerComponent {
     this.start = d;
     this.end = d;
     this.selectedRange.set(this.format(d));
+
+    this.dateRange.emit(this.selectedRange());
   }
 
   selectLastWeek() {
@@ -160,7 +162,8 @@ export class CustomDatepickerComponent {
     start.setDate(start.getDate() - 7);
     this.start = start;
     this.end = end;
-    this.selectedRange.set(`${this.format(start)} – ${this.format(end)}`);
+    this.selectedRange.set(`${this.format(start)} - ${this.format(end)}`);
+    this.dateRange.emit(this.selectedRange());
   }
 
   selectLastMonth() {
@@ -170,6 +173,7 @@ export class CustomDatepickerComponent {
     this.start = start;
     this.end = end;
     this.selectedRange.set(`${this.format(start)} – ${this.format(end)}`);
+    this.dateRange.emit(this.selectedRange());
   }
 
   selectLastQuarter() {
@@ -179,5 +183,6 @@ export class CustomDatepickerComponent {
     this.start = start;
     this.end = end;
     this.selectedRange.set(`${this.format(start)} – ${this.format(end)}`);
+    this.dateRange.emit(this.selectedRange());
   }
 }

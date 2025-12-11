@@ -4,18 +4,14 @@ import {
   inject,
   OnInit,
   signal,
-  WritableSignal,
 } from '@angular/core';
+
+import { MatIcon } from '@angular/material/icon';
+
 import { ButtonComponent } from '../../../shared/ui/button/button.component';
 import { OrderItemsComponent } from '../order-items/order-items.component';
-
-import { provideNativeDateAdapter } from '@angular/material/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatIcon } from '@angular/material/icon';
 import { CustomDatepickerComponent } from '../../../shared/ui/custom-datepicker/custom-datepicker.component';
 import { OrderStore } from '../../data-access/order.store';
-import { OrderRes } from '../../interfaces/order.interface';
 
 @Component({
   selector: 'app-order-page',
@@ -23,8 +19,6 @@ import { OrderRes } from '../../interfaces/order.interface';
   imports: [
     ButtonComponent,
     OrderItemsComponent,
-    MatFormFieldModule,
-    MatDatepickerModule,
     MatIcon,
     CustomDatepickerComponent,
   ],
@@ -36,12 +30,15 @@ import { OrderRes } from '../../interfaces/order.interface';
 export class OrderPageComponent implements OnInit {
   private orderStore = inject(OrderStore);
   public open = signal<boolean>(false);
+  private priceBy = signal<'abc' | 'desc' | null>('abc');
+  private dates = signal<any>([]);
+  public arrowActive = false;
 
   ngOnInit(): void {
     this.orderStore.loadOrders();
   }
 
-  showCalendar() {
+  showCalendar(): void {
     if (this.open()) {
       this.open.set(false);
     } else {
@@ -49,14 +46,36 @@ export class OrderPageComponent implements OnInit {
     }
   }
 
-  dateRange(range: string) {
-    const from = new Date(range.split(' ').splice(0, 3).join(' '));
-    const to = new Date(range.split(' ').splice(4, 6).join(' '));
+  dateRange(range: string): void {
+    this.dates.set([]);
 
-    this.orderStore.setDateRange(from, to);
+    if (range !== null) {
+      const from = new Date(range.split(' ').splice(0, 3).join(' '));
+      const to = new Date(range.split(' ').splice(4, 6).join(' '));
+      this.dates.update((items) => [from, to, ...items]);
+
+      if (this.dates()[0] != 'Invalid Date') {
+        this.orderStore.setDateRange(
+          this.dates()[0],
+          new Date(this.dates()[1].getTime() + 24 * 3600 * 1000)
+        );
+      }
+    }
+    if (range === 'reset') {
+      this.orderStore.setDateRange(null, null);
+    }
   }
 
-  sortByPrice() {
-    this.orderStore.setSort('price');
+  sortByPrice(): void {
+    this.arrowActive = !this.arrowActive;
+    if (this.priceBy() === 'abc') {
+      this.orderStore.setSort(this.priceBy());
+      this.priceBy.set('desc');
+    } else if (this.priceBy() === 'desc') {
+      this.orderStore.setSort(this.priceBy());
+      this.priceBy.set('abc');
+    } else {
+      this.priceBy.set(null);
+    }
   }
 }

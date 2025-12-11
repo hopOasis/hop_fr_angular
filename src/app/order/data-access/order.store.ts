@@ -13,9 +13,10 @@ import { OrderRes } from '../interfaces/order.interface';
 
 export interface OrderState {
   orders: OrderRes[];
-  sortBy: 'price' | 'date' | null;
+  sortBy: 'abc' | 'desc' | 'date' | null;
   dateRange: { from: Date | null; to: Date | null };
   loading: boolean;
+  filteredOrders: OrderRes[];
 }
 
 const initialState: OrderState = {
@@ -23,6 +24,7 @@ const initialState: OrderState = {
   sortBy: null,
   dateRange: { from: null, to: null },
   loading: false,
+  filteredOrders: [],
 };
 
 export const OrderStore = signalStore(
@@ -41,7 +43,7 @@ export const OrderStore = signalStore(
           .subscribe((orders) => patchState(store, { orders, loading: false }));
       },
 
-      setSort(sort: 'price' | 'date' | null) {
+      setSort(sort: 'abc' | 'desc' | 'date' | null) {
         patchState(store, { sortBy: sort });
       },
 
@@ -55,8 +57,10 @@ export const OrderStore = signalStore(
     sortedOrders: computed(() => {
       let orders = [...state.orders()];
 
-      if (state.sortBy() === 'price') {
+      if (state.sortBy() === 'abc') {
         return orders.sort((a, b) => a.totalPrice - b.totalPrice);
+      } else if (state.sortBy() === 'desc') {
+        return orders.sort((a, b) => b.totalPrice - a.totalPrice);
       }
 
       if (state.sortBy() === 'date') {
@@ -75,8 +79,10 @@ export const OrderStore = signalStore(
       let orders = [...state.orders()];
 
       // 1. сортування
-      if (state.sortBy() === 'price') {
-        orders = orders.sort((a, b) => a.totalPrice - b.totalPrice);
+      if (state.sortBy() === 'abc') {
+        orders.sort((a, b) => a.totalPrice - b.totalPrice);
+      } else if (state.sortBy() === 'desc') {
+        orders.sort((a, b) => b.totalPrice - a.totalPrice);
       }
 
       if (state.sortBy() === 'date') {
