@@ -155,7 +155,6 @@ export class CartProductItemComponent implements OnInit {
   }
 
   removeFromCart(cartItem: CartItemResponse) {
-    console.log('remove');
     const { itemId, measureValue, itemType } = cartItem;
     this.isLoading.set(true);
     this.cartService

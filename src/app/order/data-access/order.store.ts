@@ -95,7 +95,7 @@ export const OrderStore = signalStore(
       // 2. фільтрація
       if (from) orders = orders.filter((o) => new Date(o.createdAt) >= from);
       if (to) orders = orders.filter((o) => new Date(o.createdAt) <= to);
-      console.log(orders);
+
       return orders;
     }),
   }))

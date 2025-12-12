@@ -1,13 +1,15 @@
-import { Component, inject, input, OnInit, signal } from '@angular/core';
+import { Component, inject, input, signal } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { MatIcon } from '@angular/material/icon';
 
-import { OrderItem, OrderRes } from '../../interfaces/order.interface';
+import { OrderRes } from '../../interfaces/order.interface';
 import { ButtonComponent } from '../../../shared/ui/button/button.component';
 import { OrderDetailsComponent } from '../order-details/order-details.component';
 import { ORDERSTATUS } from '../../utils/order.config';
 import { CartService } from '../../../cart/data-access/services/cart.service';
-import { Router } from '@angular/router';
+import { AuthApiService } from '../../../authentication/data-access/api/auth-api.service';
+import { CartStore } from '../../../cart/data-access/store/cart.store';
 
 @Component({
   selector: 'app-order-item',
@@ -16,35 +18,40 @@ import { Router } from '@angular/router';
   templateUrl: './order-item.component.html',
   styleUrl: './order-item.component.scss',
 })
-export class OrderItemComponent implements OnInit {
+export class OrderItemComponent {
   private cartService = inject(CartService);
+  private cartStore = inject(CartStore);
   private router = inject(Router);
+  private isAuth = inject(AuthApiService);
   public order = input.required<OrderRes>();
   public orderStatus = ORDERSTATUS;
-  public isDetails!: OrderItem;
+  public isDetails = signal(false);
 
-  ngOnInit(): void {
-    this.isDetails = { isDetails: false, ...this.order() };
-  }
-
-  showDetails(id: number) {
-    if (this.isDetails.id === id) {
-      this.isDetails.isDetails = !this.isDetails.isDetails;
-    } else {
-      this.isDetails.isDetails = false;
-    }
+  showDetails(): void {
+    this.isDetails.update((s) => (s = !s));
   }
 
   reorder(order: OrderRes) {
     order.items.forEach((item) => {
       this.cartService
-        .addProductToApi({
-          itemId: item.id,
-          quantity: item.quantity,
-          measureValue: item.measureValue,
-          itemType: item.itemType,
-        })
-        .subscribe(() => this.router.navigate(['/my_cabinet/cart']));
+        .addProduct(
+          {
+            quantity: item.quantity,
+            itemId: item.itemId,
+            itemType: item.itemType,
+            measureValue: item.measureValue,
+          },
+          item.price,
+          item.itemTitle,
+          [item.imageName],
+          item.measureValue,
+          item.itemType,
+          this.isAuth.isAuth()
+        )
+        .subscribe(() => {
+          this.cartStore.triggerCartApdating(this.isAuth.isAuth());
+          this.router.navigate(['/my_cabinet/cart']);
+        });
     });
   }
 }

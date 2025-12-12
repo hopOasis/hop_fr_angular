@@ -12,6 +12,7 @@ import { ButtonComponent } from '../../../shared/ui/button/button.component';
 import { OrderItemsComponent } from '../order-items/order-items.component';
 import { CustomDatepickerComponent } from '../../../shared/ui/custom-datepicker/custom-datepicker.component';
 import { OrderStore } from '../../data-access/order.store';
+import { SpinnerComponent } from '../../../shared/ui/spinner/spinner.component';
 
 @Component({
   selector: 'app-order-page',
@@ -21,6 +22,7 @@ import { OrderStore } from '../../data-access/order.store';
     OrderItemsComponent,
     MatIcon,
     CustomDatepickerComponent,
+    SpinnerComponent,
   ],
   templateUrl: './order-page.component.html',
   styleUrl: './order-page.component.scss',
@@ -28,7 +30,7 @@ import { OrderStore } from '../../data-access/order.store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrderPageComponent implements OnInit {
-  private orderStore = inject(OrderStore);
+  public orderStore = inject(OrderStore);
   public open = signal<boolean>(false);
   private priceBy = signal<'abc' | 'desc' | null>('abc');
   private dates = signal<any>([]);
@@ -36,6 +38,7 @@ export class OrderPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.orderStore.loadOrders();
+    console.log(this.orderStore.loading());
   }
 
   showCalendar(): void {

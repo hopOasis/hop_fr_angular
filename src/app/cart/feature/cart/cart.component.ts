@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { UpdatePricePipe } from '../../../catalog/utils/update-price.pipe';
 import { Router, RouterLink } from '@angular/router';
 import { CartProductItemComponent } from '../../../shared/ui/cart-product-item/cart-product-item.component';

@@ -8,7 +8,7 @@ import {
 export type PaymentStatus = 'PAID' | 'NOT_PAID';
 
 export interface ProductItem {
-  id: number;
+  itemId: number;
   itemTitle: string;
   itemType: ProductType;
   quantity: number;
@@ -36,8 +36,4 @@ export interface OrderRes {
   shippingPrice: number;
   items: ProductItem[];
   paymentStatus: PaymentStatus;
-}
-
-export interface OrderItem extends OrderRes {
-  isDetails: boolean;
 }

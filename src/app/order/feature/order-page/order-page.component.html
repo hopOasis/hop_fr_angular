@@ -19,4 +19,10 @@
   <div class="orders__body">
     <app-order-items />
   </div>
+  @if(orderStore.loading()){
+
+  <div class="loading">
+    <app-spinner />
+  </div>
+  }
 </section>
