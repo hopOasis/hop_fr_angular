@@ -1,18 +1,21 @@
 @use "../../../styles/global/colors" as c;
+@use "../../../styles/utils/rem";
 
 .btn {
   display: flex;
+  flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
-  max-width: 193px;
-  max-height: 42px;
+  // max-width: rem.rem(193);
+  max-height: rem.rem(42);
   border: 1px solid c.$black-50;
   border-radius: 4px;
-  padding: 12px 10px;
+  padding: rem.rem(12) rem.rem(10);
   cursor: pointer;
 
   &:hover {
     border-color: c.$accent-500;
+    color: c.$accent-500;
   }
 
   &__active {
@@ -20,18 +23,20 @@
   }
 
   &__content {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: rem.rem(6);
     font-family: Montserrat;
     font-weight: 500;
-    font-size: 14px;
+    font-size: rem.rem(14);
     line-height: 100%;
     letter-spacing: 0%;
-
-    color: c.$black-100;
   }
 
   &__icon {
-    width: 20px;
-    height: 18px;
+    width: rem.rem(20);
+    height: rem.rem(18);
   }
 }
 

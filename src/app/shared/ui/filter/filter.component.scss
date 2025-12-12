@@ -2,6 +2,7 @@
 @use "../../../styles/global/colors" as c;
 .filter {
   padding-top: 2rem;
+  max-width: rem.rem(200);
 
   &__actions {
     display: none;

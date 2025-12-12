@@ -1,0 +1,37 @@
+@use "../../../styles/global/colors" as c;
+@use "../../../styles/utils/rem";
+
+.order {
+  &__items {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid c.$black-50;
+    border-radius: 4px;
+
+    &__header {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr) 2fr;
+      justify-items: center;
+      padding: rem.rem(20);
+      border-bottom: 1px solid c.$black-50;
+    }
+  }
+
+  &__item {
+    &__header {
+      font-family: Montserrat;
+      font-weight: 600;
+      font-size: rem.rem(16);
+      line-height: 100%;
+      letter-spacing: 0%;
+    }
+  }
+}
+
+.self-end {
+  justify-self: end;
+}
+
+.self-start {
+  justify-self: start;
+}

@@ -1,0 +1,108 @@
+@use "../../../styles/global/colors" as c;
+@use "../../../styles/utils/rem";
+
+.datepicker-wrapper {
+  position: relative;
+}
+.datepicker-input {
+  display: flex;
+  align-items: center;
+  gap: rem.rem(4);
+  padding: rem.rem(10) rem.rem(14);
+  border: 1px solid c.$black-50;
+  border-radius: 4px;
+  cursor: pointer;
+  max-width: rem.rem(210);
+
+  &:hover {
+    color: c.$accent-600;
+    border: 1px solid c.$accent-600;
+  }
+}
+
+.datepicker-panel {
+  position: absolute;
+  top: rem.rem(48);
+  right: 0;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  display: flex;
+  padding: rem.rem(16);
+  gap: rem.rem(20);
+  z-index: 100;
+}
+
+.quick-options {
+  display: flex;
+  flex-direction: column;
+  gap: rem.rem(8);
+  width: max(70%, rem.rem(151));
+}
+.quick-options .opt {
+  cursor: pointer;
+  padding: rem.rem(4) 0;
+  color: #333;
+}
+.quick-options .opt:hover {
+  color: c.$red;
+}
+.quick-options .reset {
+  margin-top: 12px;
+  color: c.$text-accent;
+}
+
+.calendar {
+  width: rem.rem(260);
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: rem.rem(10);
+}
+.header button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: rem.rem(20);
+}
+
+.weekdays,
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+}
+.weekdays div {
+  font-size: rem.rem(12);
+  color: c.$black-100;
+  margin-bottom: rem.rem(6);
+}
+
+.day {
+  padding: rem.rem(8);
+  cursor: pointer;
+  border-radius: 50%;
+}
+.day.other {
+  color: c.$black-50;
+}
+.day.selected {
+  background: c.$accent-500;
+  color: c.$white;
+}
+.day.between {
+  background: c.$black-40;
+  border-radius: 50%;
+}
+.day:hover {
+  background: c.$bg-grey;
+}
+
+.opt {
+  font-weight: 400;
+  font-size: rem.rem(16);
+  line-height: rem.rem(20);
+  letter-spacing: rem.rem(-0.18);
+}

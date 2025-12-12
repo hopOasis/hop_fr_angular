@@ -16,22 +16,22 @@
   <div class="card__counter">
     <div
       class="icon-remove-minus card__icon"
-      (click)="decrease(itemData(), quantity)"
+      [class.disabled]="isDisabled()"
+      (click)="decrease(itemData())"
     ></div>
     <div class="card__counter__quantity">
-      {{ quantity }}
+      <input
+        class="card__input"
+        type="text"
+        [(ngModel)]="amount"
+        (ngModelChange)="onQuantityChange(itemData(), amount)"
+      />
     </div>
-    <div
-      class="icon-add-plus card__icon"
-      (click)="increase(itemData(), quantity)"
-    ></div>
+    <div class="icon-add-plus card__icon" (click)="increase(itemData())"></div>
   </div>
-  <p class="card__price">{{ itemData().pricePerItem }} грн</p>
-  <button
-    class="card__delete-button"
-    type="button"
-    (click)="removeFromCart(itemData())"
-  >
+  <p class="card__price">{{ itemData().pricePerItem }} грн/од.</p>
+  <p class="card__price">{{ itemData().pricePerItem * quantity }} грн</p>
+  <button (click)="removeFromCart(itemData())">
     <span class="icon-trash-full"></span>
   </button>
 </div>

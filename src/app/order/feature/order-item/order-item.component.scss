@@ -1,0 +1,70 @@
+@use "../../../styles/global/colors" as c;
+@use "../../../styles/utils/rem";
+
+.order {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) 2fr;
+  justify-items: center;
+  align-items: center;
+  padding: rem.rem(20);
+  border-bottom: 1px solid c.$black-50;
+
+  &__item {
+    &__actions {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      gap: rem.rem(10);
+      justify-self: end;
+    }
+
+    &__start {
+      justify-self: start;
+    }
+  }
+
+  &__details {
+    padding: rem.rem(20);
+    background: c.$bg-grey;
+  }
+}
+
+.box {
+  border-radius: 4px;
+  padding: rem.rem(7) rem.rem(11);
+  font-family: Montserrat;
+  font-weight: 500;
+  font-size: rem.rem(14);
+  line-height: 100%;
+  letter-spacing: 0%;
+}
+
+.delivered {
+  @extend .box;
+
+  color: c.$green;
+  border: 1px solid c.$green;
+}
+
+.cancelled {
+  @extend .box;
+
+  color: c.$red;
+  border: 1px solid c.$red;
+}
+
+.processing {
+  @extend .box;
+
+  color: c.$accent-600;
+  border: 1px solid c.$accent-600;
+}
+
+.in_progress,
+.accepted,
+.completed {
+  @extend .box;
+
+  color: c.$black-100;
+  border: 1px solid c.$black-100;
+}

@@ -1,0 +1,16 @@
+<div class="order__items">
+  <div class="order__items__header">
+    @for(item of itemsHeader; track $index ) {
+    <div
+      class="order__item__header"
+      [class.self-end]="item === getLastItem(itemsHeader)"
+      [class.self-start]="item === itemsHeader[0]"
+    >
+      {{ item }}
+    </div>
+    }
+  </div>
+  @for(order of orderStore.filteredOrders(); track $index){
+  <app-order-item [order]="order" />
+  }
+</div>

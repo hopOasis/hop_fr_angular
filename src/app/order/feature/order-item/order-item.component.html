@@ -1,0 +1,25 @@
+<div class="order">
+  <div class="order__item order__item__start">
+    {{ order().orderNumber }}
+  </div>
+  <div class="order__item">{{ order().createdAt }}</div>
+  <div class="order__item" [class]="order().orderStatus.toLowerCase()">
+    {{ orderStatus[order().orderStatus] }}
+  </div>
+  <div class="order__item">{{ order().totalPrice }} грн.</div>
+  <div class="order__item__actions">
+    <app-button (clicked)="showDetails()">
+      <span class="icon-showed-eye"></span>
+      <p>Переглянути</p>
+    </app-button>
+    <app-button (clicked)="reorder(order())">
+      <mat-icon>refresh</mat-icon>
+      <p>Перезамовити</p>
+    </app-button>
+  </div>
+</div>
+@if(isDetails()){
+<div class="order__details">
+  <app-order-details [order]="order()" />
+</div>
+}
