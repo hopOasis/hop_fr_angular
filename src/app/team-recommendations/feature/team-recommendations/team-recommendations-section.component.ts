@@ -4,6 +4,7 @@ import {
   OnInit,
   Inject,
   PLATFORM_ID,
+  signal,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { TeamRecommendationsService } from '../../data-access/service/team-recommendations.service';
@@ -20,8 +21,9 @@ import { catchError, finalize, of, Subject, takeUntil } from 'rxjs';
 })
 export class TeamRecommendationsSectionComponent implements OnInit, OnDestroy {
   recommendations: Recommendation[] = [];
-  loading = true;
+  loading = signal(true);
   error = false;
+  checkedOnce = false;
 
   private destroy$ = new Subject<void>();
 
@@ -30,23 +32,23 @@ export class TeamRecommendationsSectionComponent implements OnInit, OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.loadRecommendations();
     } else {
-      this.loading = false;
+      this.loading.set(false);
       this.recommendations = [];
+      this.checkedOnce = true;
     }
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
-  checkedOnce = false;
 
   private loadRecommendations(): void {
-    this.loading = true;
+    this.loading.set(true);
     this.error = false;
     this.checkedOnce = false;
 
@@ -56,21 +58,23 @@ export class TeamRecommendationsSectionComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
         catchError((err) => {
           console.error('Error loading recommendations:', err);
-          if (err.status === 404) {
+
+          if (err?.status === 404) {
             this.recommendations = [];
             this.error = false;
           } else {
             this.error = true;
           }
-          return of([]);
+
+          return of<Recommendation[]>([]);
         }),
         finalize(() => {
-          this.loading = false;
+          this.loading.set(false);
           this.checkedOnce = true;
         })
       )
-      .subscribe((data: Recommendation[]) => {
-        this.recommendations = Array.isArray(data) ? data : [];
+      .subscribe((data) => {
+        this.recommendations = data;
       });
   }
 }

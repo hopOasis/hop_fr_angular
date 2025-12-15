@@ -2,14 +2,14 @@
   <div class="team-recommendations__container">
     <h2 class="team-recommendations__title">Пропозиції від нашої команди</h2>
 
-    <div *ngIf="loading" class="loading-state">Завантаження...</div>
+    <div *ngIf="loading()" class="loading-state">Завантаження...</div>
 
-    <div *ngIf="!loading && error" class="error-state">
+    <div *ngIf="!loading() && error" class="error-state">
       Сталася помилка при завантаженні.
     </div>
 
     <div
-      *ngIf="!loading && !error && recommendations.length === 0"
+      *ngIf="!loading() && !error && recommendations.length === 0"
       class="no-recommendations"
     >
       Ми готуємо нові рекомендації від нашої команди, повертайтеся згодом!
@@ -17,7 +17,7 @@
 
     <div
       class="cards-grid"
-      *ngIf="!loading && !error && recommendations.length > 0"
+      *ngIf="!loading() && !error && recommendations.length > 0"
       [ngClass]="{
         'grid-1': recommendations.length === 1,
         'grid-2': recommendations.length === 2,
