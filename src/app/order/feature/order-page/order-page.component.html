@@ -9,7 +9,11 @@
     <div class="orders__actions">
       <app-button (clicked)="sortByPrice()">
         <mat-icon>loyalty</mat-icon> За ціною
-        <span [class]="arrowActive ? 'icon-chevron-down' : 'icon-chevron-up'">
+        <span
+          [class]="
+            priceBy() === 'desc' ? 'icon-chevron-down' : 'icon-chevron-up'
+          "
+        >
         </span>
       </app-button>
 

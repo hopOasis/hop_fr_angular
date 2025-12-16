@@ -16,7 +16,11 @@
     </div>
     @if(authService.isAuth()) {
 
-    <app-cart />
+    <app-cart>
+      <div cart-empty>
+        <app-cart-empty />
+      </div>
+    </app-cart>
     }
   </div>
 </div>

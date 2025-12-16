@@ -7,7 +7,10 @@ import { pipe, switchMap, tap } from 'rxjs';
 import { tapResponse } from '@ngrx/operators';
 import { CartDataService } from '../services/cart-data.service';
 
-const initialState: { cartDetails: CartResponse | null; loading: boolean } = {
+const initialState: {
+  cartDetails: CartResponse | null;
+  loading: boolean;
+} = {
   cartDetails: null,
   loading: false,
 };
@@ -38,6 +41,7 @@ export const CartStore = signalStore(
     ),
   })),
   withComputed(({ cartDetails }) => ({
+    userId: computed(() => cartDetails()?.userId),
     cartId: computed(() =>
       cartDetails()?.items[0] ? cartDetails()!.items[0].cartId : 0
     ),

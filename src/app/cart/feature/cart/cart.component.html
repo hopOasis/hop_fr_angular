@@ -9,36 +9,9 @@
     <p class="cart__amount-info">
       Сума замовлення {{ fullCost() | updatePrice }}
     </p>
-    <div class="cart__actions">
-      <div class="cart__button-wrapper">
-        <a
-          (click)="onCloseModal()"
-          routerLink="/shop"
-          [queryParams]="{ page: 0 }"
-          type="button"
-          class="hover:text-accent-500 active:text-accent-600 active:border-accent-600 hover:border-accent-500 text-black-500 border-solid border border-black-50 px-16 py-6 cart__button-continue"
-        >
-          Продовжити покупки
-        </a>
-      </div>
-      <div class="cart__button-wrapper">
-        <button
-          type="button"
-          class="px-16 py-6 cart__button-make-order"
-          (click)="makeOrder()"
-        >
-          Оформити замовлення
-        </button>
-      </div>
-    </div>
+    <app-cart-actions />
     }@else {
-    <div class="cart__empty-wrapper">
-      <div class="cart__image">
-        <img src="./cart.png" alt="Cart" />
-      </div>
-      <h2 class="cart__title">Ваш кошик порожній</h2>
-      <p class="cart__text">Та ви завжди можете додати до нього товари</p>
-    </div>
+    <ng-content select="[cart-empty]"></ng-content>
 
     }
   </div>

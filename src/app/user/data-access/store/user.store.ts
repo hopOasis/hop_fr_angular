@@ -21,7 +21,7 @@ export const UserStore = signalStore(
   withState(initialState),
   withComputed(({ userInfo, loading }) => ({
     isLoading: computed(() => loading),
-    userName: computed(() => (userInfo ? userInfo()!.firstName : '')),
+    userName: computed(() => (userInfo ? userInfo()?.firstName : '')),
   })),
   withMethods(
     (

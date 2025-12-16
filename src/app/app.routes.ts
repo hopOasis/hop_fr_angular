@@ -45,4 +45,16 @@ export const routes: Routes = [
         (c) => c.SearchResultComponent
       ),
   },
+  {
+    path: 'checkout',
+    loadComponent: () =>
+      import('./checkout/features/checkout/checkout.component').then(
+        (c) => c.CheckoutComponent
+      ),
+  },
+  {
+    path: '**',
+    redirectTo: '/not_found',
+    pathMatch: 'full',
+  },
 ];

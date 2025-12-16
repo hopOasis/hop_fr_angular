@@ -1,0 +1,21 @@
+<div class="title">
+  <h2 class="h2">Замовлення</h2>
+  @if(userName()) {
+  <p class="h3">Привіт, {{ userName() }}!</p>
+  }
+</div>
+<div class="progress">
+  @for(conf of progress; track $index) {
+
+  <div
+    class="circle"
+    [class.circle__active]="$index == prog.getCurrentProgress()"
+  >
+    {{ $index + 1 }}
+  </div>
+  <p class="text" (click)="show($index)">{{ conf }}</p>
+  @if($index + 1 != 3){
+
+  <div class="arrow-right"></div>
+  } }
+</div>

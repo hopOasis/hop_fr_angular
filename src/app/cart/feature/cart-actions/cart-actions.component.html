@@ -1,0 +1,22 @@
+<div class="cart__actions">
+  <div class="cart__button-wrapper">
+    <a
+      (click)="onCloseModal()"
+      routerLink="/shop"
+      [queryParams]="{ page: 0 }"
+      type="button"
+      class="hover:text-accent-500 active:text-accent-600 active:border-accent-600 hover:border-accent-500 text-black-500 border-solid border border-black-50 px-16 py-6 cart__button-continue"
+    >
+      Продовжити покупки
+    </a>
+  </div>
+  <div class="cart__button-wrapper">
+    <button
+      type="button"
+      class="px-16 py-6 cart__button-make-order"
+      (click)="makeOrder()"
+    >
+      Оформити замовлення
+    </button>
+  </div>
+</div>

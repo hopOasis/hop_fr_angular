@@ -1,36 +1,27 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { UpdatePricePipe } from '../../../catalog/utils/update-price.pipe';
-import { Router, RouterLink } from '@angular/router';
+
 import { CartProductItemComponent } from '../../../shared/ui/cart-product-item/cart-product-item.component';
-import { CartModalStore } from '../../data-access/store/cart-modal.store';
+import { UpdatePricePipe } from '../../../catalog/utils/update-price.pipe';
 import { CartStore } from '../../data-access/store/cart.store';
 import { SpinnerComponent } from '../../../shared/ui/spinner/spinner.component';
+import { CartActionsComponent } from '../cart-actions/cart-actions.component';
+
 @Component({
   selector: 'app-cart',
   standalone: true,
   imports: [
     CartProductItemComponent,
     UpdatePricePipe,
-    RouterLink,
     SpinnerComponent,
+    CartActionsComponent,
   ],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CartComponent {
-  readonly cartModalStore = inject(CartModalStore);
   readonly cartStore = inject(CartStore);
-  private readonly router = inject(Router);
 
   public data = this.cartStore.cartItems;
   public fullCost = this.cartStore.priceForAll;
-
-  onCloseModal() {
-    this.cartModalStore.updateState(false);
-  }
-
-  makeOrder(): void {
-    this.router.navigate(['/my-orders']);
-  }
 }
