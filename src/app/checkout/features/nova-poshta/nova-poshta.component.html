@@ -1,0 +1,35 @@
+<h5 class="h5">Особисті дані</h5>
+<div class="nova-poshta">
+  <app-input [placeholder]="'Введіть ім\'я'"
+    >І'мя<span class="red__asterix">*</span>
+  </app-input>
+  <app-input [placeholder]="'Введіть прізвище'"
+    >Прізвище<span class="red__asterix">*</span>
+  </app-input>
+  <app-input [placeholder]="'Введіть номер телефону'"
+    >Номер телефону<span class="red__asterix">*</span>
+  </app-input>
+  <app-input [placeholder]="'Введіть електронну пошту'">
+    Електронну пошту
+  </app-input>
+</div>
+<h5 class="h5">Адреса доставки</h5>
+<div class="nova-poshta">
+  <app-sorting [name]="''" [selectOptions]="cities()">
+    <p class="text__label">Місто<span class="red__asterix">*</span></p>
+  </app-sorting>
+  <app-sorting [name]="''" [selectOptions]="cities()">
+    <p class="text__label">
+      {{ current() === "npc" ? "Вулиця" : "Відділення"
+      }}<span class="red__asterix">*</span>
+    </p>
+  </app-sorting>
+  @if(current() == 'npc') {
+  <app-input [placeholder]="'Номер будинку'">
+    <p class="text__label">Номер будинку<span class="red__asterix">*</span></p>
+  </app-input>
+  <app-input [placeholder]="'Номер квартири'">
+    <p class="text__label">Номер квартири (опціонально)</p>
+  </app-input>
+  }
+</div>

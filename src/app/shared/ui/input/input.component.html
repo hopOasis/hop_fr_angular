@@ -1,0 +1,12 @@
+<p class="label"><ng-content /></p>
+<div class="input__wrapper" [class.error]="hasError()">
+  <input
+    class="input"
+    [class.input__error]="hasError()"
+    [type]="type()"
+    [placeholder]="placeholder()"
+    (input)="onInputChange($event)"
+    (blur)="onInputBlur()"
+    [disabled]="disabled"
+  />
+</div>

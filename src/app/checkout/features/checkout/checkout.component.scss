@@ -2,9 +2,8 @@
 @use "../../../styles/utils/rem";
 
 :host {
-  min-height: 100%;
   flex-grow: 1;
-  padding: 0 rem.rem(257);
+  min-height: 100%;
 }
 
 .order {

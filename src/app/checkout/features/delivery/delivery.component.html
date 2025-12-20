@@ -9,13 +9,38 @@
 
   <div
     class="circle"
-    [class.circle__active]="$index == prog.getCurrentProgress()"
+    [class.circle__active]="$index == progressService.getCurrentProgress()"
   >
     {{ $index + 1 }}
   </div>
-  <p class="text" (click)="show($index)">{{ conf }}</p>
+  <p class="text">{{ conf }}</p>
   @if($index + 1 != 3){
 
   <div class="arrow-right"></div>
   } }
+</div>
+@switch(progressService.getProgresses()[progressService.getCurrentProgress()]){
+@case('delivery-type'){
+<app-delivery-type />
+} @case('payment-type'){
+<app-payment-type />
+} @case('order-info'){
+<app-order-info />
+} @default {
+<app-delivery-type />
+} }
+
+<div class="delivery__actions">
+  @if(deliveryService.getCurrent() !== 'default' ||
+  progressService.getCurrentProgress() !== 0){
+  <div class="btn btn__bg__white" (click)="back()">Назад</div>
+
+  <div
+    class="btn btn__bg__black"
+    [class.btn__space]="progressService.getCurrentProgress() == 0"
+    (click)="continue()"
+  >
+    Продовжити
+  </div>
+  }
 </div>

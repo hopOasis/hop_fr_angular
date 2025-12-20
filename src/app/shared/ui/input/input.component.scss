@@ -1,0 +1,69 @@
+@use "../../../styles/global/colors" as c;
+@use "../../../styles/utils/rem";
+
+.input {
+  display: flex;
+  padding: rem.rem(12) rem.rem(8);
+  border: none;
+  outline: none;
+  background: transparent;
+  transition: 300ms ease-out;
+  color: c.$black-500;
+  font-family: Montserrat;
+  font-weight: 500;
+  font-size: rem.rem(14);
+  line-height: 100%;
+  letter-spacing: 0%;
+  transition: 500ms;
+
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    width: rem.rem(295);
+    border-radius: 10px;
+    border: 1px solid c.$black-50;
+
+    &:hover {
+      border-color: c.$accent-500;
+    }
+  }
+
+  &__error {
+    border-color: c.$red;
+    color: c.$red;
+  }
+
+  &__warning {
+    border-color: c.$warrning;
+  }
+}
+
+.error {
+  border-color: c.$red;
+}
+
+.icon {
+  &__error {
+    // color: var(--error-color);
+  }
+
+  &__warning {
+    // color: var(--warning-color);
+  }
+}
+
+.padding {
+  &__right {
+    padding-right: 7px;
+  }
+}
+
+.label {
+  padding-bottom: rem.rem(8);
+  font-family: Montserrat;
+  font-weight: 500;
+  font-size: rem.rem(14);
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: c.$black-100;
+}

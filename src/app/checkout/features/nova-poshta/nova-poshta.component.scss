@@ -1,0 +1,45 @@
+@use "../../../styles/global/colors" as c;
+@use "../../../styles/utils/rem";
+
+.nova-poshta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem.rem(20);
+  max-width: rem.rem(620);
+  padding-bottom: rem.rem(32);
+}
+
+.text {
+  &__label {
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: rem.rem(14);
+    line-height: 100%;
+    letter-spacing: 0%;
+    padding-bottom: rem.rem(8);
+    color: c.$black-100;
+  }
+}
+
+.red__asterix {
+  font-family: Montserrat;
+  font-weight: 500;
+  font-size: rem.rem(14);
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: c.$red;
+}
+
+.h5 {
+  font-family: Montserrat;
+  font-weight: 600;
+  font-size: rem.rem(16);
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: c.$black-500;
+  padding-bottom: rem.rem(20);
+}
+
+app-sorting {
+  width: rem.rem(295);
+}

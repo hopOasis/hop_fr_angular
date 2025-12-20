@@ -74,3 +74,37 @@
   padding-top: rem.rem(40);
   gap: rem.rem(4);
 }
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: rem.rem(210);
+  height: rem.rem(48);
+  border: 0.5px solid c.$grey-500;
+  border-radius: 4px;
+  font-family: Montserrat;
+  font-weight: 600;
+  font-size: rem.rem(16);
+  line-height: 100%;
+  letter-spacing: 0%;
+
+  &__bg__black {
+    background: c.$grey-500;
+    color: c.$white;
+    margin-left: rem.rem(189);
+  }
+
+  &__space {
+    margin-left: rem.rem(399);
+  }
+
+  &__bg__white {
+    color: c.$grey-500;
+  }
+}
+
+.delivery__actions {
+  display: flex;
+  flex-wrap: nowrap;
+}

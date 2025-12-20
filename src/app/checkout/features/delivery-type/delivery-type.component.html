@@ -1,1 +1,29 @@
-<p>delivery-type works!</p>
+<div class="delivery-type">
+  <h3 class="h3">{{ deliveryService.getCurrentTitle() }}</h3>
+  @switch(deliveryService.getCurrent()) { @case ('npd'){
+  <app-nova-poshta />
+  } @case('npc'){
+  <app-nova-poshta [current]="'npc'" />
+  } @case('npp') {
+  <app-nova-poshta />
+  } @case ('uap'){
+  <app-nova-poshta />
+  } @default { @for(item of deliveryTypeItems; track $index){
+
+  <div class="delivery-type__item" (click)="choosenType($index)">
+    <p class="text">
+      {{ item }}
+    </p>
+    <p
+      class="text text__bold"
+      [class.text__green]="deliveryTypePrices[$index] == 'безкоштовно'"
+    >
+      {{
+        deliveryTypePrices[$index] !== "безкоштовно"
+          ? deliveryTypePrices[$index] + " грн."
+          : deliveryTypePrices[$index]
+      }}
+    </p>
+  </div>
+  } } }
+</div>

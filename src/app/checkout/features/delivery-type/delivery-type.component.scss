@@ -1,0 +1,50 @@
+@use "../../../styles/global/colors" as c;
+@use "../../../styles/utils/rem";
+
+.h3 {
+  font-family: Montserrat;
+  font-weight: 500;
+  font-size: rem.rem(24);
+  line-height: 100%;
+  letter-spacing: 0%;
+}
+
+.delivery-type {
+  display: flex;
+  flex-direction: column;
+  gap: rem.rem(20);
+
+  padding-top: rem.rem(48);
+  padding-bottom: rem.rem(60);
+
+  &__item {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    max-width: rem.rem(505);
+    border: 1px solid c.$black-50;
+    border-radius: 4px;
+    padding: rem.rem(10) rem.rem(19.5);
+    cursor: pointer;
+  }
+}
+
+.text {
+  font-family: Montserrat;
+  font-weight: 500;
+  font-size: rem.rem(14);
+  line-height: 100%;
+  letter-spacing: 0%;
+
+  &__green {
+    color: c.$green;
+  }
+
+  &__bold {
+    font-family: Montserrat;
+    font-weight: 600;
+    font-size: rem.rem(16);
+    line-height: 100%;
+    letter-spacing: 0%;
+  }
+}
