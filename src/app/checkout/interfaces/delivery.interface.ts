@@ -15,10 +15,12 @@ export interface DeliveryDataReq {
 }
 
 export interface DeliveryData {
-  userName: string;
-  userSurname: string;
+  firstName: string;
+  lastName: string;
   city: string;
   deliveryPoint: string;
   appartment: string;
   streetNum: string;
+  phone: string;
+  email: string;
 }

@@ -102,6 +102,13 @@
   &__bg__white {
     color: c.$grey-500;
   }
+
+  &:hover {
+    border: 0.5px solid c.$accent-600;
+    color: c.$accent-600;
+  }
+
+  cursor: pointer;
 }
 
 .delivery__actions {

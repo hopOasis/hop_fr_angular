@@ -8,6 +8,7 @@ import { Direction } from '../../interfaces/delivery.interface';
 import { PaymentTypeComponent } from '../payment-type/payment-type.component';
 import { OrderInfoComponent } from '../order-info/order-info.component';
 import { DeliveryTypeService } from '../../data-access/delivery-type.service';
+import { CheckoutStoreService } from '../../data-access/checkout-store.service';
 
 @Component({
   selector: 'app-delivery',
@@ -15,9 +16,10 @@ import { DeliveryTypeService } from '../../data-access/delivery-type.service';
   imports: [DeliveryTypeComponent, PaymentTypeComponent, OrderInfoComponent],
   templateUrl: './delivery.component.html',
   styleUrl: './delivery.component.scss',
-  providers: [ProgressService, DeliveryTypeService],
+  providers: [ProgressService, DeliveryTypeService, CheckoutStoreService],
 })
 export class DeliveryComponent {
+  private checkoutStore = inject(CheckoutStoreService);
   private readonly userStore = inject(UserStore);
   public userName = this.userStore.userName;
   public progress = progressConfig;
@@ -27,6 +29,7 @@ export class DeliveryComponent {
   continue() {
     this.progressService.udpateCurrentProgress('up');
     this.progressService.previousProgress();
+    console.log(this.checkoutStore.getDeliveryData());
   }
 
   back() {

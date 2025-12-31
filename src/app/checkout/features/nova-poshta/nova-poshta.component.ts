@@ -1,34 +1,37 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
 
 import { InputComponent } from '../../../shared/ui/input/input.component';
 import { SortingComponent } from '../../../shared/ui/sorting/sorting.component';
 import { SelectOption } from '../../../shared/interfaces/select-option.interface';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { CheckoutStoreService } from '../../data-access/checkout-store.service';
 import { DeliveryData } from '../../interfaces/delivery.interface';
+import { UserStore } from '../../../user/data-access/store/user.store';
 
 @Component({
   selector: 'app-nova-poshta',
   standalone: true,
-  imports: [InputComponent, SortingComponent, ReactiveFormsModule],
+  imports: [InputComponent, SortingComponent, FormsModule],
   templateUrl: './nova-poshta.component.html',
   styleUrl: './nova-poshta.component.scss',
+  providers: [],
 })
-export class NovaPoshtaComponent {
-  private fb = inject(FormBuilder);
+export class NovaPoshtaComponent implements OnInit {
   private checkoutStore = inject(CheckoutStoreService);
+  private userStore = inject(UserStore);
+
   current = input<string>();
   cities = signal<SelectOption[]>([
     {
-      value: 'city',
+      value: 'Kyiv',
       text: 'Kyiv',
     },
     {
-      value: 'city',
+      value: 'Lviv',
       text: 'Lviv',
     },
     {
-      value: 'city',
+      value: 'Poltava',
       text: 'Poltava',
     },
     {
@@ -37,13 +40,35 @@ export class NovaPoshtaComponent {
       selected: true,
     },
   ]);
+  data: DeliveryData = {
+    firstName: '',
+    lastName: '',
+    city: '',
+    deliveryPoint: '',
+    appartment: '',
+    streetNum: '',
+    phone: '',
+    email: '',
+  };
 
-  checkoutForm = this.fb.group({
-    userName: [''],
-    userSurname: [''],
-    deliveryPoint: [''],
-    streetNum: [''],
-    appartment: [''],
-    city: [''],
-  });
+  ngOnInit(): void {
+    const user = this.userStore.userInfo();
+    if (user) {
+      this.data.firstName = user.firstName;
+      this.data.lastName = user.lastName;
+      this.data.email = user.email;
+    }
+  }
+
+  dataChange() {
+    this.checkoutStore.setDeliveryData(this.data);
+  }
+
+  deliveryPointSelected(point: string) {
+    this.data.deliveryPoint = point;
+  }
+
+  citySelected(city: string) {
+    this.data.city = city;
+  }
 }
