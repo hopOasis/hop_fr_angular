@@ -28,15 +28,18 @@ export class SearchResultService {
       )
       .pipe(
         map((products) => {
-          return products.content.filter(
-            (product) =>
+          return products.content.filter((product) => {
+            if (product.imageName?.length && product.imageName.length > 1)
+              product.imageName?.splice(0, 1);
+            return (
               trimmedLowerCase(product.name).includes(
                 trimmedLowerCase(searchWord)
               ) ||
               trimmedLowerCase(product.description).includes(
                 trimmedLowerCase(searchWord)
               )
-          );
+            );
+          });
         })
       );
   }

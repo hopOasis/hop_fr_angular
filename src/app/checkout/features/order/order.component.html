@@ -1,4 +1,89 @@
-@for(item of data(); track $index) {
+<div class="checkout__order">
+  <h3 class="h3">Ваше замовлення</h3>
 
-<app-cart-product-item [itemData]="item" />
-}
+  <div class="checkout__items">
+    @for(item of data(); track $index){
+
+    <div class="checkout__item">
+      <div class="checkout__item__img">
+        <img [src]="item.imageName[0]" [alt]="item.itemTitle" class="image" />
+      </div>
+      <div class="checkout__body__wrapp">
+        <div class="checkout__body">
+          <div>
+            <h6 class="h6">{{ item.itemTitle + " " + item.measureValue }}</h6>
+          </div>
+        </div>
+        <div class="checkout__actions">
+          <div class="checkout__btn">
+            <button (click)="removeFromCart(item)">
+              <p class="icon-trash-full icon"></p>
+            </button>
+          </div>
+          <div class="checkout__amount">
+            <div
+              class="checkout__amount-btn icon-remove-minus icon"
+              [class.disabled]="item.quantity <= 1 ? true : false"
+              (click)="decrease(item, item.quantity)"
+            ></div>
+            <div class="checkout__amount-input">
+              <input
+                type="text"
+                [ngModel]="item.quantity"
+                (ngModelChange)="onQuantityChange(item, $event)"
+              />
+            </div>
+            <div
+              class="checkout__amount-btn icon-add-plus icon"
+              (click)="increase(item)"
+            ></div>
+          </div>
+          <div class="checkout__price">
+            {{ item.totalCost }} <span>грн.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+
+  <div class="checkout__promo">
+    <!-- <input class="input__promo" type="text" /> -->
+    <app-input
+      [placeholder]="'Промокод'"
+      [disabled]="disabledInput()"
+      [(ngModel)]="promoCode"
+    />
+    <button
+      class="btn__promo"
+      [class.btn__promo__disabled]="disabledInput()"
+      (click)="applyPromoCode()"
+    >
+      Застосувати @if(disabledInput()){<mat-icon>done</mat-icon>}
+    </button>
+  </div>
+  <div class="checkout__info">
+    <div class="checkout__info__item">
+      <h5 class="h5">Знижка</h5>
+      <h5 class="h5">{{ discount() + "%" }}</h5>
+    </div>
+    <div class="checkout__info__item">
+      <h5 class="h5">Вартість доставки</h5>
+      <h5 class="h5">{{ deliveryPrice() }} грн.</h5>
+    </div>
+    <div class="checkout__info__item">
+      <h5 class="h5">Товарів на суму</h5>
+      <h5 class="h5">
+        {{ priceForAll() }}
+        грн.
+      </h5>
+    </div>
+  </div>
+  <div class="checkout__total">
+    <h5 class="h5">Разом</h5>
+    <h5 class="h5">
+      {{ totalCost() }}
+      грн.
+    </h5>
+  </div>
+</div>

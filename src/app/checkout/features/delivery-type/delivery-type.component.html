@@ -1,29 +1,90 @@
 <div class="delivery-type">
-  <h3 class="h3">{{ deliveryService.getCurrentTitle() }}</h3>
-  @switch(deliveryService.getCurrent()) { @case ('npd'){
-  <app-nova-poshta />
-  } @case('npc'){
-  <app-nova-poshta [current]="'npc'" />
-  } @case('npp') {
-  <app-nova-poshta />
-  } @case ('uap'){
-  <app-nova-poshta />
-  } @default { @for(item of deliveryTypeItems; track $index){
-
-  <div class="delivery-type__item" (click)="choosenType($index)">
-    <p class="text">
-      {{ item }}
-    </p>
-    <p
-      class="text text__bold"
-      [class.text__green]="deliveryTypePrices[$index] == 'безкоштовно'"
-    >
-      {{
-        deliveryTypePrices[$index] !== "безкоштовно"
-          ? deliveryTypePrices[$index] + " грн."
-          : deliveryTypePrices[$index]
-      }}
-    </p>
+  <div class="delivery-type__items" (click)="onClick()">
+    <h6 class="h6">{{ deliveryTypeTitle() }}</h6>
+    <div class="delivery-type__price">
+      <h5 class="h5">{{ deliveryTypePrice() }}</h5>
+      <p [class]="icon()"></p>
+    </div>
   </div>
-  } } }
+  @if (isOpened()) {
+    @if (deliveryTypeTitle() === "Нова пошта") {
+      <div class="delivery-type__select">
+        <div class="input__radio">
+          <label class="radio__label">
+            <input
+              class="radio__input"
+              type="radio"
+              name="deliveryType"
+              id="POST_OFFICE"
+              (input)="setDeliveryType($event)"
+              checked
+            />
+            <h6 class="h6">Відділення</h6>
+          </label>
+        </div>
+        <div class="input__radio">
+          <label class="radio__label">
+            <input
+              class="radio__input"
+              type="radio"
+              name="deliveryType"
+              id="PARCEL_TERMINAL"
+              (input)="setDeliveryType($event)"
+            />
+            <h6 class="h6">Поштомат</h6>
+          </label>
+        </div>
+        <div class="input__radio">
+          <label class="radio__label">
+            <input
+              class="radio__input"
+              type="radio"
+              name="deliveryType"
+              id="COURIER"
+              (input)="setDeliveryType($event)"
+            />
+            <h6 class="h6">Курʼєр</h6>
+          </label>
+        </div>
+      </div>
+    }
+    @if (
+      getDeliveryType() === "POST_OFFICE" ||
+      getDeliveryType() === "PARCEL_TERMINAL"
+    ) {
+      <div class="delivery-type__input-items">
+        <div class="delivery-type__input-item">
+          <app-input [(ngModel)]="store.deliveryAddress"
+            >Виберіть місто<span class="asterix">*</span>
+          </app-input>
+        </div>
+        <div class="delivery-type__input-item">
+          <app-input [(ngModel)]="store.deliveryPostalCode"
+            >Виберіть
+            {{ getDeliveryType() === "POST_OFFICE" ? "відділення" : "поштомат"
+            }}<span class="asterix">*</span>
+          </app-input>
+        </div>
+      </div>
+    } @else if (
+      getDeliveryType() === "COURIER" || deliveryTypeTitle() === "Укрпошта"
+    ) {
+      <div class="delivery-type__input-items">
+        <div class="delivery-type__input-item">
+          <app-input [(ngModel)]="store.deliveryAddress"
+            >Виберіть місто<span class="asterix">*</span>
+          </app-input>
+        </div>
+        <div class="delivery-type__input-item">
+          <app-input>Виберіть вулицю<span class="asterix">*</span> </app-input>
+        </div>
+        <div class="delivery-type__input-item">
+          <app-input>Номер будинку<span class="asterix">*</span> </app-input>
+        </div>
+        <div class="delivery-type__input-item">
+          <app-input>Номер квартири </app-input>
+        </div>
+      </div>
+    }
+  }
 </div>

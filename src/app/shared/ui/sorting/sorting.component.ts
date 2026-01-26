@@ -1,5 +1,6 @@
 import {
   Component,
+  computed,
   input,
   OnInit,
   output,
@@ -25,6 +26,9 @@ export class SortingComponent implements OnInit {
   sortBy = output<string>();
   selectedOption = signal<string | null>(null);
   isActive = signal(false);
+  iconToggle = computed(() =>
+    this.isActive() ? 'icon-chevron-up' : 'icon-chevron-down'
+  );
 
   defaultOptions: WritableSignal<SelectOption[]> = signal([
     { value: 'abc', text: 'Від дешевих' },

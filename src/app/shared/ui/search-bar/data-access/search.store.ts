@@ -35,7 +35,7 @@ const initialState: SearchState = {
 export const SearchStore = signalStore(
   withState(initialState),
 
-  withComputed(({ productData, filterBy, filterOptions }) => ({
+  withComputed(({ productData, filterBy }) => ({
     filtered: computed(() => {
       switch (filterBy()) {
         case 'inStock':

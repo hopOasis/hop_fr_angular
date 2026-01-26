@@ -21,35 +21,35 @@ export const routes: Routes = [
     children: userCabinetRoutes,
     loadComponent: () =>
       import('./user/feature/my-cabinet/my-cabinet.component').then(
-        (m) => m.MyCabinetComponent
+        (m) => m.MyCabinetComponent,
       ),
   },
   {
     path: 'not_found',
     loadComponent: () =>
       import('./shared/layout/not-found/not-found.component').then(
-        (m) => m.NotFoundComponent
+        (m) => m.NotFoundComponent,
       ),
   },
   {
     path: 'confirmage',
     loadComponent: () =>
-      import(
-        './age-confirmation/feauters/confirmation/age-confirmation.component'
-      ).then((c) => c.AgeConfirmationComponent),
+      import('./age-confirmation/feauters/confirmation/age-confirmation.component').then(
+        (c) => c.AgeConfirmationComponent,
+      ),
   },
   {
     path: 'searchresult',
     loadComponent: () =>
       import('./search-result/search-result.component').then(
-        (c) => c.SearchResultComponent
+        (c) => c.SearchResultComponent,
       ),
   },
   {
     path: 'checkout',
     loadComponent: () =>
       import('./checkout/features/checkout/checkout.component').then(
-        (c) => c.CheckoutComponent
+        (c) => c.CheckoutComponent,
       ),
   },
   {

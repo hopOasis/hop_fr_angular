@@ -19,7 +19,7 @@
   &__wrapper {
     display: flex;
     align-items: center;
-    width: rem.rem(295);
+    max-width: rem.rem(295);
     border-radius: 10px;
     border: 1px solid c.$black-50;
 
@@ -59,6 +59,7 @@
 }
 
 .label {
+  max-width: rem.rem(295);
   padding-bottom: rem.rem(8);
   font-family: Montserrat;
   font-weight: 500;

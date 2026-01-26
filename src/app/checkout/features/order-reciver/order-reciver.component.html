@@ -1,0 +1,23 @@
+<form [formGroup]="deliveryForm()">
+  <div class="buyer-info__items">
+    <app-input [placeholder]="'Введіть ім\'я'" required formControlName="name"
+      >Ім'я<span class="asterix">*</span>
+    </app-input>
+
+    <app-input [placeholder]="'Введіть прізвище'" formControlName="surname"
+      >Прізвище<span class="asterix">*</span>
+    </app-input>
+  </div>
+  <div class="buyer-info__items">
+    <app-input
+      [placeholder]="'+380_________'"
+      [type]="'tel'"
+      [defaultValue]="'+380'"
+      formControlName="phone"
+      >Номер телефону<span class="asterix">*</span>
+    </app-input>
+    <app-input [placeholder]="'адреса електроноі пошти'" formControlName="email"
+      >Електронна пошта<span class="asterix">*</span>
+    </app-input>
+  </div>
+</form>

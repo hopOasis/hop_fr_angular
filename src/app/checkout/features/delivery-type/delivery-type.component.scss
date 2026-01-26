@@ -1,50 +1,101 @@
 @use "../../../styles/global/colors" as c;
 @use "../../../styles/utils/rem";
 
-.h3 {
-  font-family: Montserrat;
-  font-weight: 500;
-  font-size: rem.rem(24);
-  line-height: 100%;
-  letter-spacing: 0%;
+.delivery-type {
+  display: grid;
+  padding: rem.rem(19.5) rem.rem(10);
+  gap: rem.rem(20);
+  border: 1px solid c.$grey-50;
+  border-radius: 4px;
+
+  &__items {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+
+  &__price {
+    display: flex;
+    justify-content: end;
+    min-width: rem.rem(108);
+    gap: rem.rem(8);
+
+    p {
+      font-weight: bold;
+      color: c.$black-500;
+    }
+  }
+
+  &__input-items {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    gap: rem.rem(16);
+  }
+
+  &__input-item {
+    flex: 1;
+  }
 }
 
-.delivery-type {
-  display: flex;
-  flex-direction: column;
-  gap: rem.rem(20);
+.input__radio {
+  padding-top: rem.rem(4);
+}
 
-  padding-top: rem.rem(48);
-  padding-bottom: rem.rem(60);
-
-  &__item {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    max-width: rem.rem(505);
-    border: 1px solid c.$black-50;
-    border-radius: 4px;
-    padding: rem.rem(10) rem.rem(19.5);
+.radio {
+  &__label {
+    display: grid;
+    grid-template-columns: 1em auto;
+    gap: rem.rem(8);
     cursor: pointer;
   }
 }
 
-.text {
-  font-family: Montserrat;
-  font-weight: 500;
-  font-size: rem.rem(14);
-  line-height: 100%;
-  letter-spacing: 0%;
+.h6 {
+  color: c.$grey-500;
+}
 
-  &__green {
-    color: c.$green;
-  }
+input[type="radio"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: c.$white;
+  margin: 0;
+  font: inherit;
+  color: currentColor;
+  width: rem.rem(16);
+  height: rem.rem(16);
+  border: 2px solid c.$black-500;
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+  transform: translateY(-0.075em);
+}
 
-  &__bold {
-    font-family: Montserrat;
-    font-weight: 600;
-    font-size: rem.rem(16);
-    line-height: 100%;
-    letter-spacing: 0%;
-  }
+input[type="radio"]::before {
+  content: "";
+  width: rem.rem(8);
+  height: rem.rem(8);
+  border-radius: 50%;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  // box-shadow: inset 1em 1em c.$black-500;
+  // background-color: CanvasText;
+  border: 2px solid c.$black-500;
+}
+
+input[type="radio"]:checked::before {
+  transform: scale(1);
+}
+
+// input[type="radio"]:focus {
+//   outline: max(2px, 0.15em) solid currentColor;
+//   outline-offset: max(2px, 0.15em);
+// }
+
+.form-control:focus-within {
+  color: c.$black-500;
+}
+
+.asterix {
+  color: c.$red;
 }

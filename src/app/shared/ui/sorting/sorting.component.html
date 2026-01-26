@@ -2,7 +2,7 @@
   <ng-content />
   <app-button
     (clicked)="onClicked()"
-    [icon]="'./svg/arrows-up-down.svg'"
+    [icon]="iconToggle()"
     [disabled]="disabled() === 'all-products'"
   >
     {{ selectedOption() }}

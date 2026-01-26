@@ -1,117 +1,99 @@
-@use "../../../styles/global/colors" as c;
 @use "../../../styles/utils/rem";
+@use "../../../styles/global/colors" as c;
+
+.checkout__delivery {
+  display: grid;
+  gap: rem.rem(16);
+  padding-top: 0;
+}
 
 .title {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
+  border-radius: 8px;
+  padding: rem.rem(8) rem.rem(24);
+  background: c.$white;
 }
 
-.h2 {
-  font-family: Montserrat;
-  font-weight: 500;
-  font-size: rem.rem(32);
-  line-height: 100%;
-  letter-spacing: 0%;
-  color: c.$black-500;
+.buyer-info {
+  padding: rem.rem(16) rem.rem(24) rem.rem(24) rem.rem(24);
+  border-radius: 8px;
+  background: c.$white;
+
+  &__user {
+    display: grid;
+    gap: rem.rem(24);
+    max-width: rem.rem(667);
+  }
+  &__items {
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
-.h3 {
-  font-family: Montserrat;
-  font-weight: 500;
-  font-size: rem.rem(24);
-  line-height: 100%;
-  letter-spacing: 0%;
-  color: c.$black-500;
+.department {
+  @extend .buyer-info;
+
+  &__items {
+    padding-top: rem.rem(24);
+  }
 }
 
-.circle {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: rem.rem(30);
-  height: rem.rem(30);
-  border: 1px solid c.$accent-500;
-  border-radius: 50%;
-  font-family: Montserrat;
-  font-weight: 500;
-  font-size: rem.rem(12);
-  line-height: 100%;
-  letter-spacing: 0%;
-  color: c.$black-100;
+.payment {
+  @extend .buyer-info;
 
-  &__active {
-    @extend .circle;
+  &__items {
+    display: grid;
+    gap: rem.rem(24);
+    padding-top: rem.rem(24);
+  }
 
-    background: c.$accent-500;
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: rem.rem(20);
+    border: 1px solid c.$grey-50;
+    border-radius: 4px;
+  }
+
+  &__action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: rem.rem(24);
+    height: rem.rem(48);
+    border-radius: 4px;
     color: c.$white;
+    background: c.$bg-button-grey;
+    cursor: pointer;
+
+    &:hover {
+      background: c.$accent-600;
+    }
+
+    &:active {
+      background: c.$accent-500;
+    }
   }
 }
 
-.arrow-right {
-  width: rem.rem(8);
-  height: rem.rem(8);
-  border-bottom: 2px solid c.$black-500;
-  border-right: 2px solid c.$black-500;
-  transform: rotate(-45deg);
-  margin-right: rem.rem(10);
+.h4 {
+  font-weight: 900;
+  color: c.$stripe;
+  padding-right: rem.rem(10);
 }
 
-.text {
-  padding-left: rem.rem(4);
-  font-family: Montserrat;
-  font-weight: 500;
-  font-size: rem.rem(12);
-  line-height: 100%;
-  letter-spacing: 0%;
-  color: c.$grey-500;
+.h6 {
+  padding: rem.rem(19.5) rem.rem(10);
 }
 
-.progress {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  padding-top: rem.rem(40);
-  gap: rem.rem(4);
-}
-
-.btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: rem.rem(210);
-  height: rem.rem(48);
-  border: 0.5px solid c.$grey-500;
-  border-radius: 4px;
-  font-family: Montserrat;
-  font-weight: 600;
-  font-size: rem.rem(16);
-  line-height: 100%;
-  letter-spacing: 0%;
-
-  &__bg__black {
-    background: c.$grey-500;
-    color: c.$white;
-    margin-left: rem.rem(189);
-  }
-
-  &__space {
-    margin-left: rem.rem(399);
-  }
-
-  &__bg__white {
-    color: c.$grey-500;
-  }
-
-  &:hover {
-    border: 0.5px solid c.$accent-600;
-    color: c.$accent-600;
-  }
-
+.pointer {
   cursor: pointer;
 }
 
-.delivery__actions {
-  display: flex;
-  flex-wrap: nowrap;
+.asterix {
+  color: c.$red;
+}
+
+app-input {
+  flex: 1;
 }

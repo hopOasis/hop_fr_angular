@@ -2,7 +2,7 @@
 
 $font-family-primary: "Montserrat", sans-serif;
 
-@mixin title-style($weight, $size, $line-height: auto) {
+@mixin title-style($weight, $size, $line-height: 100%) {
   font-family: $font-family-primary;
   font-weight: $weight;
   font-size: $size;

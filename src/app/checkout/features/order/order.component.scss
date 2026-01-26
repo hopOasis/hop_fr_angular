@@ -1,0 +1,185 @@
+@use "../../../styles/global/colors" as c;
+@use "../../../styles/utils/rem";
+
+.checkout {
+  &__order {
+    width: rem.rem(505);
+    padding: rem.rem(24) rem.rem(38);
+    background: c.$white;
+  }
+
+  &__body {
+    display: grid;
+    gap: 0.2rem;
+
+    &__wrapp {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+
+  &__items {
+    display: grid;
+    gap: rem.rem(36);
+    padding-top: rem.rem(50);
+  }
+
+  &__item {
+    display: flex;
+    gap: rem.rem(18);
+    max-height: rem.rem(104);
+
+    &__img {
+      max-width: rem.rem(92);
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  &__actions {
+    display: grid;
+
+    button {
+      span {
+        color: c.$black-50;
+      }
+    }
+  }
+
+  &__btn {
+    text-align: right;
+  }
+
+  &__amount {
+    display: flex;
+    width: rem.rem(78);
+    align-items: center;
+    justify-content: space-between;
+    padding: rem.rem(13) 0;
+
+    input {
+      outline: none;
+      border: none;
+      text-align: center;
+    }
+  }
+
+  &__amount-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: rem.rem(24);
+    height: rem.rem(24);
+    border-radius: 50%;
+    border: 0.5px solid c.$black-100;
+
+    &:hover {
+      border: 0.5px solid c.$accent-500;
+    }
+
+    &:active {
+      border: 0.5px solid c.$accent-600;
+    }
+  }
+
+  &__promo {
+    display: flex;
+    align-items: baseline;
+    padding: rem.rem(54) 0;
+  }
+
+  &__info {
+    display: grid;
+    gap: rem.rem(20);
+    border-bottom: 1px solid c.$black-500;
+    padding-bottom: rem.rem(28);
+
+    &__item {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  &__total {
+    display: flex;
+    justify-content: space-between;
+    padding: rem.rem(24) 0;
+  }
+}
+
+.disabled {
+  border-color: c.$black-100;
+  background: c.$black-100;
+  color: c.$white-500;
+  cursor: not-allowed;
+
+  &:hover {
+    @extend .disabled;
+  }
+}
+
+.icon {
+  color: c.$black-50;
+  cursor: pointer;
+
+  &:hover {
+    color: c.$accent-500;
+  }
+}
+
+.input__promo {
+  padding: rem.rem(11.5);
+  outline: none;
+  border: 1px solid c.$black-50;
+  width: rem.rem(195);
+  height: rem.rem(40);
+  color: c.$black-50;
+  border-right: none;
+  border-radius: 4px;
+}
+
+.btn__promo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: rem.rem(8);
+  width: rem.rem(195);
+  height: rem.rem(42.5);
+  background: c.$black-100;
+  border-radius: 4px;
+  color: c.$white-50;
+  transform: translateX(-4%);
+
+  &:hover {
+    background: c.$accent-500;
+  }
+
+  &:active {
+    background: c.$accent-600;
+  }
+
+  &__disabled {
+    background: c.$accent-500;
+  }
+}
+
+.h3 {
+  text-align: center;
+}
+
+.checkout__info__item .h5 {
+  color: c.$black-100;
+}
+
+.checkout__total .h5 {
+  color: c.$grey-100;
+}
+
+.h6 {
+  color: c.$grey-500;
+}

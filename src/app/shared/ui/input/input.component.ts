@@ -24,15 +24,19 @@ export class InputComponent implements ControlValueAccessor {
   /**
    *variables
    */
-  placeholder = input<string>();
+  placeholder = input<string>('');
   /**
    * the type of the input default text
    */
-  type = input<'text' | 'password' | 'email'>('text');
+  type = input<'text' | 'password' | 'email' | 'radio' | 'tel'>('text');
   /**
    * checking for validation errors
    */
   hasError = input<boolean | undefined>(false);
+  /**
+   * initial value
+   */
+  defaultValue = input('');
 
   /**
    * for correct work of visibility icon
@@ -43,7 +47,7 @@ export class InputComponent implements ControlValueAccessor {
    */
   isPassVisible = output<boolean>();
   isVisible = false;
-  value = '';
+  value = this.defaultValue() ? this.defaultValue() : '';
   disabled = false;
 
   /**
@@ -57,7 +61,11 @@ export class InputComponent implements ControlValueAccessor {
    * @param value
    */
   writeValue(value: string): void {
-    this.value = value;
+    if (this.defaultValue()) {
+      this.value = this.defaultValue() + value;
+    } else {
+      this.value = value;
+    }
   }
 
   /**

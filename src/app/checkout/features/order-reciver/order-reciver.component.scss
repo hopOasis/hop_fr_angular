@@ -1,0 +1,18 @@
+@use "../../../styles/global/colors" as c;
+@use "../../../styles/utils/rem";
+
+.buyer-info {
+  &__items {
+    display: flex;
+    justify-content: space-between;
+    padding-top: rem.rem(24);
+  }
+}
+
+.asterix {
+  color: c.$red;
+}
+
+app-input {
+  flex: 1;
+}

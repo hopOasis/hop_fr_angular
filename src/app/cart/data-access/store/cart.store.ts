@@ -50,7 +50,7 @@ export const CartStore = signalStore(
     ),
     cartItems: computed(() => (cartDetails() ? cartDetails()!.items : [])),
     priceForAll: computed(() =>
-      !cartDetails ? 0 : cartDetails()!.priceForAll
+      !cartDetails() ? 0 : cartDetails()!.priceForAll
     ),
   }))
 );

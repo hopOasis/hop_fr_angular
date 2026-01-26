@@ -1,25 +1,46 @@
-import { Component, inject } from '@angular/core';
-
+import { Component, computed, inject, input, signal } from '@angular/core';
+import { InputComponent } from '../../../shared/ui/input/input.component';
+import { FormsModule } from '@angular/forms';
+import { CheckoutStoreService } from '../../data-access/checkout-store.service';
 import {
-  deliveryTypeItems,
-  deliveryTypePrices,
-} from '../../utils/delivery-type.config';
-import { NovaPoshtaComponent } from '../nova-poshta/nova-poshta.component';
-import { DeliveryTypeService } from '../../data-access/delivery-type.service';
+  DeliveryDataReq,
+  DeliveryMethod,
+} from '../../interfaces/delivery.interface';
+import { defaultDeliveryDataReq } from '../../utils/default-data';
 
 @Component({
   selector: 'app-delivery-type',
   standalone: true,
-  imports: [NovaPoshtaComponent],
+  imports: [InputComponent, FormsModule],
   templateUrl: './delivery-type.component.html',
   styleUrl: './delivery-type.component.scss',
+  providers: [],
 })
 export class DeliveryTypeComponent {
-  public deliveryTypeItems = deliveryTypeItems;
-  public deliveryTypePrices = deliveryTypePrices;
-  deliveryService = inject(DeliveryTypeService);
+  private checkoutStore = inject(CheckoutStoreService);
+  private deliveryType = signal<DeliveryMethod>('POST_OFFICE');
 
-  choosenType(id: number) {
-    this.deliveryService.setCurrent(id + 1);
+  public isOpened = signal(false);
+  public icon = computed(() =>
+    this.isOpened() ? 'icon-chevron-down' : 'icon-chevron-up',
+  );
+  public getDeliveryType = computed(() => this.deliveryType());
+  public deliveryTypeTitle = input('');
+  public deliveryTypePrice = input('');
+  public store!: DeliveryDataReq;
+
+  constructor() {
+    this.store = this.checkoutStore.getPaymentDataReq();
+  }
+
+  onClick() {
+    this.isOpened.update((item) => !item);
+  }
+
+  setDeliveryType(event: Event) {
+    const eventTarget = event.target as HTMLInputElement;
+    this.deliveryType.set(eventTarget.id as DeliveryMethod);
+    this.store.deliveryMethod = this.deliveryType();
+    this.checkoutStore.setPaymentDataReq(defaultDeliveryDataReq);
   }
 }

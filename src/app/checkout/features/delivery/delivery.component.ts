@@ -1,40 +1,48 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 
-import { UserStore } from '../../../user/data-access/store/user.store';
-import { progressConfig } from '../../utils/progress.config';
+import { InputComponent } from '../../../shared/ui/input/input.component';
+import { CheckboxComponent } from '../../../shared/ui/checkbox/checkbox.component';
+import { OrderReciverComponent } from '../order-reciver/order-reciver.component';
 import { DeliveryTypeComponent } from '../delivery-type/delivery-type.component';
-import { ProgressService } from '../../data-access/progerss.service';
-import { Direction } from '../../interfaces/delivery.interface';
-import { PaymentTypeComponent } from '../payment-type/payment-type.component';
-import { OrderInfoComponent } from '../order-info/order-info.component';
-import { DeliveryTypeService } from '../../data-access/delivery-type.service';
+import { ButtonComponent } from '../../../shared/ui/button/button.component';
 import { CheckoutStoreService } from '../../data-access/checkout-store.service';
+import { CheckoutService } from '../../data-access/checkout.service';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { phoneParser } from '../../../utils/phone-parser';
 
 @Component({
   selector: 'app-delivery',
   standalone: true,
-  imports: [DeliveryTypeComponent, PaymentTypeComponent, OrderInfoComponent],
+  imports: [
+    InputComponent,
+    CheckboxComponent,
+    OrderReciverComponent,
+    DeliveryTypeComponent,
+    ReactiveFormsModule,
+  ],
   templateUrl: './delivery.component.html',
   styleUrl: './delivery.component.scss',
-  providers: [ProgressService, DeliveryTypeService, CheckoutStoreService],
+  providers: [CheckoutStoreService, CheckoutService],
 })
 export class DeliveryComponent {
   private checkoutStore = inject(CheckoutStoreService);
-  private readonly userStore = inject(UserStore);
-  public userName = this.userStore.userName;
-  public progress = progressConfig;
-  progressService = inject(ProgressService);
-  deliveryService = inject(DeliveryTypeService);
+  private checkoutService = inject(CheckoutService);
+  private fb = inject(FormBuilder);
+  public deliveryForm = this.fb.group({
+    name: '',
+    surname: '',
+    phone: '',
+    email: '',
+  });
+  isReceiver = signal(false);
 
-  continue() {
-    this.progressService.udpateCurrentProgress('up');
-    this.progressService.previousProgress();
-    console.log(this.checkoutStore.getDeliveryData());
+  isChecked(event: boolean) {
+    this.isReceiver.set(event);
   }
 
-  back() {
-    this.deliveryService.setCurrent(0);
-    this.progressService.udpateCurrentProgress('down');
-    this.progressService.previousProgress();
+  makeOrder() {
+    console.log(this.deliveryForm.value);
+    console.log(this.checkoutStore.getPaymentDataReq());
+    // this.checkoutService.makeOrder(this.checkoutStore.getPaymentDataReq());
   }
 }

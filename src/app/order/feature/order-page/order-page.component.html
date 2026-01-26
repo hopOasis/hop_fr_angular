@@ -1,9 +1,4 @@
 <section class="orders">
-  <!-- <h2>Замовлення</h2>
-  <div class="orders__filtering">
-    <div class="orders__search"></div>
-    <div class="orders__sorting"></div>
-  </div> -->
   <div class="orders__subtitle">
     <h3>Мої замовлення</h3>
     <div class="orders__actions">
@@ -23,10 +18,9 @@
   <div class="orders__body">
     <app-order-items />
   </div>
-  @if(orderStore.loading()){
-
-  <div class="loading">
-    <app-spinner />
-  </div>
+  @if (orderStore.loading()) {
+    <div class="loading">
+      <app-spinner />
+    </div>
   }
 </section>
