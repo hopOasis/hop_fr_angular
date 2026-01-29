@@ -33,10 +33,6 @@ export class InputComponent implements ControlValueAccessor {
    * checking for validation errors
    */
   hasError = input<boolean | undefined>(false);
-  /**
-   * initial value
-   */
-  defaultValue = input('');
 
   /**
    * for correct work of visibility icon
@@ -47,7 +43,7 @@ export class InputComponent implements ControlValueAccessor {
    */
   isPassVisible = output<boolean>();
   isVisible = false;
-  value = this.defaultValue() ? this.defaultValue() : '';
+  value = '';
   disabled = false;
 
   /**
@@ -61,11 +57,7 @@ export class InputComponent implements ControlValueAccessor {
    * @param value
    */
   writeValue(value: string): void {
-    if (this.defaultValue()) {
-      this.value = this.defaultValue() + value;
-    } else {
-      this.value = value;
-    }
+    this.value = value;
   }
 
   /**
@@ -99,7 +91,7 @@ export class InputComponent implements ControlValueAccessor {
   onInputChange(event: Event): void {
     const input = event.target as HTMLInputElement;
 
-    this.onChange(input.value); //
+    this.onChange(input.value);
   }
 
   /**

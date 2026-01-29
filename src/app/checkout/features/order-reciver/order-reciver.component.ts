@@ -1,39 +1,27 @@
-import { Component, inject, input } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, computed, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { InputComponent } from '../../../shared/ui/input/input.component';
-import { phoneParser } from '../../../utils/phone-parser';
-import { CheckoutStoreService } from '../../data-access/checkout-store.service';
+import { UserStore } from '../../../user/data-access/store/user.store';
+import { customValidator } from '../../utils/validator';
 
 @Component({
   selector: 'app-order-reciver',
   standalone: true,
-  imports: [InputComponent, ReactiveFormsModule],
+  imports: [InputComponent, FormsModule],
   templateUrl: './order-reciver.component.html',
   styleUrl: './order-reciver.component.scss',
 })
 export class OrderReciverComponent {
-  private checkoutStore = inject(CheckoutStoreService);
-  private store = this.checkoutStore.getPaymentDataReq();
-  private fb = inject(FormBuilder);
+  private userStore = inject(UserStore);
+  public userInfo = computed(() => this.userStore.userData());
+  public valid = customValidator();
 
-  deliveryForm = input.required<FormGroup>();
-
-  public data = {
-    phone: '+380',
-    email: '',
-    name: '',
-    surname: '',
-  };
-
-  onInputChange(event: Event) {
-    const inputTarget = event.target as HTMLInputElement;
-    if (inputTarget.type === 'tel') {
-      if (phoneParser(inputTarget.value).length === 16) {
-        inputTarget.value = phoneParser(inputTarget.value);
-      }
-      console.log(inputTarget.value);
-      this.store.customerPhoneNumber = inputTarget.value;
-    }
+  onChange(
+    event: Event,
+    regEx: RegExp,
+    contr: 'name' | 'surname' | 'phone' | 'email',
+  ) {
+    this.valid.onChange(event, regEx, contr);
   }
 }

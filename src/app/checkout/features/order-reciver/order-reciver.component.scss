@@ -16,3 +16,12 @@
 app-input {
   flex: 1;
 }
+
+.item {
+  width: 100%;
+
+  &__error {
+    padding-left: 0.7rem;
+    color: c.$red;
+  }
+}

@@ -22,32 +22,33 @@ export const UserStore = signalStore(
   withComputed(({ userInfo, loading }) => ({
     isLoading: computed(() => loading),
     userName: computed(() => (userInfo ? userInfo()?.firstName : '')),
+    userData: computed(() => userInfo()),
   })),
   withMethods(
     (
       store,
       userService = inject(UserService),
-      cartApi = inject(CartApiService)
+      cartApi = inject(CartApiService),
     ) => ({
       updateUserInfo: rxMethod<boolean>(
         pipe(
           tap(() => patchState(store, { loading: true })),
           switchMap((state) =>
-            combineLatest([userService.getUserInfo(), of(state)])
+            combineLatest([userService.getUserInfo(), of(state)]),
           ),
           tapResponse({
             next: ([userInfo, state]) => {
-              patchState(store, { loading: false, userInfo }),
-                cartApi.triggerCartUpdate(state);
+              (patchState(store, { loading: false, userInfo }),
+                cartApi.triggerCartUpdate(state));
             },
             error: () => {
               patchState(store, { loading: false, userInfo: null });
               cartApi.triggerCartUpdate(false);
               console.error('Не вдалось завантажити інформацію користувача');
             },
-          })
-        )
+          }),
+        ),
       ),
-    })
-  )
+    }),
+  ),
 );
