@@ -6,6 +6,13 @@ import { OrderReciverComponent } from '../order-reciver/order-reciver.component'
 import { DeliveryTypeComponent } from '../delivery-type/delivery-type.component';
 import { CheckoutStoreService } from '../../data-access/checkout-store.service';
 import { CheckoutService } from '../../data-access/checkout.service';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  customValidator,
+  emailRegEx,
+  nameRegEx,
+  phoneRegEx,
+} from '../../utils/validator';
 
 @Component({
   selector: 'app-delivery',
@@ -15,6 +22,7 @@ import { CheckoutService } from '../../data-access/checkout.service';
     CheckboxComponent,
     OrderReciverComponent,
     DeliveryTypeComponent,
+    ReactiveFormsModule,
   ],
   templateUrl: './delivery.component.html',
   styleUrl: './delivery.component.scss',
@@ -23,15 +31,30 @@ import { CheckoutService } from '../../data-access/checkout.service';
 export class DeliveryComponent {
   private checkoutStore = inject(CheckoutStoreService);
   private checkoutService = inject(CheckoutService);
+  private fb = inject(FormBuilder);
 
-  isReceiver = signal(false);
+  public checkoutForm = this.fb.group({
+    owner: this.fb.group({
+      name: ['', [Validators.required, customValidator(nameRegEx)]],
+      surname: ['', [Validators.required, customValidator(nameRegEx)]],
+      phone: ['', [Validators.required, customValidator(phoneRegEx)]],
+      email: ['', [Validators.required, customValidator(emailRegEx)]],
+    }),
+    receiver: this.fb.group({
+      name: ['', [Validators.required, customValidator(nameRegEx)]],
+      surname: ['', [Validators.required, customValidator(nameRegEx)]],
+      phone: ['', [Validators.required, customValidator(phoneRegEx)]],
+      email: ['', [Validators.required, customValidator(emailRegEx)]],
+    }),
+  });
+  public isReceiver = signal(false);
 
   isChecked(event: boolean) {
     this.isReceiver.set(event);
   }
 
   makeOrder() {
-    console.log(this.checkoutStore.getPaymentDataReq());
+    console.log(this.checkoutForm.valid);
     // this.checkoutService.makeOrder(this.checkoutStore.getPaymentDataReq());
   }
 }

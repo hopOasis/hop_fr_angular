@@ -1,6 +1,7 @@
 import { Component, computed, inject, input, signal } from '@angular/core';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+
 import { InputComponent } from '../../../shared/ui/input/input.component';
-import { FormsModule } from '@angular/forms';
 import { CheckoutStoreService } from '../../data-access/checkout-store.service';
 import {
   DeliveryDataReq,
@@ -11,7 +12,7 @@ import { defaultDeliveryDataReq } from '../../utils/default-data';
 @Component({
   selector: 'app-delivery-type',
   standalone: true,
-  imports: [InputComponent, FormsModule],
+  imports: [InputComponent, ReactiveFormsModule],
   templateUrl: './delivery-type.component.html',
   styleUrl: './delivery-type.component.scss',
   providers: [],

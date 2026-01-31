@@ -1,55 +1,95 @@
-<div class="buyer-info__items">
-  <div class="item">
-    <app-input
-      [placeholder]="'Введіть ім\'я'"
-      required
-      (input)="onChange($event, valid.nameRegEx, 'name')"
-      >Ім'я<span class="asterix">*</span>
-    </app-input>
-    @if (!valid.controller().name.valid && valid.controller().name.touched) {
-      <div class="item__error">
-        <span>name error</span>
-      </div>
-    }
+<ng-container [formGroup]="receiver()">
+  <div class="buyer-info__items">
+    <div class="item">
+      <app-input [placeholder]="'Введіть ім\'я'" required formControlName="name"
+        >Ім'я<span class="asterix">*</span>
+      </app-input>
+      @if (
+        getControl("name")?.invalid &&
+        (getControl("name")?.touched || getControl("name")?.dirty)
+      ) {
+        @if (getControl("name")?.errors?.["required"]) {
+          <div class="item__error">
+            <span> Впишіть і'мя</span>
+          </div>
+        }
+        @if (getControl("name")?.errors?.["customError"]) {
+          <div class="item__error">
+            <span>
+              Ім'я може містити не менше 3-х літер украінського алфавіту
+            </span>
+          </div>
+        }
+      }
+    </div>
+    <div class="item">
+      <app-input [placeholder]="'Введіть прізвище'" formControlName="surname"
+        >Прізвище<span class="asterix">*</span>
+      </app-input>
+      @if (
+        getControl("surname")?.invalid &&
+        (getControl("surname")?.touched || getControl("surname")?.dirty)
+      ) {
+        @if (getControl("surname")?.errors?.["required"]) {
+          <div class="item__error">
+            <span> Впишіть прізвище</span>
+          </div>
+        }
+        @if (getControl("surname")?.errors?.["customError"]) {
+          <div class="item__error">
+            <span>
+              Прізвище може містити не менше 3-х літер украінського алфавіту
+            </span>
+          </div>
+        }
+      }
+    </div>
   </div>
-  <div class="item">
-    <app-input
-      [placeholder]="'Введіть прізвище'"
-      (input)="onChange($event, valid.nameRegEx, 'surname')"
-      >Прізвище<span class="asterix">*</span>
-    </app-input>
-
-    @if (
-      !valid.controller().surname.valid && valid.controller().surname.touched
-    ) {
-      <div class="item__error">
-        <span>surname error</span>
-      </div>
-    }
+  <div class="buyer-info__items">
+    <div class="item">
+      <app-input
+        [placeholder]="'+380_________'"
+        [type]="'tel'"
+        formControlName="phone"
+        >Номер телефону<span class="asterix">*</span>
+      </app-input>
+      @if (
+        getControl("phone")?.invalid &&
+        (getControl("phone")?.touched || getControl("phone")?.dirty)
+      ) {
+        @if (getControl("phone")?.errors?.["required"]) {
+          <div class="item__error">
+            <span> Впишіть номер телефону</span>
+          </div>
+        }
+        @if (getControl("phone")?.errors?.["customError"]) {
+          <div class="item__error">
+            <span> Номер телефону має відповідати формату +380ХХХХХХХХХ </span>
+          </div>
+        }
+      }
+    </div>
+    <div class="item">
+      <app-input
+        [placeholder]="'адреса електроноі пошти'"
+        formControlName="email"
+        >Електронна пошта<span class="asterix">*</span>
+      </app-input>
+      @if (
+        getControl("email")?.invalid &&
+        (getControl("email")?.touched || getControl("email")?.dirty)
+      ) {
+        @if (getControl("email")?.errors?.["required"]) {
+          <div class="item__error">
+            <span> Впишіть номер телефону</span>
+          </div>
+        }
+        @if (getControl("email")?.errors?.["customError"]) {
+          <div class="item__error">
+            <span> Введіть коректну електронну пошту </span>
+          </div>
+        }
+      }
+    </div>
   </div>
-</div>
-<div class="buyer-info__items">
-  <div class="item">
-    <app-input
-      [placeholder]="'+380_________'"
-      [type]="'tel'"
-      (input)="onChange($event, valid.phoneRegEx, 'phone')"
-      >Номер телефону<span class="asterix">*</span>
-    </app-input>
-    @if (!valid.controller().phone.valid && valid.controller().phone.touched) {
-      <div class="item__error">phone valid</div>
-    }
-  </div>
-  <div class="item">
-    <app-input
-      [placeholder]="'адреса електроноі пошти'"
-      (input)="onChange($event, valid.emailRegEx, 'email')"
-      >Електронна пошта<span class="asterix">*</span>
-    </app-input>
-    @if (!valid.controller().email.valid && valid.controller().email.touched) {
-      <div class="item__error">
-        <span>email error</span>
-      </div>
-    }
-  </div>
-</div>
+</ng-container>

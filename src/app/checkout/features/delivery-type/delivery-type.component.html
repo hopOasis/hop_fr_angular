@@ -54,12 +54,10 @@
     ) {
       <div class="delivery-type__input-items">
         <div class="delivery-type__input-item">
-          <app-input [(ngModel)]="store.deliveryAddress"
-            >Виберіть місто<span class="asterix">*</span>
-          </app-input>
+          <app-input>Виберіть місто<span class="asterix">*</span> </app-input>
         </div>
         <div class="delivery-type__input-item">
-          <app-input [(ngModel)]="store.deliveryPostalCode"
+          <app-input
             >Виберіть
             {{ getDeliveryType() === "POST_OFFICE" ? "відділення" : "поштомат"
             }}<span class="asterix">*</span>
@@ -67,13 +65,11 @@
         </div>
       </div>
     } @else if (
-      getDeliveryType() === "COURIER" || deliveryTypeTitle() === "Укрпошта"
+      deliveryTypeTitle() === "Укрпошта" || getDeliveryType() === "COURIER"
     ) {
       <div class="delivery-type__input-items">
         <div class="delivery-type__input-item">
-          <app-input [(ngModel)]="store.deliveryAddress"
-            >Виберіть місто<span class="asterix">*</span>
-          </app-input>
+          <app-input>Виберіть місто<span class="asterix">*</span> </app-input>
         </div>
         <div class="delivery-type__input-item">
           <app-input>Виберіть вулицю<span class="asterix">*</span> </app-input>

@@ -1,27 +1,26 @@
-import { Component, computed, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, computed, inject, input } from '@angular/core';
+import {
+  AbstractControl,
+  FormGroup,
+  ReactiveFormsModule,
+} from '@angular/forms';
 
 import { InputComponent } from '../../../shared/ui/input/input.component';
 import { UserStore } from '../../../user/data-access/store/user.store';
-import { customValidator } from '../../utils/validator';
 
 @Component({
   selector: 'app-order-reciver',
   standalone: true,
-  imports: [InputComponent, FormsModule],
+  imports: [InputComponent, ReactiveFormsModule],
   templateUrl: './order-reciver.component.html',
   styleUrl: './order-reciver.component.scss',
 })
 export class OrderReciverComponent {
   private userStore = inject(UserStore);
   public userInfo = computed(() => this.userStore.userData());
-  public valid = customValidator();
+  public receiver = input.required<FormGroup>();
 
-  onChange(
-    event: Event,
-    regEx: RegExp,
-    contr: 'name' | 'surname' | 'phone' | 'email',
-  ) {
-    this.valid.onChange(event, regEx, contr);
+  getControl(contr: string): AbstractControl | null {
+    return this.receiver().get(contr);
   }
 }

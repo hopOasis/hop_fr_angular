@@ -2,56 +2,57 @@
   <div class="title">
     <h2 class="h2">Оформлення замовлення</h2>
   </div>
-
-  <div class="buyer-info">
-    <h3 class="h3">1/3 Контактна інформація</h3>
-    <div class="buyer-info__user">
-      <app-order-reciver />
-      <div class="buyer-info__reciver">
-        <app-checkbox (isChecked)="isChecked($event)"
-          >Отримувач інша людина</app-checkbox
-        >
-      </div>
-    </div>
-  </div>
-  @if (isReceiver()) {
+  <form [formGroup]="checkoutForm">
     <div class="buyer-info">
-      <h3 class="h3">Одержувач замовлення</h3>
+      <h3 class="h3">1/3 Контактна інформація</h3>
       <div class="buyer-info__user">
-        <div class="reciver">
-          <app-order-reciver />
+        <app-order-reciver [receiver]="checkoutForm.controls.owner" />
+        <div class="buyer-info__reciver">
+          <app-checkbox (isChecked)="isChecked($event)"
+            >Отримувач інша людина</app-checkbox
+          >
         </div>
       </div>
     </div>
-  }
-  <div class="department">
-    <h3 class="h3">2/3 Доставка</h3>
-    <div class="department__items">
-      <app-delivery-type
-        [deliveryTypeTitle]="'Нова пошта'"
-        [deliveryTypePrice]="'від 20 грн'"
-      />
-    </div>
-    <div class="department__items">
-      <app-delivery-type
-        [deliveryTypeTitle]="'Укрпошта'"
-        [deliveryTypePrice]="'10 грн'"
-      />
-    </div>
-  </div>
-  <div class="payment">
-    <h3 class="h3">3/3 Спосіб оплати</h3>
-    <div class="payment__items">
-      <div class="payment__item">
-        <h6 class="h6">Онлайн оплата</h6>
-        <h4 class="h4">stripe</h4>
+    @if (isReceiver()) {
+      <div class="buyer-info">
+        <h3 class="h3">Одержувач замовлення</h3>
+        <div class="buyer-info__user">
+          <div class="reciver">
+            <app-order-reciver [receiver]="checkoutForm.controls.receiver" />
+          </div>
+        </div>
       </div>
-      <div class="payment__item pointer">
-        <h6 class="h6">Оплата при отриманні замовлення (накладний платіж)</h6>
+    }
+    <div class="department">
+      <h3 class="h3">2/3 Доставка</h3>
+      <div class="department__items">
+        <app-delivery-type
+          [deliveryTypeTitle]="'Нова пошта'"
+          [deliveryTypePrice]="'від 20 грн'"
+        />
+      </div>
+      <div class="department__items">
+        <app-delivery-type
+          [deliveryTypeTitle]="'Укрпошта'"
+          [deliveryTypePrice]="'10 грн'"
+        />
       </div>
     </div>
-    <div class="payment__action" (click)="makeOrder()">
-      <h5 class="h5">Оформити замовлення</h5>
+    <div class="payment">
+      <h3 class="h3">3/3 Спосіб оплати</h3>
+      <div class="payment__items">
+        <div class="payment__item">
+          <h6 class="h6">Онлайн оплата</h6>
+          <h4 class="h4">stripe</h4>
+        </div>
+        <div class="payment__item pointer">
+          <h6 class="h6">Оплата при отриманні замовлення (накладний платіж)</h6>
+        </div>
+      </div>
+      <div class="payment__action" (click)="makeOrder()">
+        <h5 class="h5">Оформити замовлення</h5>
+      </div>
     </div>
-  </div>
+  </form>
 </div>
