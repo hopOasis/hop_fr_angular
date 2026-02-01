@@ -21,6 +21,7 @@ export class DeliveryTypeComponent {
   private checkoutStore = inject(CheckoutStoreService);
   private deliveryType = signal<DeliveryMethod>('POST_OFFICE');
 
+  public deliveryTypeForm = input.required<FormGroup>();
   public isOpened = signal(false);
   public icon = computed(() =>
     this.isOpened() ? 'icon-chevron-down' : 'icon-chevron-up',

@@ -30,12 +30,14 @@
         <app-delivery-type
           [deliveryTypeTitle]="'Нова пошта'"
           [deliveryTypePrice]="'від 20 грн'"
+          [deliveryTypeForm]="checkoutForm.controls.deliveryType"
         />
       </div>
       <div class="department__items">
         <app-delivery-type
           [deliveryTypeTitle]="'Укрпошта'"
           [deliveryTypePrice]="'10 грн'"
+          [deliveryTypeForm]="checkoutForm.controls.deliveryType"
         />
       </div>
     </div>

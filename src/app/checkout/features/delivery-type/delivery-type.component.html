@@ -17,7 +17,7 @@
               name="deliveryType"
               id="POST_OFFICE"
               (input)="setDeliveryType($event)"
-              checked
+              [checked]="getDeliveryType() === 'POST_OFFICE'"
             />
             <h6 class="h6">Відділення</h6>
           </label>
@@ -30,6 +30,7 @@
               name="deliveryType"
               id="PARCEL_TERMINAL"
               (input)="setDeliveryType($event)"
+              [checked]="getDeliveryType() === 'PARCEL_TERMINAL'"
             />
             <h6 class="h6">Поштомат</h6>
           </label>
@@ -42,45 +43,59 @@
               name="deliveryType"
               id="COURIER"
               (input)="setDeliveryType($event)"
+              [checked]="getDeliveryType() === 'COURIER'"
             />
             <h6 class="h6">Курʼєр</h6>
           </label>
         </div>
       </div>
     }
-    @if (
-      getDeliveryType() === "POST_OFFICE" ||
-      getDeliveryType() === "PARCEL_TERMINAL"
-    ) {
-      <div class="delivery-type__input-items">
-        <div class="delivery-type__input-item">
-          <app-input>Виберіть місто<span class="asterix">*</span> </app-input>
+    <ng-container [formGroup]="deliveryTypeForm()">
+      @if (
+        (getDeliveryType() === "POST_OFFICE" ||
+          getDeliveryType() === "PARCEL_TERMINAL") &&
+        deliveryTypeTitle() !== "Укрпошта"
+      ) {
+        <div class="delivery-type__input-items">
+          <div class="delivery-type__input-item">
+            <app-input formControlName="city"
+              >Виберіть місто<span class="asterix">*</span>
+            </app-input>
+          </div>
+          <div class="delivery-type__input-item">
+            <app-input formControlName="postCode"
+              >Виберіть
+              {{
+                getDeliveryType() === "POST_OFFICE" ? "відділення" : "поштомат"
+              }}<span class="asterix">*</span>
+            </app-input>
+          </div>
         </div>
-        <div class="delivery-type__input-item">
-          <app-input
-            >Виберіть
-            {{ getDeliveryType() === "POST_OFFICE" ? "відділення" : "поштомат"
-            }}<span class="asterix">*</span>
-          </app-input>
+      }
+      @if (
+        deliveryTypeTitle() === "Укрпошта" || getDeliveryType() === "COURIER"
+      ) {
+        <div class="delivery-type__input-items">
+          <div class="delivery-type__input-item">
+            <app-input formControlName="city"
+              >Виберіть місто<span class="asterix">*</span>
+            </app-input>
+          </div>
+          <div class="delivery-type__input-item">
+            <app-input formControlName="street"
+              >Виберіть вулицю<span class="asterix">*</span>
+            </app-input>
+          </div>
+          <div class="delivery-type__input-item">
+            <app-input formControlName="building"
+              >Номер будинку<span class="asterix">*</span>
+            </app-input>
+          </div>
+          <div class="delivery-type__input-item">
+            <app-input formControlName="apartment">Номер квартири </app-input>
+          </div>
         </div>
-      </div>
-    } @else if (
-      deliveryTypeTitle() === "Укрпошта" || getDeliveryType() === "COURIER"
-    ) {
-      <div class="delivery-type__input-items">
-        <div class="delivery-type__input-item">
-          <app-input>Виберіть місто<span class="asterix">*</span> </app-input>
-        </div>
-        <div class="delivery-type__input-item">
-          <app-input>Виберіть вулицю<span class="asterix">*</span> </app-input>
-        </div>
-        <div class="delivery-type__input-item">
-          <app-input>Номер будинку<span class="asterix">*</span> </app-input>
-        </div>
-        <div class="delivery-type__input-item">
-          <app-input>Номер квартири </app-input>
-        </div>
-      </div>
-    }
+      }
+    </ng-container>
   }
 </div>

@@ -46,6 +46,13 @@ export class DeliveryComponent {
       phone: ['', [Validators.required, customValidator(phoneRegEx)]],
       email: ['', [Validators.required, customValidator(emailRegEx)]],
     }),
+    deliveryType: this.fb.group({
+      city: ['', [Validators.required, customValidator(nameRegEx)]],
+      street: ['', [Validators.required, customValidator(nameRegEx)]],
+      postCode: ['', [Validators.required]],
+      building: ['', [Validators.required]],
+      apartment: ['', [customValidator(nameRegEx)]],
+    }),
   });
   public isReceiver = signal(false);
 
@@ -54,7 +61,7 @@ export class DeliveryComponent {
   }
 
   makeOrder() {
-    console.log(this.checkoutForm.valid);
+    console.log(this.checkoutForm.value);
     // this.checkoutService.makeOrder(this.checkoutStore.getPaymentDataReq());
   }
 }
