@@ -61,6 +61,23 @@
             <app-input formControlName="city"
               >Виберіть місто<span class="asterix">*</span>
             </app-input>
+            @if (
+              getControl("city")?.invalid &&
+              (getControl("city")?.touched || getControl("city")?.dirty)
+            ) {
+              @if (getControl("city")?.errors?.["required"]) {
+                <div class="item__error">
+                  <span> Впишіть місто</span>
+                </div>
+              }
+              @if (getControl("city")?.errors?.["customError"]) {
+                <div class="item__error">
+                  <span>
+                    Місто може містити не менше 3-х літер украінського алфавіту
+                  </span>
+                </div>
+              }
+            }
           </div>
           <div class="delivery-type__input-item">
             <app-input formControlName="postCode"
@@ -69,6 +86,21 @@
                 getDeliveryType() === "POST_OFFICE" ? "відділення" : "поштомат"
               }}<span class="asterix">*</span>
             </app-input>
+            @if (
+              getControl("postCode")?.invalid &&
+              (getControl("postCode")?.touched || getControl("postCode")?.dirty)
+            ) {
+              @if (getControl("postCode")?.errors?.["required"]) {
+                <div class="item__error">
+                  <span> Не може бути пустим</span>
+                </div>
+              }
+              @if (getControl("postCode")?.errors?.["customError"]) {
+                <div class="item__error">
+                  <span> Має містити 5 цифр </span>
+                </div>
+              }
+            }
           </div>
         </div>
       }
@@ -80,19 +112,81 @@
             <app-input formControlName="city"
               >Виберіть місто<span class="asterix">*</span>
             </app-input>
+            @if (
+              getControl("city")?.invalid &&
+              (getControl("city")?.touched || getControl("city")?.dirty)
+            ) {
+              @if (getControl("city")?.errors?.["required"]) {
+                <div class="item__error">
+                  <span> Не може бути пустим</span>
+                </div>
+              }
+              @if (getControl("city")?.errors?.["customError"]) {
+                <div class="item__error">
+                  <span>
+                    Має містити не менше 3-х літер украінського алфавіту
+                  </span>
+                </div>
+              }
+            }
           </div>
           <div class="delivery-type__input-item">
             <app-input formControlName="street"
               >Виберіть вулицю<span class="asterix">*</span>
             </app-input>
+            @if (
+              getControl("street")?.invalid &&
+              (getControl("street")?.touched || getControl("street")?.dirty)
+            ) {
+              @if (getControl("street")?.errors?.["required"]) {
+                <div class="item__error">
+                  <span> Не може бути пустим</span>
+                </div>
+              }
+              @if (getControl("street")?.errors?.["customError"]) {
+                <div class="item__error">
+                  <span>
+                    Має містити не менше 3-х літер украінського алфавіту
+                  </span>
+                </div>
+              }
+            }
           </div>
           <div class="delivery-type__input-item">
             <app-input formControlName="building"
               >Номер будинку<span class="asterix">*</span>
             </app-input>
+            @if (
+              getControl("building")?.invalid &&
+              (getControl("building")?.touched || getControl("building")?.dirty)
+            ) {
+              @if (getControl("building")?.errors?.["required"]) {
+                <div class="item__error">
+                  <span> Не може бути пустим</span>
+                </div>
+              }
+              @if (getControl("building")?.errors?.["customError"]) {
+                <div class="item__error">
+                  <span>
+                    Має містити цифру або цифру та літеру украінського алфавіту
+                  </span>
+                </div>
+              }
+            }
           </div>
           <div class="delivery-type__input-item">
             <app-input formControlName="apartment">Номер квартири </app-input>
+            @if (
+              getControl("apartment")?.invalid &&
+              (getControl("apartment")?.touched ||
+                getControl("apartment")?.dirty)
+            ) {
+              @if (getControl("apartment")?.errors?.["customError"]) {
+                <div class="item__error">
+                  <span> Має містити лише цифри </span>
+                </div>
+              }
+            }
           </div>
         </div>
       }

@@ -8,9 +8,12 @@ import { CheckoutStoreService } from '../../data-access/checkout-store.service';
 import { CheckoutService } from '../../data-access/checkout.service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
+  buildingRegEx,
   customValidator,
+  departmentRegEx,
   emailRegEx,
   nameRegEx,
+  numberRegEx,
   phoneRegEx,
 } from '../../utils/validator';
 
@@ -49,9 +52,9 @@ export class DeliveryComponent {
     deliveryType: this.fb.group({
       city: ['', [Validators.required, customValidator(nameRegEx)]],
       street: ['', [Validators.required, customValidator(nameRegEx)]],
-      postCode: ['', [Validators.required]],
-      building: ['', [Validators.required]],
-      apartment: ['', [customValidator(nameRegEx)]],
+      postCode: ['', [Validators.required, customValidator(departmentRegEx)]],
+      building: ['', [Validators.required, customValidator(buildingRegEx)]],
+      apartment: ['', [customValidator(numberRegEx)]],
     }),
   });
   public isReceiver = signal(false);

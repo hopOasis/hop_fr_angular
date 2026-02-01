@@ -1,5 +1,9 @@
 import { Component, computed, inject, input, signal } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  AbstractControl,
+  FormGroup,
+  ReactiveFormsModule,
+} from '@angular/forms';
 
 import { InputComponent } from '../../../shared/ui/input/input.component';
 import { CheckoutStoreService } from '../../data-access/checkout-store.service';
@@ -44,5 +48,9 @@ export class DeliveryTypeComponent {
     this.deliveryType.set(eventTarget.id as DeliveryMethod);
     this.store.deliveryMethod = this.deliveryType();
     this.checkoutStore.setPaymentDataReq(defaultDeliveryDataReq);
+  }
+
+  getControl(contr: string): AbstractControl | null {
+    return this.deliveryTypeForm().get(contr);
   }
 }
