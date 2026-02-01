@@ -46,7 +46,7 @@ export class DeliveryComponent {
     owner: this.fb.group({
       name: ['', [Validators.required, customValidator(nameRegEx)]],
       surname: ['', [Validators.required, customValidator(nameRegEx)]],
-      phone: ['', [Validators.required, customValidator(phoneRegEx)]],
+      phone: ['+3806', [Validators.required, customValidator(phoneRegEx)]],
       email: ['', [Validators.required, customValidator(emailRegEx)]],
     }),
     receiver: this.fb.group({
@@ -73,7 +73,29 @@ export class DeliveryComponent {
   }
 
   makeOrder() {
-    console.log(Object.entries(this.checkoutForm.controls));
+    const ownerPhone = this.checkoutForm.controls.owner.get('phone');
+    const receiverPhone = this.checkoutForm.controls.receiver.get('phone');
+    const city = this.checkoutForm.controls.deliveryType.get('city');
+    const street = this.checkoutForm.controls.deliveryType.get('street');
+    const postCode = this.checkoutForm.controls.deliveryType.get('postCode');
+    const building = this.checkoutForm.controls.deliveryType.get('building');
+    const apartment = this.checkoutForm.controls.deliveryType.get('apartment');
+
+    this.checkoutStore.updatePaymentDataReq(
+      'customerPhoneNumber',
+      receiverPhone?.value || ownerPhone?.value || '',
+    );
+    this.checkoutStore.updatePaymentDataReq(
+      'deliveryAddress',
+      `${city?.value} ${street?.value} ${building?.value} ${apartment?.value ? apartment?.value : ''}`,
+    );
+    this.checkoutStore.updatePaymentDataReq(
+      'deliveryPostalCode',
+      postCode?.value || '',
+    );
+
+    console.log(this.checkoutStore.getPaymentDataReq());
+
     // this.checkoutService.makeOrder(this.checkoutStore.getPaymentDataReq());
   }
 }
