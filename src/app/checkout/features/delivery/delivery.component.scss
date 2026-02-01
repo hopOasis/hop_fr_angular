@@ -48,11 +48,17 @@
 
   &__item {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     gap: rem.rem(20);
     border: 1px solid c.$grey-50;
     border-radius: 4px;
+
+    &__active {
+      background: c.$accent-500;
+      border: none;
+      color: c.$white;
+    }
   }
 
   &__action {

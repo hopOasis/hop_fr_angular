@@ -44,12 +44,26 @@
     <div class="payment">
       <h3 class="h3">3/3 Спосіб оплати</h3>
       <div class="payment__items">
-        <div class="payment__item">
+        <div
+          class="payment__item pointer"
+          [class.payment__item__active]="paymentType() === 'ONLINE'"
+          (click)="chosenPayment('ONLINE')"
+        >
           <h6 class="h6">Онлайн оплата</h6>
           <h4 class="h4">stripe</h4>
+          @if (paymentType() === "ONLINE") {
+            <mat-icon>done</mat-icon>
+          }
         </div>
-        <div class="payment__item pointer">
+        <div
+          class="payment__item pointer"
+          [class.payment__item__active]="paymentType() === 'CASH'"
+          (click)="chosenPayment('CASH')"
+        >
           <h6 class="h6">Оплата при отриманні замовлення (накладний платіж)</h6>
+          @if (paymentType() === "CASH") {
+            <mat-icon>done</mat-icon>
+          }
         </div>
       </div>
       <div class="payment__action" (click)="makeOrder()">

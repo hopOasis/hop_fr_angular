@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 
 import { InputComponent } from '../../../shared/ui/input/input.component';
 import { CheckboxComponent } from '../../../shared/ui/checkbox/checkbox.component';
@@ -16,6 +16,7 @@ import {
   numberRegEx,
   phoneRegEx,
 } from '../../utils/validator';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-delivery',
@@ -26,6 +27,7 @@ import {
     OrderReciverComponent,
     DeliveryTypeComponent,
     ReactiveFormsModule,
+    MatIconModule,
   ],
   templateUrl: './delivery.component.html',
   styleUrl: './delivery.component.scss',
@@ -36,6 +38,10 @@ export class DeliveryComponent {
   private checkoutService = inject(CheckoutService);
   private fb = inject(FormBuilder);
 
+  public paymentType = computed(
+    () => this.checkoutStore.getPaymentDataReq().paymentType,
+  );
+  public isReceiver = signal(false);
   public checkoutForm = this.fb.group({
     owner: this.fb.group({
       name: ['', [Validators.required, customValidator(nameRegEx)]],
@@ -57,14 +63,17 @@ export class DeliveryComponent {
       apartment: ['', [customValidator(numberRegEx)]],
     }),
   });
-  public isReceiver = signal(false);
 
   isChecked(event: boolean) {
     this.isReceiver.set(event);
   }
 
+  chosenPayment(payment: 'CASH' | 'ONLINE') {
+    this.checkoutStore.updatePaymentDataReq('paymentType', payment);
+  }
+
   makeOrder() {
-    console.log(this.checkoutForm.value);
+    console.log(Object.entries(this.checkoutForm.controls));
     // this.checkoutService.makeOrder(this.checkoutStore.getPaymentDataReq());
   }
 }
