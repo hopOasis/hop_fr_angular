@@ -4,45 +4,23 @@
       <app-input [placeholder]="'Введіть ім\'я'" required formControlName="name"
         >Ім'я<span class="asterix">*</span>
       </app-input>
-      @if (
-        getControl("name")?.invalid &&
-        (getControl("name")?.touched || getControl("name")?.dirty)
-      ) {
-        @if (getControl("name")?.errors?.["required"]) {
-          <div class="item__error">
-            <span> Впишіть і'мя</span>
-          </div>
-        }
-        @if (getControl("name")?.errors?.["customError"]) {
-          <div class="item__error">
-            <span>
-              Ім'я може містити не менше 3-х літер украінського алфавіту
-            </span>
-          </div>
-        }
-      }
+      <app-custom-validator
+        [control]="getControl(receiver(), 'name')"
+        [message]="
+          'Ім\'я може містити не менше 3-х літер украінського алфавіту'
+        "
+      />
     </div>
     <div class="item">
       <app-input [placeholder]="'Введіть прізвище'" formControlName="surname"
         >Прізвище<span class="asterix">*</span>
       </app-input>
-      @if (
-        getControl("surname")?.invalid &&
-        (getControl("surname")?.touched || getControl("surname")?.dirty)
-      ) {
-        @if (getControl("surname")?.errors?.["required"]) {
-          <div class="item__error">
-            <span> Впишіть прізвище</span>
-          </div>
-        }
-        @if (getControl("surname")?.errors?.["customError"]) {
-          <div class="item__error">
-            <span>
-              Прізвище може містити не менше 3-х літер украінського алфавіту
-            </span>
-          </div>
-        }
-      }
+      <app-custom-validator
+        [control]="getControl(receiver(), 'surname')"
+        [message]="
+          'Прізвище може містити не менше 3-х літер украінського алфавіту'
+        "
+      />
     </div>
   </div>
   <div class="buyer-info__items">
@@ -53,21 +31,10 @@
         formControlName="phone"
         >Номер телефону<span class="asterix">*</span>
       </app-input>
-      @if (
-        getControl("phone")?.invalid &&
-        (getControl("phone")?.touched || getControl("phone")?.dirty)
-      ) {
-        @if (getControl("phone")?.errors?.["required"]) {
-          <div class="item__error">
-            <span> Впишіть номер телефону</span>
-          </div>
-        }
-        @if (getControl("phone")?.errors?.["customError"]) {
-          <div class="item__error">
-            <span> Номер телефону має відповідати формату +380ХХХХХХХХХ </span>
-          </div>
-        }
-      }
+      <app-custom-validator
+        [control]="getControl(receiver(), 'phone')"
+        [message]="'Номер телефону має відповідати формату +380ХХХХХХХХХ '"
+      />
     </div>
     <div class="item">
       <app-input
@@ -75,21 +42,10 @@
         formControlName="email"
         >Електронна пошта<span class="asterix">*</span>
       </app-input>
-      @if (
-        getControl("email")?.invalid &&
-        (getControl("email")?.touched || getControl("email")?.dirty)
-      ) {
-        @if (getControl("email")?.errors?.["required"]) {
-          <div class="item__error">
-            <span> Впишіть номер телефону</span>
-          </div>
-        }
-        @if (getControl("email")?.errors?.["customError"]) {
-          <div class="item__error">
-            <span> Введіть коректну електронну пошту </span>
-          </div>
-        }
-      }
+      <app-custom-validator
+        [control]="getControl(receiver(), 'email')"
+        [message]="'Введіть коректну електронну пошту'"
+      />
     </div>
   </div>
 </ng-container>

@@ -1,0 +1,4 @@
+@use "../../../styles/global/colors" as c;
+.item__error {
+  color: c.$red;
+}

@@ -1,4 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { InputComponent } from '../../../shared/ui/input/input.component';
 import { CheckboxComponent } from '../../../shared/ui/checkbox/checkbox.component';
@@ -6,7 +7,6 @@ import { OrderReciverComponent } from '../order-reciver/order-reciver.component'
 import { DeliveryTypeComponent } from '../delivery-type/delivery-type.component';
 import { CheckoutStoreService } from '../../data-access/checkout-store.service';
 import { CheckoutService } from '../../data-access/checkout.service';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   buildingRegEx,
   customValidator,
@@ -17,6 +17,7 @@ import {
   phoneRegEx,
 } from '../../utils/validator';
 import { MatIconModule } from '@angular/material/icon';
+import { FormService } from '../../data-access/form.service';
 
 @Component({
   selector: 'app-delivery',
@@ -31,11 +32,12 @@ import { MatIconModule } from '@angular/material/icon';
   ],
   templateUrl: './delivery.component.html',
   styleUrl: './delivery.component.scss',
-  providers: [CheckoutStoreService, CheckoutService],
+  providers: [CheckoutStoreService, CheckoutService, FormService],
 })
 export class DeliveryComponent {
   private checkoutStore = inject(CheckoutStoreService);
   private checkoutService = inject(CheckoutService);
+  private formService = inject(FormService);
   private fb = inject(FormBuilder);
 
   public paymentType = computed(
@@ -55,13 +57,6 @@ export class DeliveryComponent {
       phone: ['', [Validators.required, customValidator(phoneRegEx)]],
       email: ['', [Validators.required, customValidator(emailRegEx)]],
     }),
-    deliveryType: this.fb.group({
-      city: ['', [Validators.required, customValidator(nameRegEx)]],
-      street: ['', [Validators.required, customValidator(nameRegEx)]],
-      postCode: ['', [Validators.required, customValidator(departmentRegEx)]],
-      building: ['', [Validators.required, customValidator(buildingRegEx)]],
-      apartment: ['', [customValidator(numberRegEx)]],
-    }),
   });
 
   isChecked(event: boolean) {
@@ -73,29 +68,43 @@ export class DeliveryComponent {
   }
 
   makeOrder() {
-    const ownerPhone = this.checkoutForm.controls.owner.get('phone');
-    const receiverPhone = this.checkoutForm.controls.receiver.get('phone');
-    const city = this.checkoutForm.controls.deliveryType.get('city');
-    const street = this.checkoutForm.controls.deliveryType.get('street');
-    const postCode = this.checkoutForm.controls.deliveryType.get('postCode');
-    const building = this.checkoutForm.controls.deliveryType.get('building');
-    const apartment = this.checkoutForm.controls.deliveryType.get('apartment');
+    /*
+    customerPhoneNumber: string;
+      paymentType: Payment;
+      deliveryMethod: DeliveryMethod;
+      deliveryAddress: string;
+      deliveryPostalCode: string;
+      orderStatus: OrderStatusKey;
+      cancellationReason: string;*/
+    let customerPhoneNumber = '';
+    let street = this.formService.getForm()?.value.street;
+    let city = this.formService.getForm()?.value.city;
+    let deliveryPostalCode = this.formService.getForm()?.value.postCode;
+    let apartment = this.formService.getForm()?.value.apartment;
+    let building = this.formService.getForm()?.value.building;
 
-    this.checkoutStore.updatePaymentDataReq(
-      'customerPhoneNumber',
-      receiverPhone?.value || ownerPhone?.value || '',
-    );
     this.checkoutStore.updatePaymentDataReq(
       'deliveryAddress',
-      `${city?.value} ${street?.value} ${building?.value} ${apartment?.value ? apartment?.value : ''}`,
+      `${city} ${street} ${building} ${apartment}`,
     );
+    console.log(this.checkoutForm.controls.owner.get('phone')?.valid);
+    if (this.isReceiver()) {
+      customerPhoneNumber =
+        this.checkoutForm.controls.receiver.value?.phone || '';
+    } else {
+      customerPhoneNumber = this.checkoutForm.controls.owner.value?.phone || '';
+    }
     this.checkoutStore.updatePaymentDataReq(
-      'deliveryPostalCode',
-      postCode?.value || '',
+      'customerPhoneNumber',
+      customerPhoneNumber,
     );
+    if (deliveryPostalCode) {
+      this.checkoutStore.updatePaymentDataReq(
+        'deliveryPostalCode',
+        deliveryPostalCode,
+      );
+    }
 
     console.log(this.checkoutStore.getPaymentDataReq());
-
-    // this.checkoutService.makeOrder(this.checkoutStore.getPaymentDataReq());
   }
 }

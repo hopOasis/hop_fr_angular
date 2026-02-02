@@ -1,0 +1,67 @@
+<form [formGroup]="novaPoshtaForm">
+  @if (
+    getDeliveryType() === "POST_OFFICE" ||
+    getDeliveryType() === "PARCEL_TERMINAL"
+  ) {
+    <div class="delivery-type__input-items">
+      <div class="delivery-type__input-item">
+        <app-input formControlName="city"
+          >Виберіть місто<span class="asterix">*</span>
+        </app-input>
+        <app-custom-validator
+          [control]="getControl(novaPoshtaForm, 'city')"
+          [message]="'Має містити не менше 3-х літер украінського алфавіту'"
+        />
+      </div>
+      <div class="delivery-type__input-item">
+        <app-input formControlName="postCode"
+          >Виберіть
+          {{ getDeliveryType() === "POST_OFFICE" ? "відділення" : "поштомат"
+          }}<span class="asterix">*</span>
+        </app-input>
+        <app-custom-validator
+          [control]="getControl(novaPoshtaForm, 'postCode')"
+          [message]="'Має містити 5 цифр'"
+        />
+      </div>
+    </div>
+  }
+  @if (getDeliveryType() === "COURIER") {
+    <div class="delivery-type__input-items">
+      <div class="delivery-type__input-item">
+        <app-input formControlName="city"
+          >Виберіть місто<span class="asterix">*</span>
+        </app-input>
+        <app-custom-validator
+          [control]="getControl(novaPoshtaForm, 'city')"
+          [message]="'Має містити не менше 3-х літер украінського алфавіту'"
+        />
+      </div>
+      <div class="delivery-type__input-item">
+        <app-input formControlName="street"
+          >Виберіть вулицю<span class="asterix">*</span>
+        </app-input>
+        <app-custom-validator
+          [control]="getControl(novaPoshtaForm, 'street')"
+          [message]="'Має містити не менше 3-х літер украінського алфавіту'"
+        />
+      </div>
+      <div class="delivery-type__input-item">
+        <app-input formControlName="building"
+          >Номер будинку<span class="asterix">*</span>
+        </app-input>
+        <app-custom-validator
+          [control]="getControl(novaPoshtaForm, 'building')"
+          [message]="'Має містити цифру або цифру і велику літеру'"
+        />
+      </div>
+      <div class="delivery-type__input-item">
+        <app-input formControlName="apartment">Номер квартири </app-input>
+        <app-custom-validator
+          [control]="getControl(novaPoshtaForm, 'apartment')"
+          [message]="'Має містити цифри'"
+        />
+      </div>
+    </div>
+  }
+</form>

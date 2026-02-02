@@ -5,7 +5,7 @@ export const defaultDeliveryDataReq: DeliveryDataReq = {
   customerPhoneNumber: '',
   paymentType: 'CASH',
   deliveryMethod: 'POST_OFFICE',
-  deliveryPostalCode: '',
+  deliveryPostalCode: '00000',
   orderStatus: 'ACCEPTED',
   cancellationReason: '',
 };

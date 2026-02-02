@@ -12,11 +12,19 @@ import {
   DeliveryMethod,
 } from '../../interfaces/delivery.interface';
 import { defaultDeliveryDataReq } from '../../utils/default-data';
+import { getControl } from '../../utils/get-control';
+import { NovaPoshtaComponent } from '../nova-poshta/nova-poshta.component';
+import { UkrPoshtaComponent } from '../ukr-poshta/ukr-poshta.component';
 
 @Component({
   selector: 'app-delivery-type',
   standalone: true,
-  imports: [InputComponent, ReactiveFormsModule],
+  imports: [
+    NovaPoshtaComponent,
+    UkrPoshtaComponent,
+    InputComponent,
+    ReactiveFormsModule,
+  ],
   templateUrl: './delivery-type.component.html',
   styleUrl: './delivery-type.component.scss',
   providers: [],
@@ -25,7 +33,6 @@ export class DeliveryTypeComponent {
   private checkoutStore = inject(CheckoutStoreService);
   private deliveryType = signal<DeliveryMethod>('POST_OFFICE');
 
-  public deliveryTypeForm = input.required<FormGroup>();
   public isOpened = signal(false);
   public icon = computed(() =>
     this.isOpened() ? 'icon-chevron-down' : 'icon-chevron-up',
@@ -33,11 +40,8 @@ export class DeliveryTypeComponent {
   public getDeliveryType = computed(() => this.deliveryType());
   public deliveryTypeTitle = input('');
   public deliveryTypePrice = input('');
-  public store!: DeliveryDataReq;
 
-  constructor() {
-    this.store = this.checkoutStore.getPaymentDataReq();
-  }
+  getControl = getControl;
 
   onClick() {
     this.isOpened.update((item) => !item);
@@ -46,11 +50,10 @@ export class DeliveryTypeComponent {
   setDeliveryType(event: Event) {
     const eventTarget = event.target as HTMLInputElement;
     this.deliveryType.set(eventTarget.id as DeliveryMethod);
-    this.store.deliveryMethod = this.deliveryType();
     this.checkoutStore.setPaymentDataReq(defaultDeliveryDataReq);
-  }
-
-  getControl(contr: string): AbstractControl | null {
-    return this.deliveryTypeForm().get(contr);
+    this.checkoutStore.updatePaymentDataReq(
+      'deliveryMethod',
+      this.deliveryType(),
+    );
   }
 }
