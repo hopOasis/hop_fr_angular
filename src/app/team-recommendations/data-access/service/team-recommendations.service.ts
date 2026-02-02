@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  inject,
-  PLATFORM_ID,
-} from '@angular/core';
+import { Injectable, inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
 import { Observable, of, throwError } from 'rxjs';
@@ -25,11 +21,11 @@ export class TeamRecommendationsService {
       .pipe(
         take(1),
         catchError((error: HttpErrorResponse) => {
-          console.error('Помилка завантаження рекомендацій:', error);
+          console.error('Error loading recommendations:', error);
           if (error.status === 404) return of([]);
           return throwError(() => error);
         }),
-        map((res) => (Array.isArray(res) ? res : []))
+        map((res) => (Array.isArray(res) ? res : [])),
       );
   }
 }

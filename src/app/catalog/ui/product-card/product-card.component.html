@@ -11,7 +11,7 @@
     [queryParams]="{ type: data()!.itemType }"
     class="product-card__image-box"
   >
-    <img [src]="imageUrl()" alt="A botle of beer or cider or snack" />
+    <img [src]="imageUrl()" alt="A bottle of beer or cider or snack" />
   </a>
   <div class="product-card__body">
     <a
@@ -22,54 +22,54 @@
     </a>
     <div class="product-card__options-wrapper">
       <div class="product-card__price">
-        @if(currentOption()){
-        {{ currentPrice() | updatePrice }}
-        }@else{
-        {{ productStore.priceOfFirstOption() | updatePrice }}
+        @if (currentOption()) {
+          {{ currentPrice() | updatePrice }}
+        } @else {
+          {{ productStore.priceOfFirstOption() | updatePrice }}
         }
       </div>
 
-      @if(data()!.options.length !== 0 ){
-      <div class="product-card__options">
-        @for(option of data()!.options;track option.id){
-        <button
-          [class.active]="currentOption()?.id === option.id"
-          (click)="onChangeOption(option)"
-          [disabled]="!option.quantity && !currentOptionInCart()"
-          class="product-card__option"
-          type="button"
-        >
-          {{
-            option.volume ?? option.weight ?? option.measureValue ?? 0
-              | updateMeasure : data()!.itemType
-          }}
-        </button>
-        }
-      </div>
+      @if (data()!.options.length !== 0) {
+        <div class="product-card__options">
+          @for (option of data()!.options; track option.id) {
+            <button
+              [class.active]="currentOption()?.id === option.id"
+              (click)="onChangeOption(option)"
+              [disabled]="!option.quantity && !currentOptionInCart()"
+              class="product-card__option"
+              type="button"
+            >
+              {{
+                option.volume ?? option.weight ?? option.measureValue ?? 0
+                  | updateMeasure: data()!.itemType
+              }}
+            </button>
+          }
+        </div>
       }
 
       <div class="product-card__button-wrapper">
-        @if(currentOption()){
-        <div class="product-card__amount-wrapper amount-wrapper">
-          <button
-            [disabled]="currentOptionInCart() || quantity() <= 1"
-            (click)="changeAmountOfItems(quantity() - 1)"
-            type="button"
-            class="amount-wrapper__button decrease"
-          ></button>
-          <span class="amount-wrapper__quantity">
-            {{ quantity() }}
-          </span>
-          <button
-            [disabled]="
-              currentOptionInCart() || quantity() === currentOption()?.quantity
-            "
-            (click)="changeAmountOfItems(quantity() + 1)"
-            type="button"
-            class="amount-wrapper__button increase"
-          ></button>
-        </div>
-
+        @if (currentOption()) {
+          <div class="product-card__amount-wrapper amount-wrapper">
+            <button
+              [disabled]="currentOptionInCart() || quantity() <= 1"
+              (click)="changeAmountOfItems(quantity() - 1)"
+              type="button"
+              class="amount-wrapper__button decrease"
+            ></button>
+            <span class="amount-wrapper__quantity">
+              {{ quantity() }}
+            </span>
+            <button
+              [disabled]="
+                currentOptionInCart() ||
+                quantity() === currentOption()?.quantity
+              "
+              (click)="changeAmountOfItems(quantity() + 1)"
+              type="button"
+              class="amount-wrapper__button increase"
+            ></button>
+          </div>
         }
         <app-big-basket-button
           (onClickButton)="onMoveProduct()"
