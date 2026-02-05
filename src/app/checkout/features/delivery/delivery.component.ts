@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { MatIconModule } from '@angular/material/icon';
@@ -16,6 +16,8 @@ import {
   phoneRegEx,
 } from '../../utils/validator';
 import { FormService } from '../../data-access/form.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-delivery',
@@ -37,6 +39,8 @@ export class DeliveryComponent {
   private checkoutService = inject(CheckoutService);
   private formService = inject(FormService);
   private fb = inject(FormBuilder);
+  private destroyRef = inject(DestroyRef);
+  private router = inject(Router);
 
   public paymentType = computed(
     () => this.checkoutStore.getPaymentDataReq().paymentType,
@@ -105,7 +109,12 @@ export class DeliveryComponent {
       );
     }
     if (this.isPaymentDataReqValid()()) {
-      this.checkoutService.makeOrder(this.checkoutStore.getPaymentDataReq());
+      this.checkoutService
+        .makeOrder(this.checkoutStore.getPaymentDataReq())
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(() => {
+          this.router.navigate(['/']);
+        });
     }
   }
 }
