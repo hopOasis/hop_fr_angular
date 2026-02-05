@@ -1,6 +1,8 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
+import { MatIconModule } from '@angular/material/icon';
+
 import { InputComponent } from '../../../shared/ui/input/input.component';
 import { CheckboxComponent } from '../../../shared/ui/checkbox/checkbox.component';
 import { OrderReciverComponent } from '../order-reciver/order-reciver.component';
@@ -8,15 +10,11 @@ import { DeliveryTypeComponent } from '../delivery-type/delivery-type.component'
 import { CheckoutStoreService } from '../../data-access/checkout-store.service';
 import { CheckoutService } from '../../data-access/checkout.service';
 import {
-  buildingRegEx,
   customValidator,
-  departmentRegEx,
   emailRegEx,
   nameRegEx,
-  numberRegEx,
   phoneRegEx,
 } from '../../utils/validator';
-import { MatIconModule } from '@angular/material/icon';
 import { FormService } from '../../data-access/form.service';
 
 @Component({
@@ -44,12 +42,15 @@ export class DeliveryComponent {
     () => this.checkoutStore.getPaymentDataReq().paymentType,
   );
   public isReceiver = signal(false);
-  public isPaymentDataReqValid = computed(
+  public isPaymentDataReqValid = signal(
     () =>
-      (this.checkoutForm.controls.owner.get('phone')?.valid ||
+      ((this.checkoutForm.controls.owner.get('phone')?.valid ||
         this.checkoutForm.controls.receiver.get('phone')?.valid) &&
-      this.formService.getForm()?.get('postCode')?.valid &&
-      this.formService.getForm()?.get('city')?.valid,
+        this.formService.getForm()?.get('postCode')?.valid &&
+        this.formService.getForm()?.get('city')?.valid) ||
+      (this.formService.getForm()?.get('city')?.valid &&
+        this.formService.getForm()?.get('building')?.valid &&
+        this.formService.getForm()?.get('street')?.valid),
   );
   public checkoutForm = this.fb.group({
     owner: this.fb.group({
@@ -75,14 +76,6 @@ export class DeliveryComponent {
   }
 
   makeOrder() {
-    /*
-    customerPhoneNumber: string;
-      paymentType: Payment;
-      deliveryMethod: DeliveryMethod;
-      deliveryAddress: string;
-      deliveryPostalCode: string;
-      orderStatus: OrderStatusKey;
-      cancellationReason: string;*/
     let customerPhoneNumber = '';
     let street = this.formService.getForm()?.value.street;
     let city = this.formService.getForm()?.value.city;
@@ -94,7 +87,7 @@ export class DeliveryComponent {
       'deliveryAddress',
       `${city} ${street} ${building} ${apartment}`,
     );
-    console.log(this.checkoutForm.controls.owner.get('phone')?.valid);
+
     if (this.isReceiver()) {
       customerPhoneNumber =
         this.checkoutForm.controls.receiver.value?.phone || '';
@@ -111,7 +104,8 @@ export class DeliveryComponent {
         deliveryPostalCode,
       );
     }
-
-    console.log(this.isPaymentDataReqValid());
+    if (this.isPaymentDataReqValid()()) {
+      this.checkoutService.makeOrder(this.checkoutStore.getPaymentDataReq());
+    }
   }
 }
