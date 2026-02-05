@@ -44,6 +44,13 @@ export class DeliveryComponent {
     () => this.checkoutStore.getPaymentDataReq().paymentType,
   );
   public isReceiver = signal(false);
+  public isPaymentDataReqValid = computed(
+    () =>
+      (this.checkoutForm.controls.owner.get('phone')?.valid ||
+        this.checkoutForm.controls.receiver.get('phone')?.valid) &&
+      this.formService.getForm()?.get('postCode')?.valid &&
+      this.formService.getForm()?.get('city')?.valid,
+  );
   public checkoutForm = this.fb.group({
     owner: this.fb.group({
       name: ['', [Validators.required, customValidator(nameRegEx)]],
@@ -105,6 +112,6 @@ export class DeliveryComponent {
       );
     }
 
-    console.log(this.checkoutStore.getPaymentDataReq());
+    console.log(this.isPaymentDataReqValid());
   }
 }

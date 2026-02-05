@@ -36,4 +36,24 @@ export class CheckoutStoreService {
       [key]: value,
     }));
   }
+
+  isPaymentDataReqValid(): boolean {
+    const {
+      paymentType,
+      customerPhoneNumber,
+      deliveryPostalCode,
+      deliveryMethod,
+    } = this.getPaymentDataReq();
+
+    if (
+      paymentType.length === 0 ||
+      customerPhoneNumber.length === 0 ||
+      deliveryMethod.length === 0 ||
+      deliveryPostalCode.length === 0
+    ) {
+      return false;
+    }
+
+    return true;
+  }
 }

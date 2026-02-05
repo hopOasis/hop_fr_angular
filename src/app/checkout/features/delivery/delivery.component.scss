@@ -103,3 +103,14 @@
 app-input {
   flex: 1;
 }
+
+.disabled {
+  border-color: c.$black-100;
+  background: c.$black-100;
+  color: c.$white-500;
+  cursor: not-allowed;
+
+  &:hover {
+    @extend .disabled;
+  }
+}

@@ -1,0 +1,27 @@
+.team-recommendations {
+  width: 100%;
+  margin: 72px 0;
+
+  &__title {
+    font-weight: 500;
+    font-size: 32px;
+    margin-bottom: 40px;
+  }
+
+  .cards-grid {
+    display: flex;
+    justify-content: center;
+    max-height: 800px;
+    flex-wrap: wrap;
+    gap: 54px;
+  }
+
+  .grid-3 {
+    flex-direction: column;
+  }
+
+  .grid-2 {
+    display: flex;
+    align-items: stretch;
+  }
+}

@@ -64,7 +64,11 @@
           }
         </div>
       </div>
-      <div class="payment__action" (click)="makeOrder()">
+      <div
+        class="payment__action"
+        (click)="makeOrder()"
+        [class.disabled]="!isPaymentDataReqValid()"
+      >
         <h5 class="h5">Оформити замовлення</h5>
       </div>
     </div>
