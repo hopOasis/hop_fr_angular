@@ -1,0 +1,116 @@
+@use "../../../styles/utils/rem";
+@use "../../../styles/global/colors" as c;
+
+.checkout__delivery {
+  display: grid;
+  gap: rem.rem(16);
+  padding-top: 0;
+}
+
+.title {
+  border-radius: 8px;
+  padding: rem.rem(8) rem.rem(24);
+  background: c.$white;
+}
+
+.buyer-info {
+  padding: rem.rem(16) rem.rem(24) rem.rem(24) rem.rem(24);
+  border-radius: 8px;
+  background: c.$white;
+
+  &__user {
+    display: grid;
+    gap: rem.rem(24);
+    max-width: rem.rem(667);
+  }
+  &__items {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.department {
+  @extend .buyer-info;
+
+  &__items {
+    padding-top: rem.rem(24);
+  }
+}
+
+.payment {
+  @extend .buyer-info;
+
+  &__items {
+    display: grid;
+    gap: rem.rem(24);
+    padding-top: rem.rem(24);
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: rem.rem(20);
+    border: 1px solid c.$grey-50;
+    border-radius: 4px;
+
+    &__active {
+      background: c.$accent-500;
+      border: none;
+      color: c.$white;
+    }
+  }
+
+  &__action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: rem.rem(24);
+    height: rem.rem(48);
+    border-radius: 4px;
+    color: c.$white;
+    background: c.$bg-button-grey;
+    cursor: pointer;
+
+    &:hover {
+      background: c.$accent-600;
+    }
+
+    &:active {
+      background: c.$accent-500;
+    }
+  }
+}
+
+.h4 {
+  font-weight: 900;
+  color: c.$stripe;
+  padding-right: rem.rem(10);
+}
+
+.h6 {
+  padding: rem.rem(19.5) rem.rem(10);
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.asterix {
+  color: c.$red;
+}
+
+app-input {
+  flex: 1;
+}
+
+.disabled {
+  border-color: c.$black-100;
+  background: c.$black-100;
+  color: c.$white-500;
+  cursor: not-allowed;
+
+  &:hover {
+    @extend .disabled;
+  }
+}

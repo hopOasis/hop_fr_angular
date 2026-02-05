@@ -1,0 +1,38 @@
+<form [formGroup]="ukrPoshtaForm">
+  <div class="delivery-type__input-items">
+    <div class="delivery-type__input-item">
+      <app-input formControlName="city"
+        >Виберіть місто<span class="asterix">*</span>
+      </app-input>
+      <app-custom-validator
+        [control]="getControl(ukrPoshtaForm, 'city')"
+        [message]="'Має містити не менше 3-х літер украінського алфавіту'"
+      />
+    </div>
+    <div class="delivery-type__input-item">
+      <app-input formControlName="street"
+        >Виберіть вулицю<span class="asterix">*</span>
+      </app-input>
+      <app-custom-validator
+        [control]="getControl(ukrPoshtaForm, 'street')"
+        [message]="'Має містити не менше 3-х літер украінського алфавіту'"
+      />
+    </div>
+    <div class="delivery-type__input-item">
+      <app-input formControlName="building"
+        >Номер будинку<span class="asterix">*</span>
+      </app-input>
+      <app-custom-validator
+        [control]="getControl(ukrPoshtaForm, 'building')"
+        [message]="'Має містити цифру або цифру і велику літеру'"
+      />
+    </div>
+    <div class="delivery-type__input-item">
+      <app-input formControlName="apartment">Номер квартири </app-input>
+      <app-custom-validator
+        [control]="getControl(ukrPoshtaForm, 'apartment')"
+        [message]="'Має містити цифри'"
+      />
+    </div>
+  </div>
+</form>

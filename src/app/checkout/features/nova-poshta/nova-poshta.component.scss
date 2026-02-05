@@ -1,0 +1,45 @@
+@use "../../../styles/global/colors" as c;
+@use "../../../styles/utils/rem";
+
+.delivery-type {
+  &__items {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+
+  &__price {
+    display: flex;
+    justify-content: end;
+    min-width: rem.rem(108);
+    gap: rem.rem(8);
+
+    p {
+      font-weight: bold;
+      color: c.$black-500;
+    }
+  }
+
+  &__input-items {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    gap: rem.rem(16);
+  }
+
+  &__input-item {
+    flex: 1;
+  }
+}
+
+.h6 {
+  color: c.$grey-500;
+}
+
+.form-control:focus-within {
+  color: c.$black-500;
+}
+
+.asterix {
+  color: c.$red;
+}

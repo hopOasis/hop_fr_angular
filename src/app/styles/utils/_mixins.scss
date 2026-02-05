@@ -1,0 +1,15 @@
+@use "../global/colors" as c;
+
+@mixin btn-accent-active {
+  &:not([disabled]):active {
+    background-color: c.$accent-600;
+    color: c.$white-500;
+  }
+}
+
+@mixin btn-accent-hover {
+  &:not([disabled]):hover {
+    background-color: c.$accent-500;
+    color: c.$white-500;
+  }
+}

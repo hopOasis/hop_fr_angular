@@ -1,0 +1,12 @@
+@if (control()?.invalid && (control()?.touched || control()?.dirty)) {
+  @if (control()?.errors?.["required"]) {
+    <div class="item__error">
+      <span> Не може бути пустим</span>
+    </div>
+  }
+  @if (control()?.errors?.["customError"]) {
+    <div class="item__error">
+      <span> {{ message() }} </span>
+    </div>
+  }
+}

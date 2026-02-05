@@ -1,0 +1,62 @@
+<div class="delivery-type">
+  <div class="delivery-type__items" (click)="onClick()">
+    <h6 class="h6">{{ deliveryTypeTitle() }}</h6>
+    <div class="delivery-type__price">
+      <h5 class="h5">{{ deliveryTypePrice() }}</h5>
+      <p [class]="icon()"></p>
+    </div>
+  </div>
+  @if (isOpened()) {
+    @if (deliveryTypeTitle() === "Нова пошта") {
+      <div class="delivery-type__select">
+        <div class="input__radio">
+          <label class="radio__label">
+            <input
+              class="radio__input"
+              type="radio"
+              name="deliveryType"
+              id="POST_OFFICE"
+              (input)="setDeliveryType($event)"
+              [checked]="getDeliveryType() === 'POST_OFFICE'"
+            />
+            <h6 class="h6">Відділення</h6>
+          </label>
+        </div>
+        <div class="input__radio">
+          <label class="radio__label">
+            <input
+              class="radio__input"
+              type="radio"
+              name="deliveryType"
+              id="PARCEL_TERMINAL"
+              (input)="setDeliveryType($event)"
+              [checked]="getDeliveryType() === 'PARCEL_TERMINAL'"
+            />
+            <h6 class="h6">Поштомат</h6>
+          </label>
+        </div>
+        <div class="input__radio">
+          <label class="radio__label">
+            <input
+              class="radio__input"
+              type="radio"
+              name="deliveryType"
+              id="COURIER"
+              (input)="setDeliveryType($event)"
+              [checked]="getDeliveryType() === 'COURIER'"
+            />
+            <h6 class="h6">Курʼєр</h6>
+          </label>
+        </div>
+      </div>
+      <ng-container>
+        <app-nova-poshta [getDeliveryType]="getDeliveryType()" />
+      </ng-container>
+    }
+    @if (deliveryTypeTitle() === "Укрпошта") {
+      <ng-container>
+        <app-ukr-poshta />
+      </ng-container>
+    }
+  }
+</div>

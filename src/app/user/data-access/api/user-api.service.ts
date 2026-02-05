@@ -5,13 +5,13 @@ import { UserInfo } from '../models/user-info.model';
 @Injectable({ providedIn: 'root' })
 export class UserApiService {
   readonly userStore = inject(UserStore);
-  fetchUserInfo(state:boolean): void {
+  fetchUserInfo(state: boolean): void {
     this.userStore.updateUserInfo(state);
   }
   get userInfo(): Signal<UserInfo | null> {
     return this.userStore.userInfo;
   }
-  get userFirstName(): Signal<string> {
+  get userFirstName(): Signal<string | undefined> {
     return this.userStore.userName;
   }
 }

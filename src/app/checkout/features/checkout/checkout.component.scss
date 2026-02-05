@@ -1,0 +1,25 @@
+@use "../../../styles/global/colors" as c;
+@use "../../../styles/utils/rem";
+
+:host {
+  flex-grow: 1;
+  min-height: 100%;
+}
+
+.order {
+  max-width: rem.rem(505);
+}
+
+.wrap {
+  display: flex;
+  flex-wrap: wrap-reverse;
+  justify-content: space-between;
+}
+
+.delivery {
+  display: flex;
+  flex-direction: column;
+  padding-top: rem.rem(40);
+  width: rem.rem(715);
+  padding: rem.rem(12) rem.rem(16);
+}

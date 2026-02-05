@@ -32,13 +32,12 @@ import { SpinnerComponent } from '../../../shared/ui/spinner/spinner.component';
 export class OrderPageComponent implements OnInit {
   public orderStore = inject(OrderStore);
   public open = signal<boolean>(false);
-  private priceBy = signal<'abc' | 'desc' | null>('abc');
-  private dates = signal<any>([]);
+  public priceBy = signal<'abc' | 'desc' | null>('abc');
   public arrowActive = false;
+  private dates = signal<any>([]);
 
   ngOnInit(): void {
     this.orderStore.loadOrders();
-    console.log(this.orderStore.loading());
   }
 
   showCalendar(): void {
@@ -76,9 +75,10 @@ export class OrderPageComponent implements OnInit {
       this.priceBy.set('desc');
     } else if (this.priceBy() === 'desc') {
       this.orderStore.setSort(this.priceBy());
-      this.priceBy.set('abc');
-    } else {
       this.priceBy.set(null);
+      this.orderStore.loadOrders();
+    } else {
+      this.priceBy.set('abc');
     }
   }
 }

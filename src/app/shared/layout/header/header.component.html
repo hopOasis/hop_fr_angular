@@ -43,12 +43,12 @@
       class="header__actions-link"
     >
       <span class="header__icon icon icon-shopping-cart">
-        @if(cartApiService.amountOfItems()){
-        <span
-          class="cart-amount"
-          [class.big]="cartApiService.amountOfItems() > 9"
-          >{{ cartApiService.amountOfItems() }}</span
-        >
+        @if (cartApiService.amountOfItems()) {
+          <span
+            class="cart-amount"
+            [class.big]="cartApiService.amountOfItems() > 9"
+            >{{ cartApiService.amountOfItems() }}</span
+          >
         }
       </span>
     </button>

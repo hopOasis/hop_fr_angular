@@ -1,9 +1,54 @@
 @use "../utils/rem";
 
-.title-h5-semi-bold {
-  font-family: Montserrat;
-  font-weight: 600;
-  font-size: rem.rem(16);
-  line-height: 100%;
-  letter-spacing: 0%;
+$font-family-primary: "Montserrat", sans-serif;
+
+@mixin title-style($weight, $size, $line-height: 100%) {
+  font-family: $font-family-primary;
+  font-weight: $weight;
+  font-size: $size;
+  line-height: $line-height;
+}
+
+$font-regular: 400;
+$font-medium: 500;
+$font-semibold: 600;
+
+h1,
+.h1 {
+  @include title-style($font-semibold, rem.rem(40));
+}
+
+h2,
+.h2 {
+  @include title-style($font-medium, rem.rem(32));
+}
+
+h3,
+.h3 {
+  @include title-style($font-medium, rem.rem(24));
+}
+
+h4,
+.h4 {
+  &.regular {
+    @include title-style($font-regular, rem.rem(20));
+  }
+  &.semibold {
+    @include title-style($font-semibold, rem.rem(20));
+  }
+  &.medium {
+    @include title-style($font-medium, rem.rem(20));
+  }
+
+  @include title-style($font-medium, rem.rem(20));
+}
+
+h5,
+.h5 {
+  @include title-style($font-semibold, rem.rem(16));
+}
+
+h6,
+.h6 {
+  @include title-style($font-medium, rem.rem(14));
 }

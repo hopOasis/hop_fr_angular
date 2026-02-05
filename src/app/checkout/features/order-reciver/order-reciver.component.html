@@ -1,0 +1,51 @@
+<ng-container [formGroup]="receiver()">
+  <div class="buyer-info__items">
+    <div class="item">
+      <app-input [placeholder]="'Введіть ім\'я'" required formControlName="name"
+        >Ім'я<span class="asterix">*</span>
+      </app-input>
+      <app-custom-validator
+        [control]="getControl(receiver(), 'name')"
+        [message]="
+          'Ім\'я може містити не менше 3-х літер украінського алфавіту'
+        "
+      />
+    </div>
+    <div class="item">
+      <app-input [placeholder]="'Введіть прізвище'" formControlName="surname"
+        >Прізвище<span class="asterix">*</span>
+      </app-input>
+      <app-custom-validator
+        [control]="getControl(receiver(), 'surname')"
+        [message]="
+          'Прізвище може містити не менше 3-х літер украінського алфавіту'
+        "
+      />
+    </div>
+  </div>
+  <div class="buyer-info__items">
+    <div class="item">
+      <app-input
+        [placeholder]="'+380_________'"
+        [type]="'tel'"
+        formControlName="phone"
+        >Номер телефону<span class="asterix">*</span>
+      </app-input>
+      <app-custom-validator
+        [control]="getControl(receiver(), 'phone')"
+        [message]="'Номер телефону має відповідати формату +380ХХХХХХХХХ '"
+      />
+    </div>
+    <div class="item">
+      <app-input
+        [placeholder]="'адреса електроноі пошти'"
+        formControlName="email"
+        >Електронна пошта<span class="asterix">*</span>
+      </app-input>
+      <app-custom-validator
+        [control]="getControl(receiver(), 'email')"
+        [message]="'Введіть коректну електронну пошту'"
+      />
+    </div>
+  </div>
+</ng-container>

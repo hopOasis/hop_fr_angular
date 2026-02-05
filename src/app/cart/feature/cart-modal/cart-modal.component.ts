@@ -15,10 +15,12 @@ import {
 } from '@angular/animations';
 import { CartModalStore } from '../../data-access/store/cart-modal.store';
 import { AuthApiService } from '../../../authentication/data-access/api/auth-api.service';
+import { CartEmptyComponent } from '../cart-empty/cart-empty.component';
+
 @Component({
   selector: 'app-cart-modal',
   standalone: true,
-  imports: [CartComponent],
+  imports: [CartComponent, CartEmptyComponent],
   animations: [
     trigger('modalState', [
       state(

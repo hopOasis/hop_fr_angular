@@ -3,7 +3,6 @@
 
 .btn {
   display: flex;
-  flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
   // max-width: rem.rem(193);
@@ -25,7 +24,7 @@
   &__content {
     display: flex;
     align-items: center;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     gap: rem.rem(6);
     font-family: Montserrat;
     font-weight: 500;
@@ -37,6 +36,8 @@
   &__icon {
     width: rem.rem(20);
     height: rem.rem(18);
+    display: flex;
+    align-items: center;
   }
 }
 

@@ -1,7 +1,8 @@
 <div class="sort-btn" [class.disabled]="disabled() === 'all-products'">
+  <ng-content />
   <app-button
     (clicked)="onClicked()"
-    [icon]="'./svg/arrows-up-down.svg'"
+    [icon]="iconToggle()"
     [disabled]="disabled() === 'all-products'"
   >
     {{ selectedOption() }}
