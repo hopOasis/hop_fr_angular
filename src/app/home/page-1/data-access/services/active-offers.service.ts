@@ -4,7 +4,6 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable } from 'rxjs';
 
 import { environment } from '../../../../environments/environment';
-import { Offer } from '../models/offer.interface';
 import { ProductDescription } from '../../../../catalog/data-access/models/product-description.model';
 import { FetchedProductData } from '../../../../catalog/data-access/models/product-api-response.model';
 
@@ -19,7 +18,7 @@ export class ActiveOffersService {
       map((item) => item.content),
       catchError((err: HttpErrorResponse) => {
         throw `Error in active offers on product name: ${prodName}. Details: ${err.message}`;
-      })
+      }),
     );
   }
 

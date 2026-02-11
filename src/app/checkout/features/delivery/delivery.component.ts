@@ -18,6 +18,10 @@ import {
 import { FormService } from '../../data-access/form.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
+import { CartStore } from '../../../cart/data-access/store/cart.store';
+import { AuthApiService } from '../../../authentication/data-access/api/auth-api.service';
+import { tap } from 'rxjs';
+import { SpinnerComponent } from '../../../shared/ui/spinner/spinner.component';
 
 @Component({
   selector: 'app-delivery',
@@ -29,6 +33,7 @@ import { Router } from '@angular/router';
     DeliveryTypeComponent,
     ReactiveFormsModule,
     MatIconModule,
+    SpinnerComponent,
   ],
   templateUrl: './delivery.component.html',
   styleUrl: './delivery.component.scss',
@@ -41,7 +46,13 @@ export class DeliveryComponent {
   private fb = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
   private router = inject(Router);
+  private cartStore = inject(CartStore);
+  private authApi = inject(AuthApiService);
 
+  public cartEmpty = computed(() =>
+    this.cartStore.cartItems().length > 0 ? false : true,
+  );
+  public loading = signal(false);
   public paymentType = computed(
     () => this.checkoutStore.getPaymentDataReq().paymentType,
   );
@@ -111,8 +122,13 @@ export class DeliveryComponent {
     if (this.isPaymentDataReqValid()()) {
       this.checkoutService
         .makeOrder(this.checkoutStore.getPaymentDataReq())
-        .pipe(takeUntilDestroyed(this.destroyRef))
+        .pipe(
+          tap(() => this.loading.set(true)),
+          takeUntilDestroyed(this.destroyRef),
+        )
         .subscribe(() => {
+          this.cartStore.triggerCartApdating(this.authApi.isAuth);
+          this.loading.set(false);
           this.router.navigate(['/']);
         });
     }

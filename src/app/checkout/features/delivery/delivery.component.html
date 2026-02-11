@@ -1,4 +1,9 @@
 <div class="checkout__delivery">
+  @if (loading()) {
+    <div class="spinner">
+      <app-spinner />
+    </div>
+  }
   <div class="title">
     <h2 class="h2">Оформлення замовлення</h2>
   </div>
@@ -67,7 +72,7 @@
       <div
         class="payment__action"
         (click)="makeOrder()"
-        [class.disabled]="!isPaymentDataReqValid()()"
+        [class.disabled]="!isPaymentDataReqValid()() || cartEmpty()"
       >
         <h5 class="h5">Оформити замовлення</h5>
       </div>
