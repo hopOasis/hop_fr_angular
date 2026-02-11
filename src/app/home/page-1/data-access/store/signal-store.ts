@@ -9,6 +9,7 @@ import { computed, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { OfferStoreData } from '../models/offer.interface';
 import { ActiveOffersService } from '../services/active-offers.service';
+import { offerFilter } from './offer-filter';
 
 const initialState: OfferStoreData = {
   productData: [],
@@ -24,7 +25,7 @@ export const OfferStore = signalStore(
   withState(initialState),
   withComputed(({ productData, startIndex, step }) => ({
     currentProduct: computed(() =>
-      productData()?.slice(startIndex(), startIndex() + step())
+      offerFilter(productData()!)?.slice(startIndex(), startIndex() + step()),
     ),
     weekProductCount: computed(() => productData()?.length || 1),
   })),
@@ -61,5 +62,5 @@ export const OfferStore = signalStore(
     disabledLeftUpdate(disabledLeft: boolean) {
       patchState(store, { disabledLeft });
     },
-  }))
+  })),
 );

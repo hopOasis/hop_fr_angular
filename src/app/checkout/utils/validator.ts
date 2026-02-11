@@ -1,7 +1,7 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 const nameRegEx =
-  /^[А-ЩЬЮЯЄІЇҐа-щьюяєіїґ]{3,30}(-[А-ЩЬЮЯЄІЇҐа-щьюяєіїґ]{1,29})?$/;
+  /^(?=.{3,30}$)[А-ЩЬЮЯЄІЇҐа-щьюяєіїґ]+([-' ][А-ЩЬЮЯЄІЇҐа-щьюяєіїґ]+)*$/;
 const phoneRegEx = /^\+380\d{9}$/;
 const emailRegEx = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
 const numberRegEx = /^[0-9]{1,4}$/;

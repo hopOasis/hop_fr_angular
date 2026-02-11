@@ -114,3 +114,11 @@ app-input {
     @extend .disabled;
   }
 }
+
+.spinner {
+  position: absolute;
+  max-width: rem.rem(1400);
+  max-height: rem.rem(500);
+  left: 50%;
+  transform: translate(-50%);
+}

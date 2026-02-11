@@ -17,15 +17,16 @@
     </div>
   </div>
   <div class="page-1__card">
-    @if(store.loading()) {
-    <div class="page-1__spinner">
-      <app-spinner />
-    </div>
+    @if (store.loading()) {
+      <div class="page-1__spinner">
+        <app-spinner />
+      </div>
     } @else if (!store.productData()?.length) {
-    <p>Наразі немає товарів тижня. Завітайте пізніше!</p>
-    } @else { @for (weekProduct of store.currentProduct(); track $index) {
-    <app-product-card [inputData]="weekProduct" />
-
-    } }
+      <p>Наразі немає товарів тижня. Завітайте пізніше!</p>
+    } @else {
+      @for (weekProduct of store.currentProduct(); track $index) {
+        <app-product-card [inputData]="weekProduct" />
+      }
+    }
   </div>
 </div>
